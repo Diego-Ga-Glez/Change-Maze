@@ -29,7 +29,6 @@ export default class DungeonScene extends Phaser.Scene {
   create() {
     this.level++;
     this.hasPlayerReachedStairs = false;
-    this.hasPlayerReachedTrap = false;
 
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
@@ -144,14 +143,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
       this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
-      this.hasPlayerReachedStairs = true;
-      this.player.freeze();
-      const cam = this.cameras.main;
-      cam.fade(250, 0, 0, 0);
-      cam.once("camerafadeoutcomplete", () => {
-        this.player.destroy();
-        this.scene.restart();
-      });
+      this.game_over(true)
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.TRAP, () => {
@@ -160,15 +152,7 @@ export default class DungeonScene extends Phaser.Scene {
         this.coins -= 5;
         this.level = rand;
         this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-        this.hasPlayerReachedTrap = true;
-        this.player.freeze();
-        const cam = this.cameras.main;
-        cam.fade(250, 0, 0, 0);
-        cam.once("camerafadeoutcomplete", () => {
-          
-          this.player.destroy();
-          this.scene.restart();
-        });
+        this.game_over(true)
       }
     });
 
@@ -201,10 +185,23 @@ export default class DungeonScene extends Phaser.Scene {
     camera.startFollow(this.player.sprite);
 
     this.score()
+
+    //timer text
+    this.initialTimer = 120;
+    this.text_timer = this.add
+      .text(584, 16, `Countdown ${this.formatTime(this.initialTimer)}`, {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff",
+      })
+      .setScrollFactor(0);
+    this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
+
   }
   
   update(time, delta) {
-    if ((this.hasPlayerReachedStairs || this.hasPlayerReachedTrap) && this.level < 10) return;
+    if (this.hasPlayerReachedStairs && this.level < 10) return;
     this.player.update();
 
     // Find the player's room using another helper method from the dungeon that converts from
@@ -214,6 +211,25 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY);
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
+  }
+
+  timer(){
+    this.initialTimer -= 1; // One second
+    if (this.initialTimer == 0){
+      this.game_over(false)
+    }
+    this.text_timer.setText('Countdown: ' + this.formatTime(this.initialTimer));
+  }
+
+  formatTime(seconds){
+    // Minutes
+    var minutes = Math.floor(seconds/60);
+    // Seconds
+    var partInSeconds = seconds%60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2,'0');
+    // Returns formated time
+    return `${minutes}:${partInSeconds}`;
   }
 
   score(){
@@ -226,6 +242,19 @@ export default class DungeonScene extends Phaser.Scene {
         backgroundColor: "#ffffff",
       })
       .setScrollFactor(0);
+  }
+
+  game_over(restart){
+    this.hasPlayerReachedStairs = true;
+    this.player.freeze();
+    const cam = this.cameras.main;
+    cam.fade(250, 0, 0, 0);
+    cam.once("camerafadeoutcomplete", () => {
+      this.player.destroy();
+      if(restart){
+        this.scene.restart();
+      } 
+    });
   }
 
 }
