@@ -10,6 +10,7 @@ export default class DungeonScene extends Phaser.Scene {
     super();
     this.level = 0;
     this.coins = 0;
+    this.initialTimer = 0;
   }
 
   preload() {
@@ -27,6 +28,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
+    this.initialTimer = 120;
     this.level++;
     this.hasPlayerReachedStairs = false;
 
@@ -187,7 +189,6 @@ export default class DungeonScene extends Phaser.Scene {
     this.score()
 
     //timer text
-    this.initialTimer = 120;
     this.text_timer = this.add
       .text(584, 16, `Countdown ${this.formatTime(this.initialTimer)}`, {
         font: "18px monospace",
@@ -196,7 +197,17 @@ export default class DungeonScene extends Phaser.Scene {
         backgroundColor: "#ffffff",
       })
       .setScrollFactor(0);
+
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
+    
+    this.input.keyboard.on('keyup-A', () => {
+      if(this.coins > 0){
+        this.initialTimer += 30
+        this.coins--
+        this.score()
+      }
+    })
+
 
   }
   
@@ -249,7 +260,7 @@ export default class DungeonScene extends Phaser.Scene {
       })
       .setScrollFactor(0);
   }
-
+  
   game_over(restart){
     this.hasPlayerReachedStairs = true;
     this.player.freeze();
