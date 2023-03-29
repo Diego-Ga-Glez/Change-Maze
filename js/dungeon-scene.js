@@ -204,7 +204,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
   
   update(time, delta) {
-    if (this.hasPlayerReachedStairs || this.hasPlayerReachedTrap && this.level < 10) return;
+    if ((this.hasPlayerReachedStairs || this.hasPlayerReachedTrap) && this.level < 10) return;
     this.player.update();
 
     // Find the player's room using another helper method from the dungeon that converts from
