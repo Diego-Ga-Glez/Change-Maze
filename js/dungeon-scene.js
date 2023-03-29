@@ -143,7 +143,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.stuffLayer.setTileIndexCallback(TILES.STAIRS, () => {
       this.stuffLayer.setTileIndexCallback(TILES.STAIRS, null);
-      this.game_over(true)
+      this.game_over()
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.TRAP, () => {
@@ -152,7 +152,7 @@ export default class DungeonScene extends Phaser.Scene {
         this.coins -= 5;
         this.level = rand;
         this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-        this.game_over(true)
+        this.game_over()
       }
     });
 
@@ -216,7 +216,13 @@ export default class DungeonScene extends Phaser.Scene {
   timer(){
     this.initialTimer -= 1; // One second
     if (this.initialTimer == 0){
-      this.game_over(false)
+      if (this.level == 1){
+        this.level-=1
+      }
+      else{
+        this.level-= 2
+      }
+      this.game_over()
     }
     this.text_timer.setText('Countdown: ' + this.formatTime(this.initialTimer));
   }
@@ -251,9 +257,8 @@ export default class DungeonScene extends Phaser.Scene {
     cam.fade(250, 0, 0, 0);
     cam.once("camerafadeoutcomplete", () => {
       this.player.destroy();
-      if(restart){
-        this.scene.restart();
-      } 
+      this.scene.restart();
+      
     });
   }
 
