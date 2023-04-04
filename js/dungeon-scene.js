@@ -14,7 +14,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tiles", "./assets/tilesets/buch-tileset-48px-extruded.png");
+    this.load.image("tiles", "./assets/tilesets/buch-tileset-48px-extruded-blue.png");
     this.load.spritesheet(
       "characters",
       "./assets/spritesheets/buch-characters-64px-extruded.png",
@@ -114,8 +114,8 @@ export default class DungeonScene extends Phaser.Scene {
     otherRooms.forEach((room) => {
       const rand = Math.random();
       if (rand <= 0.25) {
-        // 25% chance of chest
-        this.stuffLayer.putTileAt(TILES.CHEST, room.centerX, room.centerY);
+        // 25% chance of coin
+        this.stuffLayer.putTileAt(TILES.COIN, room.centerX, room.centerY);
       } else if (rand <= 0.5) {
         // 50% chance of a pot anywhere in the room... except don't block a door!
         const x = Phaser.Math.Between(room.left + 2, room.right - 2);
@@ -149,21 +149,18 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.TRAP, () => {
-      if (this.coins >= 5) {
-        const rand = Math.floor(Math.random() * 10)
-        this.coins -= 5;
-        this.level = rand;
-        this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-        this.game_over()
-      }
+      const rand = Math.floor(Math.random() * 10)
+      this.level = rand;
+      this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
+      this.game_over()
     });
 
-    this.stuffLayer.setCollision(TILES.CHEST, false)
-    this.stuffLayer.setTileIndexCallback(TILES.CHEST, () => {
-      const chestX = this.groundLayer.worldToTileX(this.player.sprite.x);
-      const chestY = this.groundLayer.worldToTileY(this.player.sprite.y);
-      if(this.stuffLayer.hasTileAt(chestX,chestY)){
-        this.stuffLayer.removeTileAt(chestX,chestY)
+    this.stuffLayer.setCollision(TILES.COIN, false)
+    this.stuffLayer.setTileIndexCallback(TILES.COIN, () => {
+      const coinX = this.groundLayer.worldToTileX(this.player.sprite.x);
+      const coinY = this.groundLayer.worldToTileY(this.player.sprite.y);
+      if(this.stuffLayer.hasTileAt(coinX,coinY)){
+        this.stuffLayer.removeTileAt(coinX,coinY)
         this.coins++
         this.score()
       }

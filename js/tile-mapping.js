@@ -52,7 +52,7 @@ const TILE_MAPPING = {
       [0]
     ],
   },
-  CHEST: 166,
+  COIN: 18,
   STAIRS: 81,
   // prettier-ignore
   TOWER: [
