@@ -197,14 +197,18 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
     
-    this.input.keyboard.on('keyup-A', () => {
-      if(this.coins > 0){
-        this.initialTimer += 30
-        this.coins--
-        this.score()
-      }
-    })
-
+    this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
+    
+    this.click_button = this.add
+      .text(500, 16, '+30s', {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff",
+      })
+      .setScrollFactor(0)
+      .setInteractive({ useHandCursor: true })
+      .on('pointerdown', () => this.enterButtonActiveState());
 
   }
   
@@ -221,6 +225,14 @@ export default class DungeonScene extends Phaser.Scene {
     this.tilemapVisibility.setActiveRoom(playerRoom);
   }
 
+  enterButtonActiveState() {
+    if(this.coins > 0){
+      this.initialTimer += 31
+      this.coins--
+      this.score()
+    }
+  }
+  
   timer(){
     this.initialTimer -= 1; // One second
     if (this.initialTimer == 0){
