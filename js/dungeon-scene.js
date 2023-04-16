@@ -1,5 +1,6 @@
 import Player from "./player.js";
 import TILES from "./tile-mapping.js";
+import Alert from "./alert.js";
 import TilemapVisibility from "./tilemap-visibility.js";
 
 /**
@@ -198,6 +199,14 @@ export default class DungeonScene extends Phaser.Scene {
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
     
     this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
+
+    // show gameplay and pause game
+    this.alert = new Alert();
+    this.input.keyboard.on('keyup-G', () => {
+          this.scene.pause();
+          this.alert.gameplay(this.scene);
+      });
+    /////////////////////////////////////////////  
     
     this.click_button = this.add
       .text(500, 16, '+30s', {
