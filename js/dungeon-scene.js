@@ -111,22 +111,44 @@ export default class DungeonScene extends Phaser.Scene {
     // Place the stairs
     this.stuffLayer.putTileAt(TILES.STAIRS, endRoom.centerX, endRoom.centerY);
 
+    // Probability for stuff in the 90% "othersRooms"
+    let prob_coin, prob_pot, prob_trap;
+    let num_coin = 0; // experimental
+    const randi = 2
+    if(randi == 0){
+      // unlucky
+      console.log("unlucky")
+      prob_coin = 0.12; // 12% chance of coin
+      prob_pot = 0.50;  // 38% chance of a pot 
+      prob_trap = 0.98; // 02% chance of trap and 48% chance of towers
+    } else if(randi == 1){
+      // normal 
+      console.log("normal")
+      prob_coin = 0.25; // 25% chance of coin
+      prob_pot = 0.50;  // 25% chance of a pot
+      prob_trap = 0.90 //  10% chance of trap and 40% chance of towers
+    } else{
+      // lucky
+      console.log("lucky")
+      prob_coin = 0.50; // 50% chance of coin
+      prob_pot = 0.75;  // 25% chance of a pot
+      prob_trap = 0.90; // 10% chance of a trap and 15% chanfe of towers
+    }
+    
     // Place stuff in the 90% "otherRooms"
     otherRooms.forEach((room) => {
       const rand = Math.random();
-      if (rand <= 0.25) {
-        // 25% chance of coin
+      if (rand <= prob_coin) {
         this.stuffLayer.putTileAt(TILES.COIN, room.centerX, room.centerY);
-      } else if (rand <= 0.5) {
-        // 50% chance of a pot anywhere in the room... except don't block a door!
+        num_coin = num_coin + 1; // experimental
+      } else if (rand <= prob_pot) {
+        //chance of a pot anywhere in the room... except don't block a door!
         const x = Phaser.Math.Between(room.left + 2, room.right - 2);
         const y = Phaser.Math.Between(room.top + 2, room.bottom - 2);
         this.stuffLayer.weightedRandomize(TILES.POT,x, y, 1, 1);
-      } else if (rand >= 0.75){
-        // 25% chance of TRAP
+      } else if (rand >= prob_trap){
         this.stuffLayer.putTileAt(TILES.TRAP, room.centerX, room.centerY);
       } else {
-        // 25% of either 2 or 4 towers, depending on the room size
         if (room.height >= 9) {
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY + 1);
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX + 1, room.centerY + 1);
@@ -138,6 +160,8 @@ export default class DungeonScene extends Phaser.Scene {
         }
       }
     });
+
+    console.log("numero de monedas: " + num_coin); // experimental
 
     // Not exactly correct for the tileset since there are more possible floor tiles, but this will
     // do for the example.
