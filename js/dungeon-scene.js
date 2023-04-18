@@ -114,7 +114,7 @@ export default class DungeonScene extends Phaser.Scene {
     // Probability for stuff in the 90% "othersRooms"
     let prob_coin, prob_pot, prob_trap;
     let num_coin = 0; // experimental
-    const randi = 2
+    const randi =  Math.floor(Math.random() * 3)
     if(randi == 0){
       // unlucky
       console.log("unlucky")
