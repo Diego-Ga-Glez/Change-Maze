@@ -1,39 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Phaser Template</title>
 
-    <style>
-      html,
-      body,
-      #game-container {
-        margin: 0;
-        padding: 0;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      #game-container {
-        min-width: 100vw;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+    <title>Inicio</title>
 
-      #game-container > canvas {
-        border-radius: 5px;
-      }
-    </style>
-  </head>
+    <!-- Bootstrap v5.1.3 CDNs -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <body style="background-color: #0d0711;">
-    <div id="game-container"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@mikewesthad/dungeon@1.2.2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./js/index.js" type="module"></script>
-  </body>
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body style="background: #f8fafc;">
+    
+        <div class="container mt-5" style="width: 40%;" id="contenedorForm">
+
+            <div class="card-deck mb-3 mt-5">
+
+                <div class="card mb-4 box-shadow">
+
+                    <div class="card-header">
+                        <h4 class="text-center">Registro</h4>
+                    </div>
+                    
+                    <div class="card-body p-5">
+
+                        <form class="needs-validation">
+
+                            <ul class="list-unstyled mb-4" id="listaCampos">
+
+                                <div class="form-group">
+                                    <label class="form-label">Nombre completo</label>
+                                    <input class="form-control" type="text" id="nombre" required>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label" for="email">Correo electrónico</label>
+                                    <input class="form-control" type="email" id="email" required>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Género</label>
+                                    <select class="form-select" id="genero" required>
+                                        <option selected></option>
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
+                                        <option value="3">Otro</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Edad</label>
+                                    <input class="form-control" type="number" min="1" max="99" id="edad" required>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Ocupación</label>
+                                    <select class="form-select" id="ocupacion" onchange="profesion()" required>
+                                        <option selected></option>
+                                        <option value="1">Estudiante</option>
+                                        <option value="2">Otra</option>
+                                    </select>
+                                </div>
+
+                            </ul>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+                                <p>
+                                    Estoy de acuerdo con el
+                                    <a href="#" onclick="alert_aviso()">aviso de privacidad</a>
+                                </p>
+                            </div>
+
+                            <input class="btn btn-primary w-100 mt-3" type="submit" id="btnRegistro" value="Registrarse">
+                        
+                        </form>
+
+                    </div>
+                
+                </div>
+            
+            </div>
+                
+        </div>
+
+        <script>
+            function alert_aviso() {
+                var text = "¡Muchas gracias por haber aceptado participar en este estudio!<br>Tu tarea consistirá en jugar dos juegos de mesa junto con otra(s) persona(s). La duración de la sesión dependerá del tiempo en el que ustedes realicen la tarea.<br>El objetivo de este estudio es obtener información sobre la forma en la que la gente se enfrenta al cambio. No buscamos evaluar inteligencia o memoria. Durante la sesión se te conectara un sensor que tomará tu pulso cardio. Se jugaron dos juegos de mesas que tendrán una duración de 30 minutos cada uno, durante el experimento se te grabará para conocer tus reacciones. Te informamos que ninguna de las actividades que realizarás implica algún riesgo o alguna molestia física o psicológica a corto o largo plazo. Sin embargo, si en algún momento deseas terminar tu participación en la tarea podrás hacerlo informando al encargado, esto sin ninguna consecuencia para ti.<br>En caso de ser necesario, los datos que proporciones serán confidenciales y se utilizarán para fines investigativos exclusivamente.<br>Finalmente, al aceptar participar en este estudio, te comprometes a no divulgar información sobre las tareas utilizadas y los procedimientos realizados porque ello podría afectar el desempeño de otros estudiantes que decidan participar con nosotros.";
+
+                Swal.fire({
+                title: 'Aviso de privacidad',
+                type: 'info',
+                html:
+                    '<p align="justify">'+text+'</p>'
+                })
+            }
+
+            function profesion() {
+                var profesion = document.getElementById("ocupacion").value;
+                var eliminar = document.getElementsByClassName("opcionales");
+                var padre_div = document.getElementById("listaCampos");
+
+                while(eliminar.length > 0){
+                    eliminar[0].parentNode.removeChild(eliminar[0]);
+                }
+
+                if (profesion == 1) {
+                    var div_carrera = document.createElement("div");
+                    div_carrera.classList.add("form-group");
+                    div_carrera.classList.add("mt-3");
+                    div_carrera.classList.add("opcionales");
+
+                    var label_carrera = document.createElement("label");
+                    label_carrera.classList.add("form-label");
+                    label_carrera.classList.add("opcionales");
+                    label_carrera.innerHTML = "Carrera";
+
+                    var select_carrera = document.createElement("select");
+                    select_carrera.classList.add("form-select");
+                    select_carrera.classList.add("opcionales");
+                    select_carrera.required = true;
+                    
+                    var opcion1_carrera = document.createElement("option");
+                    opcion1_carrera.classList.add("opcionales");
+                    opcion1_carrera.selected = true;
+
+                    var opcion2_carrera = document.createElement("option");
+                    opcion2_carrera.classList.add("opcionales");
+                    opcion2_carrera.value = "1";
+                    opcion2_carrera.innerHTML = "Ingeniería en Computación";
+
+                    var opcion3_carrera = document.createElement("option");
+                    opcion3_carrera.classList.add("opcionales");
+                    opcion3_carrera.value = "2";
+                    opcion3_carrera.innerHTML = "Ingeniería en Informática";
+
+                    var opcion4_carrera = document.createElement("option");
+                    opcion4_carrera.classList.add("opcionales");
+                    opcion4_carrera.value = "3";
+                    opcion4_carrera.innerHTML = "Ingeniería en Robótica";
+
+                    var opcion5_carrera = document.createElement("option");
+                    opcion5_carrera.classList.add("opcionales");
+                    opcion5_carrera.value = "4";
+                    opcion5_carrera.innerHTML = "Ingeniería en Comunicaciones y Electrónica";
+
+                    var opcion6_carrera = document.createElement("option");
+                    opcion6_carrera.classList.add("opcionales");
+                    opcion6_carrera.value = "5";
+                    opcion6_carrera.innerHTML = "Otra";
+
+                    var div_semestre = document.createElement("div");
+                    div_semestre.classList.add("form-group");
+                    div_semestre.classList.add("mt-3");
+                    div_semestre.classList.add("opcionales");
+
+                    var label_semestre = document.createElement("label");
+                    label_semestre.classList.add("form-label");
+                    label_semestre.classList.add("opcionales");
+                    label_semestre.innerHTML = "Semestre";
+
+                    var select_semestre = document.createElement("select");
+                    select_semestre.classList.add("form-select");
+                    select_semestre.classList.add("opcionales");
+                    select_semestre.required = true;
+                    
+                    var opcion1_semestre = document.createElement("option");
+                    opcion1_semestre.classList.add("opcionales");
+                    opcion1_semestre.selected = true;
+
+                    var opcion2_semestre = document.createElement("option");
+                    opcion2_semestre.classList.add("opcionales");
+                    opcion2_semestre.value = "1";
+                    opcion2_semestre.innerHTML = "1ro";
+
+                    var opcion3_semestre = document.createElement("option");
+                    opcion3_semestre.classList.add("opcionales");
+                    opcion3_semestre.value = "2";
+                    opcion3_semestre.innerHTML = "2do";
+
+                    var opcion4_semestre = document.createElement("option");
+                    opcion4_semestre.classList.add("opcionales");
+                    opcion4_semestre.value = "3";
+                    opcion4_semestre.innerHTML = "3ro";
+
+                    var opcion5_semestre = document.createElement("option");
+                    opcion5_semestre.classList.add("opcionales");
+                    opcion5_semestre.value = "4";
+                    opcion5_semestre.innerHTML = "4to";
+
+                    var opcion6_semestre = document.createElement("option");
+                    opcion6_semestre.classList.add("opcionales");
+                    opcion6_semestre.value = "5";
+                    opcion6_semestre.innerHTML = "5to";
+
+                    var opcion7_semestre = document.createElement("option");
+                    opcion7_semestre.classList.add("opcionales");
+                    opcion7_semestre.value = "6";
+                    opcion7_semestre.innerHTML = "6to";
+
+                    var opcion8_semestre = document.createElement("option");
+                    opcion8_semestre.classList.add("opcionales");
+                    opcion8_semestre.value = "7";
+                    opcion8_semestre.innerHTML = "7mo";
+
+                    var opcion9_semestre = document.createElement("option");
+                    opcion9_semestre.classList.add("opcionales");
+                    opcion9_semestre.value = "8";
+                    opcion9_semestre.innerHTML = "8vo";
+
+                    var opcion10_semestre = document.createElement("option");
+                    opcion10_semestre.classList.add("opcionales");
+                    opcion10_semestre.value = "9";
+                    opcion10_semestre.innerHTML = "Otro";
+
+                    select_carrera.appendChild(opcion1_carrera);
+                    select_carrera.appendChild(opcion2_carrera);
+                    select_carrera.appendChild(opcion3_carrera);
+                    select_carrera.appendChild(opcion4_carrera);
+                    select_carrera.appendChild(opcion5_carrera);
+                    select_carrera.appendChild(opcion6_carrera);
+
+                    select_semestre.appendChild(opcion1_semestre);
+                    select_semestre.appendChild(opcion2_semestre);
+                    select_semestre.appendChild(opcion3_semestre);
+                    select_semestre.appendChild(opcion4_semestre);
+                    select_semestre.appendChild(opcion5_semestre);
+                    select_semestre.appendChild(opcion6_semestre);
+                    select_semestre.appendChild(opcion7_semestre);
+                    select_semestre.appendChild(opcion8_semestre);
+                    select_semestre.appendChild(opcion9_semestre);
+                    select_semestre.appendChild(opcion10_semestre);
+                    
+                    div_carrera.appendChild(label_carrera);
+                    div_carrera.appendChild(select_carrera);
+
+                    div_semestre.appendChild(label_semestre);
+                    div_semestre.appendChild(select_semestre);
+
+                    padre_div.appendChild(div_carrera);
+                    padre_div.appendChild(div_semestre);
+                }
+                
+                if (profesion == 2) {
+                    var div_profesion = document.createElement("div");
+                    div_profesion.classList.add("form-group");
+                    div_profesion.classList.add("mt-3");
+                    div_profesion.classList.add("opcionales");
+
+                    var label_profesion = document.createElement("label");
+                    label_profesion.classList.add("form-label");
+                    label_profesion.classList.add("opcionales");
+                    label_profesion.innerHTML = "Nombre de la profesión";
+
+                    var input_profesion = document.createElement("input");
+                    input_profesion.classList.add("form-control");
+                    input_profesion.classList.add("opcionales");
+                    input_profesion.type = "text";
+                    input_profesion.required = true;
+
+                    div_profesion.appendChild(label_profesion);
+                    div_profesion.appendChild(input_profesion);
+
+                    padre_div.appendChild(div_profesion);
+                } 
+            }
+        </script>
+
+</body>
+
 </html>
