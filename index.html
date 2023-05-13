@@ -14,9 +14,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- CSS File -->
-    <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body style="background: #f8fafc;">
@@ -66,8 +63,9 @@
                                     <label class="form-label">Ocupación</label>
                                     <select class="form-select" id="ocupacion" onchange="profesion()" required>
                                         <option selected></option>
-                                        <option value="1">Estudiante</option>
-                                        <option value="2">Otra</option>
+                                        <option value="1">Estudiante de CUCEI</option>
+                                        <option value="2">Profesionista</option>
+                                        <option value="3">Otra</option>
                                     </select>
                                 </div>
 
@@ -129,6 +127,8 @@
                     select_carrera.classList.add("form-select");
                     select_carrera.classList.add("opcionales");
                     select_carrera.required = true;
+                    select_carrera.id = "carrera";
+                    select_carrera.onchange = function() {otra_carrera()};
                     
                     var opcion1_carrera = document.createElement("option");
                     opcion1_carrera.classList.add("opcionales");
@@ -163,6 +163,7 @@
                     div_semestre.classList.add("form-group");
                     div_semestre.classList.add("mt-3");
                     div_semestre.classList.add("opcionales");
+                    div_semestre.id = "semestre";
 
                     var label_semestre = document.createElement("label");
                     label_semestre.classList.add("form-label");
@@ -272,7 +273,68 @@
                     div_profesion.appendChild(input_profesion);
 
                     padre_div.appendChild(div_profesion);
-                } 
+                }
+
+                if (profesion == 3) {
+                    var div_otra_escuela = document.createElement("div");
+                    div_otra_escuela.classList.add("form-group");
+                    div_otra_escuela.classList.add("mt-3");
+                    div_otra_escuela.classList.add("opcionales");
+
+                    var label_otra_escuela = document.createElement("label");
+                    label_otra_escuela.classList.add("form-label");
+                    label_otra_escuela.classList.add("opcionales");
+                    label_otra_escuela.innerHTML = "Nombre de la escuela de procedencia";
+
+                    var input_otra_escuela = document.createElement("input");
+                    input_otra_escuela.classList.add("form-control");
+                    input_otra_escuela.classList.add("opcionales");
+                    input_otra_escuela.type = "text";
+                    input_otra_escuela.required = true;
+
+                    div_otra_escuela.appendChild(label_otra_escuela);
+                    div_otra_escuela.appendChild(input_otra_escuela);
+
+                    padre_div.appendChild(div_otra_escuela);
+                }
+            }
+
+            function otra_carrera() {
+                var valor_carrera = document.getElementById("carrera").value;
+                var eliminar = document.getElementsByClassName("opcional");
+                var padre_div = document.getElementById("listaCampos");
+                var div_semestres = document.getElementById("semestre");
+
+                while(eliminar.length > 0){
+                    eliminar[0].parentNode.removeChild(eliminar[0]);
+                }
+
+                if (valor_carrera == 5) {
+                    var div_otra_carrera = document.createElement("div");
+                    div_otra_carrera.classList.add("form-group");
+                    div_otra_carrera.classList.add("mt-3");
+                    div_otra_carrera.classList.add("opcional");
+                    div_otra_carrera.classList.add("opcionales");
+
+                    var label_otra_carrera = document.createElement("label");
+                    label_otra_carrera.classList.add("form-label");
+                    label_otra_carrera.classList.add("opcional");
+                    label_otra_carrera.classList.add("opcionales");
+                    label_otra_carrera.innerHTML = "Nombre de la carrera";
+
+                    var input_otra_carrera = document.createElement("input");
+                    input_otra_carrera.classList.add("form-control");
+                    input_otra_carrera.classList.add("opcional");
+                    input_otra_carrera.classList.add("opcionales");
+                    input_otra_carrera.type = "text";
+                    input_otra_carrera.required = true;
+
+                    div_otra_carrera.appendChild(label_otra_carrera);
+                    div_otra_carrera.appendChild(input_otra_carrera);
+
+                    padre_div.insertBefore(div_otra_carrera, div_semestres);
+                }
+            
             }
         </script>
 
