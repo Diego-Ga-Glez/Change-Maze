@@ -64,7 +64,7 @@ export default class Alert {
 
     }
 
-    change_section(){
+    change_section(scene){
         return new Promise((resolve) => {
             const { value: opcion } = Swal.fire({
                 title: 'Cambiar de juego',
@@ -79,8 +79,10 @@ export default class Alert {
                             return "Selecciona una opción"
                 }
             }).then((result)=>{
-                if (result.isConfirmed)
+                if (result.isConfirmed){
+                    scene.resume()
                     resolve(result.value)
+                }
             })
         })
     }

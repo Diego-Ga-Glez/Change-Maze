@@ -174,10 +174,29 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.TRAP, async () => {
-      this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-      
+
+      // remove trap
+      const trapX = this.groundLayer.worldToTileX(this.player.sprite.x);
+      const trapY = this.groundLayer.worldToTileY(this.player.sprite.y);
+      // check current position
+      if(this.stuffLayer.hasTileAt(trapX,trapY))
+        this.stuffLayer.removeTileAt(trapX,trapY)
+      // check right position
+      else if (this.stuffLayer.hasTileAt(trapX+1,trapY))
+        this.stuffLayer.removeTileAt(trapX+1,trapY)
+      // check left position
+      else if (this.stuffLayer.hasTileAt(trapX-1,trapY))
+        this.stuffLayer.removeTileAt(trapX-1,trapY)
+      // check top position
+      else if (this.stuffLayer.hasTileAt(trapX,trapY+1))
+        this.stuffLayer.removeTileAt(trapX,trapY+1)
+      // check bottom position
+      else if (this.stuffLayer.hasTileAt(trapX,trapY-1))
+        this.stuffLayer.removeTileAt(trapX,trapY-1)
+
+      this.scene.pause()
       const score = await this.alert.score_section();
-      const change = await this.alert.change_section();
+      const change = await this.alert.change_section(this.scene);
       
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)
