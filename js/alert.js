@@ -36,7 +36,34 @@ export default class Alert {
                 break
             }
         }
-
         scene.resume()
+    }
+
+    game_section() {
+        var calificacion;
+        var cambiar;
+
+        const { value: opcion } = Swal.fire({
+            title: 'Califica tu juego actual',
+            input: 'select',
+            inputOptions: {
+                excelente: 'Excelente',
+                bueno: 'Bueno',
+                regular: 'Regular',
+                malo: 'Malo',
+                pesimo: 'Pésimo'
+            },
+            inputPlaceholder: 'Selecciona una opción',
+            inputValidator: (value) => {
+                    if (value) {
+                        calificacion = value;
+
+                    } else {
+                        return "Selecciona una opción"
+                    }
+                
+            }
+        })
+        return calificacion;
     }
 }

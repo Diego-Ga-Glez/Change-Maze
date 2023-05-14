@@ -120,19 +120,19 @@ export default class DungeonScene extends Phaser.Scene {
       console.log("unlucky")
       prob_coin = 0.12; // 12% chance of coin
       prob_pot = 0.50;  // 38% chance of a pot 
-      prob_trap = 0.98; // 02% chance of trap and 48% chance of towers
+      prob_trap = 0.5; // 02% chance of trap and 48% chance of towers
     } else if(randi == 1){
       // normal 
       console.log("normal")
       prob_coin = 0.25; // 25% chance of coin
       prob_pot = 0.50;  // 25% chance of a pot
-      prob_trap = 0.90 //  10% chance of trap and 40% chance of towers
+      prob_trap = 0.5 //  10% chance of trap and 40% chance of towers
     } else{
       // lucky
       console.log("lucky")
       prob_coin = 0.50; // 50% chance of coin
       prob_pot = 0.75;  // 25% chance of a pot
-      prob_trap = 0.90; // 10% chance of a trap and 15% chanfe of towers
+      prob_trap = 0.5; // 10% chance of a trap and 15% chanfe of towers
     }
     
     // Place stuff in the 90% "otherRooms"
@@ -174,10 +174,17 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.TRAP, () => {
-      const rand = Math.floor(Math.random() * 10)
-      this.level = rand;
       this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-      this.game_over()
+      var change = this.alert.game_section();
+
+      console.log(change);
+
+      if (change == 'si') {
+        const rand = Math.floor(Math.random() * 10)
+        this.level = rand;
+        this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
+        this.game_over()
+      }
     });
 
     this.stuffLayer.setCollision(TILES.COIN, false)
@@ -277,7 +284,7 @@ export default class DungeonScene extends Phaser.Scene {
       }
       this.game_over()
     }
-    this.text_timer.setText('Countdown: ' + this.formatTime(this.initialTimer));
+    this.text_timer.setText('Temporizador: ' + this.formatTime(this.initialTimer));
   }
 
   formatTime(seconds){
@@ -294,7 +301,7 @@ export default class DungeonScene extends Phaser.Scene {
   score(){
     // Help text that has a "fixed" position on the screen
     this.add
-      .text(16, 16, `Current level: ${this.level}\nCoins: ${this.coins}`, {
+      .text(16, 16, `Nivel actual: ${this.level}\nMonedas: ${this.coins}`, {
         font: "18px monospace",
         fill: "#000000",
         padding: { x: 20, y: 10 },
