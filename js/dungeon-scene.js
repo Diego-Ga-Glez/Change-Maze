@@ -173,12 +173,12 @@ export default class DungeonScene extends Phaser.Scene {
       this.game_over()
     });
 
-    this.stuffLayer.setTileIndexCallback(TILES.TRAP, () => {
+    this.stuffLayer.setTileIndexCallback(TILES.TRAP, async () => {
       this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
-      var change = this.alert.game_section();
-
-      console.log(change);
-
+      
+      const score = await this.alert.score_section();
+      const change = await this.alert.change_section();
+      
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;

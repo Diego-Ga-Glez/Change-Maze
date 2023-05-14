@@ -39,31 +39,50 @@ export default class Alert {
         scene.resume()
     }
 
-    game_section() {
-        var calificacion;
-        var cambiar;
-
-        const { value: opcion } = Swal.fire({
-            title: 'Califica tu juego actual',
-            input: 'select',
-            inputOptions: {
-                excelente: 'Excelente',
-                bueno: 'Bueno',
-                regular: 'Regular',
-                malo: 'Malo',
-                pesimo: 'Pésimo'
-            },
-            inputPlaceholder: 'Selecciona una opción',
-            inputValidator: (value) => {
-                    if (value) {
-                        calificacion = value;
-
-                    } else {
-                        return "Selecciona una opción"
-                    }
-                
-            }
+    score_section() {
+        return new Promise((resolve) => {
+            const { value: opcion } = Swal.fire({
+                title: 'Califica tu juego actual',
+                input: 'select',
+                inputOptions: {
+                    excelente: 'Excelente',
+                    bueno: 'Bueno',
+                    regular: 'Regular',
+                    malo: 'Malo',
+                    pesimo: 'Pésimo'
+                },
+                inputPlaceholder: 'Selecciona una opción',
+                inputValidator: (value) => {
+                        if (!value) 
+                            return "Selecciona una opción"
+                }
+            }).then((result)=>{
+                if (result.isConfirmed)
+                    resolve(result.value)
+            })
         })
-        return calificacion;
+
     }
+
+    change_section(){
+        return new Promise((resolve) => {
+            const { value: opcion } = Swal.fire({
+                title: 'Cambiar de juego',
+                input: 'select',
+                inputOptions: {
+                    si: 'Si',
+                    no: 'No'
+                },
+                inputPlaceholder: 'Selecciona una opción',
+                inputValidator: (value) => {
+                        if (!value) 
+                            return "Selecciona una opción"
+                }
+            }).then((result)=>{
+                if (result.isConfirmed)
+                    resolve(result.value)
+            })
+        })
+    }
+
 }
