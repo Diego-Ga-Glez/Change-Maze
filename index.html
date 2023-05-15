@@ -64,8 +64,8 @@
                                     <select class="form-select" id="ocupacion" onchange="profesion()" required>
                                         <option selected></option>
                                         <option value="1">Estudiante de CUCEI</option>
-                                        <option value="2">Profesionista</option>
-                                        <option value="3">Otra</option>
+                                        <option value="2">Estudiante de otra escuela</option>
+                                        <option value="3">Profesionista</option>
                                     </select>
                                 </div>
 
@@ -251,8 +251,131 @@
                     padre_div.appendChild(div_carrera);
                     padre_div.appendChild(div_semestre);
                 }
-                
+
                 if (profesion == 2) {
+                    var div_otra_escuela = document.createElement("div");
+                    div_otra_escuela.classList.add("form-group");
+                    div_otra_escuela.classList.add("mt-3");
+                    div_otra_escuela.classList.add("opcionales");
+
+                    var label_otra_escuela = document.createElement("label");
+                    label_otra_escuela.classList.add("form-label");
+                    label_otra_escuela.classList.add("opcionales");
+                    label_otra_escuela.innerHTML = "Nombre de la escuela de procedencia";
+
+                    var input_otra_escuela = document.createElement("input");
+                    input_otra_escuela.classList.add("form-control");
+                    input_otra_escuela.classList.add("opcionales");
+                    input_otra_escuela.type = "text";
+                    input_otra_escuela.required = true;
+
+                    var div_carrera = document.createElement("div");
+                    div_carrera.classList.add("form-group");
+                    div_carrera.classList.add("mt-3");
+                    div_carrera.classList.add("opcionales");
+
+                    var label_carrera = document.createElement("label");
+                    label_carrera.classList.add("form-label");
+                    label_carrera.classList.add("opcionales");
+                    label_carrera.innerHTML = "Nombre de la carrera";
+
+                    var input_carrera = document.createElement("input");
+                    input_carrera.classList.add("form-control");
+                    input_carrera.classList.add("opcionales");
+                    input_carrera.type = "text";
+                    input_carrera.required = true;
+
+                    var div_semestre = document.createElement("div");
+                    div_semestre.classList.add("form-group");
+                    div_semestre.classList.add("mt-3");
+                    div_semestre.classList.add("opcionales");
+                    div_semestre.id = "semestre";
+
+                    var label_semestre = document.createElement("label");
+                    label_semestre.classList.add("form-label");
+                    label_semestre.classList.add("opcionales");
+                    label_semestre.innerHTML = "Semestre";
+
+                    var select_semestre = document.createElement("select");
+                    select_semestre.classList.add("form-select");
+                    select_semestre.classList.add("opcionales");
+                    select_semestre.required = true;
+                    
+                    var opcion1_semestre = document.createElement("option");
+                    opcion1_semestre.classList.add("opcionales");
+                    opcion1_semestre.selected = true;
+
+                    var opcion2_semestre = document.createElement("option");
+                    opcion2_semestre.classList.add("opcionales");
+                    opcion2_semestre.value = "1";
+                    opcion2_semestre.innerHTML = "1ro";
+
+                    var opcion3_semestre = document.createElement("option");
+                    opcion3_semestre.classList.add("opcionales");
+                    opcion3_semestre.value = "2";
+                    opcion3_semestre.innerHTML = "2do";
+
+                    var opcion4_semestre = document.createElement("option");
+                    opcion4_semestre.classList.add("opcionales");
+                    opcion4_semestre.value = "3";
+                    opcion4_semestre.innerHTML = "3ro";
+
+                    var opcion5_semestre = document.createElement("option");
+                    opcion5_semestre.classList.add("opcionales");
+                    opcion5_semestre.value = "4";
+                    opcion5_semestre.innerHTML = "4to";
+
+                    var opcion6_semestre = document.createElement("option");
+                    opcion6_semestre.classList.add("opcionales");
+                    opcion6_semestre.value = "5";
+                    opcion6_semestre.innerHTML = "5to";
+
+                    var opcion7_semestre = document.createElement("option");
+                    opcion7_semestre.classList.add("opcionales");
+                    opcion7_semestre.value = "6";
+                    opcion7_semestre.innerHTML = "6to";
+
+                    var opcion8_semestre = document.createElement("option");
+                    opcion8_semestre.classList.add("opcionales");
+                    opcion8_semestre.value = "7";
+                    opcion8_semestre.innerHTML = "7mo";
+
+                    var opcion9_semestre = document.createElement("option");
+                    opcion9_semestre.classList.add("opcionales");
+                    opcion9_semestre.value = "8";
+                    opcion9_semestre.innerHTML = "8vo";
+
+                    var opcion10_semestre = document.createElement("option");
+                    opcion10_semestre.classList.add("opcionales");
+                    opcion10_semestre.value = "9";
+                    opcion10_semestre.innerHTML = "Otro";
+
+                    div_otra_escuela.appendChild(label_otra_escuela);
+                    div_otra_escuela.appendChild(input_otra_escuela);
+
+                    div_carrera.appendChild(label_carrera);
+                    div_carrera.appendChild(input_carrera);
+
+                    select_semestre.appendChild(opcion1_semestre);
+                    select_semestre.appendChild(opcion2_semestre);
+                    select_semestre.appendChild(opcion3_semestre);
+                    select_semestre.appendChild(opcion4_semestre);
+                    select_semestre.appendChild(opcion5_semestre);
+                    select_semestre.appendChild(opcion6_semestre);
+                    select_semestre.appendChild(opcion7_semestre);
+                    select_semestre.appendChild(opcion8_semestre);
+                    select_semestre.appendChild(opcion9_semestre);
+                    select_semestre.appendChild(opcion10_semestre);
+
+                    div_semestre.appendChild(label_semestre);
+                    div_semestre.appendChild(select_semestre);
+
+                    padre_div.appendChild(div_otra_escuela);
+                    padre_div.appendChild(div_carrera);
+                    padre_div.appendChild(div_semestre);
+                }
+                
+                if (profesion == 3) {
                     var div_profesion = document.createElement("div");
                     div_profesion.classList.add("form-group");
                     div_profesion.classList.add("mt-3");
@@ -273,29 +396,6 @@
                     div_profesion.appendChild(input_profesion);
 
                     padre_div.appendChild(div_profesion);
-                }
-
-                if (profesion == 3) {
-                    var div_otra_escuela = document.createElement("div");
-                    div_otra_escuela.classList.add("form-group");
-                    div_otra_escuela.classList.add("mt-3");
-                    div_otra_escuela.classList.add("opcionales");
-
-                    var label_otra_escuela = document.createElement("label");
-                    label_otra_escuela.classList.add("form-label");
-                    label_otra_escuela.classList.add("opcionales");
-                    label_otra_escuela.innerHTML = "Nombre de la escuela de procedencia";
-
-                    var input_otra_escuela = document.createElement("input");
-                    input_otra_escuela.classList.add("form-control");
-                    input_otra_escuela.classList.add("opcionales");
-                    input_otra_escuela.type = "text";
-                    input_otra_escuela.required = true;
-
-                    div_otra_escuela.appendChild(label_otra_escuela);
-                    div_otra_escuela.appendChild(input_otra_escuela);
-
-                    padre_div.appendChild(div_otra_escuela);
                 }
             }
 
@@ -336,6 +436,7 @@
                 }
             
             }
+
         </script>
 
 </body>

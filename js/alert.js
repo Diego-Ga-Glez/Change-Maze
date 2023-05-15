@@ -74,7 +74,7 @@ export default class Alert {
                 allowEscapeKey : false,
                 allowOutsideClick: false,
                 inputOptions: {
-                    si: 'Si',
+                    si: 'Sí',
                     no: 'No'
                 },
                 inputPlaceholder: 'Selecciona una opción',
