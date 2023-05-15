@@ -69,7 +69,7 @@ export default class Alert {
     change_section(scene){
         return new Promise((resolve) => {
             const { value: opcion } = Swal.fire({
-                title: 'Cambiar de juego',
+                title: '¿Quieres que cambie el juego?',
                 input: 'select',
                 allowEscapeKey : false,
                 allowOutsideClick: false,

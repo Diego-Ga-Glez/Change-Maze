@@ -120,19 +120,19 @@ export default class DungeonScene extends Phaser.Scene {
       console.log("unlucky")
       prob_coin = 0.12; // 12% chance of coin
       prob_pot = 0.50;  // 38% chance of a pot 
-      prob_trap = 0.5; // 02% chance of trap and 48% chance of towers
+      prob_trap = 0.98; // 02% chance of trap and 48% chance of towers
     } else if(randi == 1){
       // normal 
       console.log("normal")
       prob_coin = 0.25; // 25% chance of coin
       prob_pot = 0.50;  // 25% chance of a pot
-      prob_trap = 0.5 //  10% chance of trap and 40% chance of towers
+      prob_trap = 0.90 //  10% chance of trap and 40% chance of towers
     } else{
       // lucky
       console.log("lucky")
       prob_coin = 0.50; // 50% chance of coin
       prob_pot = 0.75;  // 25% chance of a pot
-      prob_trap = 0.5; // 10% chance of a trap and 15% chanfe of towers
+      prob_trap = 0.90; // 10% chance of a trap and 15% chanfe of towers
     }
     
     // Place stuff in the 90% "otherRooms"
@@ -147,7 +147,7 @@ export default class DungeonScene extends Phaser.Scene {
         const y = Phaser.Math.Between(room.top + 2, room.bottom - 2);
         this.stuffLayer.weightedRandomize(TILES.POT,x, y, 1, 1);
       } else if (rand >= prob_trap){
-        this.stuffLayer.putTileAt(TILES.TRAP, room.centerX, room.centerY);
+        this.stuffLayer.putTileAt(TILES.PORTAL, room.centerX, room.centerY);
       } else {
         if (room.height >= 9) {
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY + 1);
@@ -173,7 +173,7 @@ export default class DungeonScene extends Phaser.Scene {
       this.game_over()
     });
 
-    this.stuffLayer.setTileIndexCallback(TILES.TRAP, async () => {
+    this.stuffLayer.setTileIndexCallback(TILES.PORTAL, async () => {
       
       const playerTileX = this.groundLayer.worldToTileX(this.player.sprite.x);
       const playerTileY = this.groundLayer.worldToTileY(this.player.sprite.y);
@@ -187,7 +187,7 @@ export default class DungeonScene extends Phaser.Scene {
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;
-        this.stuffLayer.setTileIndexCallback(TILES.TRAP, null);
+        this.stuffLayer.setTileIndexCallback(TILES.PORTAL, null);
         this.game_over()
       }
     });
@@ -224,7 +224,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     //timer text
     this.text_timer = this.add
-      .text(584, 16, `Countdown ${this.formatTime(this.initialTimer)}`, {
+      .text(584, 16, `Temporizador ${this.formatTime(this.initialTimer)}`, {
         font: "18px monospace",
         fill: "#000000",
         padding: { x: 20, y: 10 },
