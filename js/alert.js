@@ -44,6 +44,8 @@ export default class Alert {
             const { value: opcion } = Swal.fire({
                 title: 'Califica tu juego actual',
                 input: 'select',
+                allowEscapeKey : false,
+                allowOutsideClick: false,
                 inputOptions: {
                     excelente: 'Excelente',
                     bueno: 'Bueno',
@@ -69,6 +71,8 @@ export default class Alert {
             const { value: opcion } = Swal.fire({
                 title: 'Cambiar de juego',
                 input: 'select',
+                allowEscapeKey : false,
+                allowOutsideClick: false,
                 inputOptions: {
                     si: 'Si',
                     no: 'No'
