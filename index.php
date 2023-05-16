@@ -30,23 +30,23 @@
                     
                     <div class="card-body p-5">
 
-                        <form class="needs-validation">
+                        <form class="needs-validation" method="post">
 
                             <ul class="list-unstyled mb-4" id="listaCampos">
 
                                 <div class="form-group">
                                     <label class="form-label">Nombre completo</label>
-                                    <input class="form-control" type="text" id="nombre" required>
+                                    <input class="form-control" type="text" id="nombre" name="nombre" required>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label" for="email">Correo electrónico</label>
-                                    <input class="form-control" type="email" id="email" required>
+                                    <input class="form-control" type="email" id="email" name="email" required>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label">Sexo</label>
-                                    <select class="form-select" id="genero" required>
+                                    <select class="form-select" id="genero" name="genero" required>
                                         <option selected></option>
                                         <option value="1">Femenino</option>
                                         <option value="2">Masculino</option>
@@ -56,12 +56,12 @@
 
                                 <div class="form-group mt-3">
                                     <label class="form-label">Edad</label>
-                                    <input class="form-control" type="number" min="1" max="99" id="edad" required>
+                                    <input class="form-control" type="number" min="1" max="99" id="edad" name="edad" required>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label">Ocupación</label>
-                                    <select class="form-select" id="ocupacion" onchange="profesion()" required>
+                                    <select class="form-select" id="ocupacion" onchange="f_profesion()" name="ocupacion" required>
                                         <option selected></option>
                                         <option value="1">Estudiante</option>
                                         <option value="2">Profesionista</option>
@@ -79,6 +79,12 @@
                             </div>
 
                             <input class="btn btn-primary w-100 mt-3" type="submit" id="btnRegistro" value="Registrarse">
+                        
+                            <?php
+                                include 'php/usuarios.php';
+                                $usuario = new Usuario();
+                                $usuario -> agregarUsuario();
+                            ?>  
                         
                         </form>
 
@@ -102,10 +108,11 @@
                 })
             }
 
-            function profesion() {
-                var profesion = document.getElementById("ocupacion").value;
-                var eliminar = document.getElementsByClassName("opcionales");
-                var padre_div = document.getElementById("listaCampos");
+            function f_profesion() {
+                let profesion = document.getElementById("ocupacion").value;
+                console.log(profesion)
+                let eliminar = document.getElementsByClassName("opcionales");
+                let padre_div = document.getElementById("listaCampos");
 
                 while(eliminar.length > 0){
                     eliminar[0].parentNode.removeChild(eliminar[0]);
@@ -128,6 +135,7 @@
                     input_escuela.type = "text";
                     input_escuela.placeholder = "Escribe su abreviatura";
                     input_escuela.required = true;
+                    input_escuela.name = "escuela";
 
                     var div_carrera = document.createElement("div");
                     div_carrera.classList.add("form-group");
@@ -145,6 +153,7 @@
                     input_carrera.type = "text";
                     input_carrera.placeholder = "Escribe su nombre completo";
                     input_carrera.required = true;
+                    input_carrera.name = "carrera";
 
                     var div_semestre = document.createElement("div");
                     div_semestre.classList.add("form-group");
@@ -164,6 +173,7 @@
                     input_semestre.min = "1";
                     input_semestre.max = "20";
                     input_semestre.required = true;
+                    input_semestre.name = "semestre";
 
                     div_escuela.appendChild(label_escuela);
                     div_escuela.appendChild(input_escuela);
@@ -195,6 +205,7 @@
                     input_profesion.classList.add("opcionales");
                     input_profesion.type = "text";
                     input_profesion.required = true;
+                    input_profesion.name = "profesion";
 
                     div_profesion.appendChild(label_profesion);
                     div_profesion.appendChild(input_profesion);
