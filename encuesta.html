@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Encuesta ERC</title>
+
+    <!-- Bootstrap v5.1.3 CDNs -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body style="background: #f8fafc;">
+    
+        <div class="container mt-5" style="width: 90%;" id="contenedorForm">
+
+            <div class="card-deck mb-3 mt-5">
+
+                <div class="card mb-4 box-shadow">
+
+                    <div class="card-header">
+                        <h4 class="text-center">Encuesta ERC</h4>
+                        <h6 class="text-center">Oreg shaul 2003</h6>
+                    </div>
+                    
+                    <div class="card-body p-5">
+
+                        <p align="justify">A continuación se presenta una serie de opiniones vinculadas al trabajo y a nuestra actividad en la
+                            misma. Le agradeceremos nos responda con absoluta sinceridad, marcando la respuesta
+                            que mejor exprese su punto de vista.</p>
+                        <p><b>FD</b> = En fuerte desacuerdo<br>
+                            <b>ED</b> = En desacuerdo<br>
+                            <b>TD</b> = con tendencia al desacuerdo<br>
+                            <b>TA</b> = Con tendencia al acuerdo<br>
+                            <b>DA</b> = De acuerdo<br>
+                            <b>FA</b> = En fuerte acuerdo</p>
+                        <p align="justify">No hay respuesta buena ni mala, todas son importantes. Asegúrese de haber contestado todas las
+                            preguntas.</p>
+
+                        <form class="needs-validation" method="post">
+
+                            <ul class="list-unstyled mb-4" id="listaCampos">
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">1. En general considero los cambios como algo negativo.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">2. Prefiero un día rutinario,
+                                             a uno lleno de acontecimientos inesperados.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">3. Prefiero hacer las mismas cosas
+                                            que ya hice en el pasado, que intentar hacer cosas nuevas y diferentes.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">4. Cuando mi vida se vuelve rutinaria,
+                                            me pongo a buscar la manera de cambiarla.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">5. Prefiero estar aburrid@ que sorprendid@.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">6. Si se me informa, que va a haber un
+                                            cambio significativo en la forma en que se
+                                            hacen las cosas en mi trabajo, seguramente
+                                            me estresaría.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">7. Cuando me informan sobre un cambio de
+                                            planes, me pongo un poco tenso(a).</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">8. Cuando las cosas no van de acuerdo con los
+                                            planes, me estreso.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">9. Si uno de mis superiores cambiará el
+                                            procedimiento para hacer mi trabajo,
+                                            seguramente me haría sentir incómodo(a).</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">10. Cambiar de planes me parece una
+                                            verdadera molestia.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">11. Con frecuencia me siento un tanto
+                                            incómodo(a), aún así con aquellos
+                                            cambios que pueden mejorar mi vida.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">12. Cuando alguien me presiona para cambiar
+                                            algo, tiendo a resistirme aún si creo que el
+                                            cambio al final me puede beneficiar.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">13. Algunas veces me doy cuenta que yo
+                                            mismo(a) evito cambios que sé que serían
+                                            buenos para mí.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">14. Con frecuencia cambio de opinión.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">15. Yo no cambio fácilmente de opinión.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">16. Una vez que llego a una conclusión, es
+                                            difícil que cambie de opinión.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-4 row">
+                                    <div class="col-7">
+                                        <label class="form-label" align="justify">17. Mis opiniones son muy consistentes a lo
+                                            largo del tiempo.</label>
+                                    </div>
+
+                                    <div class="col-5">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p11" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              FD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p12" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              ED
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p13" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              TD
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p14" name="p1">
+                                            <label class="form-check-label" for="radio4">
+                                              TA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p15" name="p1">
+                                            <label class="form-check-label" for="radio5">
+                                              DA
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" value="" id="p16" name="p1">
+                                            <label class="form-check-label" for="radio6">
+                                              FA
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ul>
+
+                            <input class="btn btn-primary btn-xs mt-5 mx-auto d-block" type="submit" id="btnRegistro" value="Enviar cuestionario">
+                        
+                        </form>
+
+                    </div>
+                
+                </div>
+            
+            </div>
+                
+        </div>
+
+        <script>
+
+        </script>
+
+</body>
+
+</html>
