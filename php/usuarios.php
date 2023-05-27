@@ -32,20 +32,34 @@ class Usuario{
                 $stmt->bindParam(":profesion", $_POST['profesion'], PDO::PARAM_STR);  
             }
 
-            if($stmt->execute())
-                echo "<script> Swal.fire({
-                               icon: 'success',
-                               title: 'Ok',
-                               showConfirmButton: true,
-                               confirmButtonText: 'Cerrar')}
-                      </script>"; 
-            else
-                echo "<script> Swal.fire({
-                               icon: 'error',
-                               title: 'Error',
-                               showConfirmButton: true,
-                               confirmButtonText: 'Cerrar')}
-                      </script>"; 
+            if($stmt->execute()) {
+                echo '<script>
+                        Swal.fire({
+                            title: "Usuario registrado con éxito",
+                            text: "Ahora serás redireccionado al juego",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "game.php";
+                            }
+                        }) 
+                      </script>'; 
+            }
+            else {
+                echo '<script>
+                        Swal.fire({
+                            title: "Algo salió mal, usuario no registrado",
+                            text: "Por favor, intentalo de nuevo",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "index.php";
+                            }
+                        }) 
+                      </script>'; 
+            }
         }
        
     }

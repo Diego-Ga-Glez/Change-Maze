@@ -36,21 +36,21 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Nombre completo</label>
-                                    <input class="form-control" type="text" id="nombre" name="nombre" required>
+                                    <input class="form-control" type="text" id="nombre" name="nombre" onkeyup="mayuscula(this)" required>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label" for="email">Correo electrónico</label>
-                                    <input class="form-control" type="email" id="email" name="correo" required>
+                                    <input class="form-control" type="email" id="email" name="correo" onkeyup="minuscula(this)" required>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label">Sexo</label>
                                     <select class="form-select" id="genero" name="genero" required>
                                         <option selected></option>
-                                        <option value="1">Femenino</option>
-                                        <option value="2">Masculino</option>
-                                        <option value="3">Prefiero no decirlo</option>
+                                        <option value="F">FEMENINO</option>
+                                        <option value="M">MASCULINO</option>
+                                        <option value="O">PREFIERO NO DECIRLO</option>
                                     </select>
                                 </div>
 
@@ -63,8 +63,8 @@
                                     <label class="form-label">Ocupación</label>
                                     <select class="form-select" id="ocupacion" onchange="f_profesion()" name="ocupacion" required>
                                         <option selected></option>
-                                        <option value="Estudiante">Estudiante</option>
-                                        <option value="Profesionista">Profesionista</option>
+                                        <option value="ESTUDIANTE">ESTUDIANTE</option>
+                                        <option value="PROFESIONISTA">PROFESIONISTA</option>
                                     </select>
                                 </div>
 
@@ -118,7 +118,7 @@
                     eliminar[0].parentNode.removeChild(eliminar[0]);
                 }
 
-                if (profesion == 'Estudiante') {
+                if (profesion == 'ESTUDIANTE') {
                     var div_escuela = document.createElement("div");
                     div_escuela.classList.add("form-group");
                     div_escuela.classList.add("mt-3");
@@ -136,6 +136,7 @@
                     input_escuela.placeholder = "Escribe su abreviatura";
                     input_escuela.required = true;
                     input_escuela.name = "escuela";
+                    input_escuela.onkeyup = function() {mayuscula(input_escuela)};
 
                     var div_carrera = document.createElement("div");
                     div_carrera.classList.add("form-group");
@@ -154,6 +155,7 @@
                     input_carrera.placeholder = "Escribe su nombre completo";
                     input_carrera.required = true;
                     input_carrera.name = "carrera";
+                    input_carrera.onkeyup = function() {mayuscula(input_carrera)};
 
                     var div_semestre = document.createElement("div");
                     div_semestre.classList.add("form-group");
@@ -189,7 +191,7 @@
                     padre_div.appendChild(div_semestre);
                 }
                 
-                if (profesion == 'Profesionista') {
+                if (profesion == 'PROFESIONISTA') {
                     var div_profesion = document.createElement("div");
                     div_profesion.classList.add("form-group");
                     div_profesion.classList.add("mt-3");
@@ -206,12 +208,21 @@
                     input_profesion.type = "text";
                     input_profesion.required = true;
                     input_profesion.name = "profesion";
+                    input_profesion.onkeyup = function() {mayuscula(input_profesion)};
 
                     div_profesion.appendChild(label_profesion);
                     div_profesion.appendChild(input_profesion);
 
                     padre_div.appendChild(div_profesion);
                 }
+            }
+
+            function mayuscula(input){
+                input.value = input.value.toUpperCase();
+            }
+
+            function minuscula(input){
+                input.value = input.value.toLowerCase();
             }
 
         </script>
