@@ -321,6 +321,11 @@ export default class DungeonScene extends Phaser.Scene {
     const cam = this.cameras.main;
     cam.fade(250, 0, 0, 0);
     cam.once("camerafadeoutcomplete", () => {
+
+      if (this.level == 10) {
+        this.alert.you_win();
+      }
+      
       this.player.destroy();
       this.scene.restart();
       

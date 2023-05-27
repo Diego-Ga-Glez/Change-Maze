@@ -15,8 +15,7 @@ export default class Alert {
             progressSteps: steps,
             reverseButtons: true
         });
-
-        
+ 
         let currentStep;
         let result;
         for (currentStep = 0; currentStep < steps.length;) {
@@ -88,6 +87,19 @@ export default class Alert {
                     resolve(result.value)
                 }
             })
+        })
+    }
+
+    you_win() {
+        Swal.fire({
+            title: 'Has ganado!',
+            text: "Por último, serás redireccionado a una encuesta",
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "encuesta.html";
+            }
         })
     }
 
