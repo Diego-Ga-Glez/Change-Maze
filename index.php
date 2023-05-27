@@ -41,7 +41,7 @@
 
                                 <div class="form-group mt-3">
                                     <label class="form-label" for="email">Correo electrónico</label>
-                                    <input class="form-control" type="email" id="email" name="email" required>
+                                    <input class="form-control" type="email" id="email" name="correo" required>
                                 </div>
 
                                 <div class="form-group mt-3">
@@ -63,8 +63,8 @@
                                     <label class="form-label">Ocupación</label>
                                     <select class="form-select" id="ocupacion" onchange="f_profesion()" name="ocupacion" required>
                                         <option selected></option>
-                                        <option value="1">Estudiante</option>
-                                        <option value="2">Profesionista</option>
+                                        <option value="Estudiante">Estudiante</option>
+                                        <option value="Profesionista">Profesionista</option>
                                     </select>
                                 </div>
 
@@ -118,7 +118,7 @@
                     eliminar[0].parentNode.removeChild(eliminar[0]);
                 }
 
-                if (profesion == 1) {
+                if (profesion == 'Estudiante') {
                     var div_escuela = document.createElement("div");
                     div_escuela.classList.add("form-group");
                     div_escuela.classList.add("mt-3");
@@ -189,7 +189,7 @@
                     padre_div.appendChild(div_semestre);
                 }
                 
-                if (profesion == 2) {
+                if (profesion == 'Profesionista') {
                     var div_profesion = document.createElement("div");
                     div_profesion.classList.add("form-group");
                     div_profesion.classList.add("mt-3");

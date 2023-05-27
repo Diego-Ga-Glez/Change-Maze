@@ -2,7 +2,7 @@
 
 class Conexion{
     static public function conectar(){
-        $link = new PDO("mysql:host=localhost; dbname=pos",
+        $link = new PDO("mysql:host=localhost; dbname=erc_game",
                         "root",
                         "");
 

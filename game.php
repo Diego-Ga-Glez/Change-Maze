@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,3 +41,14 @@
     <script src="./js/index.js" type="module"></script>
   </body>
 </html>
+
+
+<?php
+
+  if(isset($_SESSION["nombre"])){
+  }
+  else{
+    echo '<script> window.location = "index.php" </script>';
+  }
+
+?>
