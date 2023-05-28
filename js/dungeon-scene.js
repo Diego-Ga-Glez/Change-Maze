@@ -11,6 +11,7 @@ export default class DungeonScene extends Phaser.Scene {
     super();
     this.level = 0;
     this.coins = 0;
+    this.num_resp = 0;
     this.initialTimer = 0;
   }
 
@@ -183,7 +184,21 @@ export default class DungeonScene extends Phaser.Scene {
       this.scene.pause()
       const score = await this.alert.score_section();
       const change = await this.alert.change_section(this.scene);
-      
+      var datos = new FormData();
+      datos.append("num_resp", this.num_resp);
+      datos.append("score", score);
+      datos.append("change", change);
+
+      $.ajax({
+        url:"./ajax/usuarios.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json"
+      });
+
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;
