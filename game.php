@@ -47,7 +47,7 @@
   
   if(!isset($_SESSION["id"])){
     echo '<script> window.location = "index.php" </script>';
-  }{
+  }else{
     session_destroy();
   }
   

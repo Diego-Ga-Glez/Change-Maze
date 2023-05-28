@@ -98,7 +98,7 @@ export default class Alert {
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "encuesta.html";
+              window.location.href = "encuesta.php";
             }
         })
     }

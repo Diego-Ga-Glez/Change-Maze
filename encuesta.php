@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -835,6 +839,12 @@
 
                             <input class="btn btn-primary btn-xs mt-5 mx-auto d-block" type="submit" id="btnEncuesta" value="Enviar cuestionario">
                         
+                            <?php
+                                include 'php/usuarios.php';
+                                $usuario = new Usuario();
+                                $usuario -> agregarEncuesta();
+                            ?>  
+
                         </form>
 
                     </div>
@@ -852,3 +862,13 @@
 </body>
 
 </html>
+
+<?php
+  
+  if(!isset($_SESSION["id"])){
+    echo '<script> window.location = "index.php" </script>';
+  }else{
+    #session_destroy();
+  }
+
+?>

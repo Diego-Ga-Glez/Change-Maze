@@ -224,7 +224,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     //timer text
     this.text_timer = this.add
-      .text(584, 16, `Temporizador ${this.formatTime(this.initialTimer)}`, {
+      .text(584, 16, `Temporizador: ${this.formatTime(this.initialTimer)}`, {
         font: "18px monospace",
         fill: "#000000",
         padding: { x: 20, y: 10 },
