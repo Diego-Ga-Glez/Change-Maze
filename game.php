@@ -51,5 +51,4 @@
     session_destroy();
   }
   
-   
 ?>
