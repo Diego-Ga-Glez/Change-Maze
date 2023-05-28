@@ -1,5 +1,5 @@
 <?php
-  session_start();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -44,11 +44,12 @@
 
 
 <?php
-
-  if(isset($_SESSION["nombre"])){
-  }
-  else{
+  
+  if(!isset($_SESSION["id"])){
     echo '<script> window.location = "index.php" </script>';
+  }{
+    session_destroy();
   }
-
+  
+   
 ?>
