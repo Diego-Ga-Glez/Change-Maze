@@ -5,14 +5,14 @@ session_start();
 
 class Usuario{
     
-    static public function agregarSeccionUsuario($num_resp,$score,$change,$id){
+    static public function agregarSeccionUsuario($num_resp,$score,$change){
         $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_usuario)
         VALUES(:num_resp,:score, :change, :id)");
 
         $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
         $stmt->bindParam(":score", $score, PDO::PARAM_STR);
         $stmt->bindParam(":change", $change, PDO::PARAM_STR);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
 
         $stmt -> execute();
     }

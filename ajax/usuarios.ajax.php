@@ -1,8 +1,6 @@
 <?php
 
-require_once './php/usuarios.php';
-
-//session_start();
+require_once '../php/usuarios.php';
 
 class AjaxUsuarios{
 
@@ -10,22 +8,18 @@ class AjaxUsuarios{
     public $num_res;
     public $score;
     public $change;
-    //public $id;
 
     public function ajaxAgregarSeccion(){
-        //Usuario::agregarSeccionUsuario($this->num_res,$this->score,$this->change,$this->id);    
+        Usuario::agregarSeccionUsuario($this->num_res,$this->score,$this->change);    
     }
 
 }
 
-echo '<script> console.log("hola") </script>';
 
 if(isset($_POST["num_resp"])){
-    echo '<script> console.log("hola") </script>';
     $agregar = new AjaxUsuarios();
     $agregar -> num_res = $_POST["num_resp"];
     $agregar -> score = $_POST["score"];
     $agregar -> change = $_POST["change"];
-    //$agregar -> id = $_SESSION["id"];
     $agregar -> ajaxAgregarSeccion();
 }

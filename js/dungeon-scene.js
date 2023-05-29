@@ -196,8 +196,11 @@ export default class DungeonScene extends Phaser.Scene {
         cache: false,
         contentType: false,
         processData: false,
-        dataType: "json"
+        success: function(ans){
+        }
       });
+
+      this.num_resp++;
 
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)

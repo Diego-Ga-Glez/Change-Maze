@@ -48,8 +48,8 @@
   
   if(!isset($_SESSION["id"])){
     echo '<script> window.location = "index.php" </script>';
-  }else{
+  }/*else{
     session_destroy();
-  }
+  }*/
   
 ?>
