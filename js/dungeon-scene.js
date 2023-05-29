@@ -121,19 +121,19 @@ export default class DungeonScene extends Phaser.Scene {
       console.log("unlucky")
       prob_coin = 0.12; // 12% chance of coin
       prob_pot = 0.50;  // 38% chance of a pot 
-      prob_trap = 0.98; // 02% chance of trap and 48% chance of towers
+      prob_trap = 0.50; // 02% chance of trap and 48% chance of towers
     } else if(randi == 1){
       // normal 
       console.log("normal")
       prob_coin = 0.25; // 25% chance of coin
       prob_pot = 0.50;  // 25% chance of a pot
-      prob_trap = 0.90 //  10% chance of trap and 40% chance of towers
+      prob_trap = 0.50 //  10% chance of trap and 40% chance of towers
     } else{
       // lucky
       console.log("lucky")
       prob_coin = 0.50; // 50% chance of coin
       prob_pot = 0.75;  // 25% chance of a pot
-      prob_trap = 0.90; // 10% chance of a trap and 15% chanfe of towers
+      prob_trap = 0.50; // 10% chance of a trap and 15% chanfe of towers
     }
     
     // Place stuff in the 90% "otherRooms"
@@ -197,6 +197,7 @@ export default class DungeonScene extends Phaser.Scene {
         contentType: false,
         processData: false,
         success: function(ans){
+          console.log(ans)
         }
       });
 

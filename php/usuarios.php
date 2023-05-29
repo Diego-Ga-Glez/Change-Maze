@@ -1,7 +1,6 @@
 <?php
 
 require_once "conexion.php";
-session_start();
 
 class Usuario{
     
@@ -9,6 +8,8 @@ class Usuario{
         $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_usuario)
         VALUES(:num_resp,:score, :change, :id)");
 
+        echo $_SESSION["id"];
+        
         $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
         $stmt->bindParam(":score", $score, PDO::PARAM_STR);
         $stmt->bindParam(":change", $change, PDO::PARAM_STR);
@@ -68,7 +69,7 @@ class Usuario{
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location = "game.php";
+                                window.location = "game";
                             }
                         }) 
                       </script>'; 
@@ -81,7 +82,7 @@ class Usuario{
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location = "index.php";
+                                window.location = "";
                             }
                         }) 
                       </script>'; 
@@ -124,7 +125,7 @@ class Usuario{
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = "index.php"; //destruir sesión
+                                window.location.href = ""; //destruir sesión
                             }
                         }) 
                       </script>'; 
@@ -137,7 +138,7 @@ class Usuario{
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location = "encuesta.php";
+                                window.location = "encuesta";
                             }
                         }) 
                       </script>'; 
