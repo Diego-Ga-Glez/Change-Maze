@@ -95,6 +95,8 @@ export default class Alert {
             title: 'Has ganado!',
             text: "Por último, serás redireccionado a una encuesta",
             icon: 'success',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {

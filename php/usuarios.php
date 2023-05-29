@@ -36,7 +36,7 @@ class Usuario{
         if(isset($_POST['nombre'])){
             
             # Ocupacion estudiante
-            if($_POST['ocupacion'] == 'Estudiante'){
+            if($_POST['ocupacion'] == 'ESTUDIANTE'){
                 $stmt = Conexion::conectar()->prepare("INSERT INTO usuario (nombre_completo,correo,sexo,edad,ocupacion,escuela,carrera,semestre) 
                 VALUES (:nombre, :correo, :genero, :edad, :ocupacion,:escuela, :carrera, :semestre)");
 
@@ -72,6 +72,8 @@ class Usuario{
                             title: "Usuario registrado con éxito",
                             text: "Ahora serás redireccionado al juego",
                             icon: "success",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
@@ -100,7 +102,7 @@ class Usuario{
         if(isset($_POST['p1'])){
 
             $stmt = Conexion::conectar()->prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,id_usuario) 
-            VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17, :id");
+            VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17, :id)");
 
             $stmt->bindParam(":p1", $_POST['p1'], PDO::PARAM_INT);
             $stmt->bindParam(":p2", $_POST['p2'], PDO::PARAM_INT);
@@ -128,19 +130,23 @@ class Usuario{
                             title: "Resultados guardados con éxito",
                             text: "Muchas gracias por participar en este experimento",
                             icon: "success",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = ""; //destruir sesión
+                                window.location = "index"; //destruir sesión
                             }
                         }) 
                       </script>'; 
             }catch(Exception $e){
                 echo '<script>
                         Swal.fire({
-                            title: "Algo salió mal, respuesyas no registradas",
+                            title: "Algo salió mal, respuestas no registradas",
                             text: "Por favor, intentalo de nuevo",
                             icon: "error",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {
