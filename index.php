@@ -1,7 +1,5 @@
 <?php
-    session_start();
-    require_once 'php/usuarios.php';
-    
+    include 'php/usuarios.php';  
 ?>
 
 <!DOCTYPE html>

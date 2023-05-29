@@ -1,14 +1,19 @@
 <?php
 
+session_start();
 require_once "conexion.php";
 
 class Usuario{
     
+    static public function eliminarUsuario(){
+        $stmt = Conexion::conectar()->prepare("DELETE FROM usuario WHERE id = :id");
+        $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
+        $stmt -> execute();   
+    }
+    
     static public function agregarSeccionUsuario($num_resp,$score,$change){
         $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_usuario)
         VALUES(:num_resp,:score, :change, :id)");
-
-        echo $_SESSION["id"];
         
         $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
         $stmt->bindParam(":score", $score, PDO::PARAM_STR);
@@ -60,6 +65,7 @@ class Usuario{
                 $stmt->execute();
                 $result = $this -> obtenerUsuario($_POST['nombre'],$_POST['correo']);
                 $_SESSION["id"] = $result -> id;
+                $_SESSION["game"] = true;
                 
                 echo '<script>
                         Swal.fire({

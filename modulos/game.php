@@ -25,7 +25,13 @@
 
 <?php
   
-  if(!isset($_SESSION["id"])){
+  if(isset($_SESSION["id"]) and $_SESSION["game"]){
+    $_SESSION["game"] = false;
+  }
+   
+  else{
+    Usuario::eliminarUsuario();
     echo '<script> window.location = "index.php" </script>';
   }
+    
 ?>

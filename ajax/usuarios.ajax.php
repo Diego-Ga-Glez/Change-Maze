@@ -15,7 +15,6 @@ class AjaxUsuarios{
 
 }
 
-
 if(isset($_POST["num_resp"])){
     $agregar = new AjaxUsuarios();
     $agregar -> num_res = $_POST["num_resp"];

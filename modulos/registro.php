@@ -89,7 +89,6 @@
 
     function f_profesion() {
         let profesion = document.getElementById("ocupacion").value;
-        console.log(profesion)
         let eliminar = document.getElementsByClassName("opcionales");
         let padre_div = document.getElementById("listaCampos");
 
