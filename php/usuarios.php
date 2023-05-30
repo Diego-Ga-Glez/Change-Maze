@@ -91,6 +91,8 @@ class Usuario{
                             title: "Algo salió mal, usuario no registrado",
                             text: "Por favor, intentalo de nuevo",
                             icon: "error",
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
                             confirmButtonText: "OK"
                             }).then((result) => {
                             if (result.isConfirmed) {

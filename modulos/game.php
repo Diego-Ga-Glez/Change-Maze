@@ -14,10 +14,6 @@
       align-items: center;
       justify-content: center;
     }
-
-    #game-container > canvas {
-      border-radius: 5px;
-    }
 </style>
 
 <div id="game-container"></div>

@@ -11,10 +11,14 @@ import DungeonScene from "./dungeon-scene.js";
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    parent: 'game-container',
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: "100%",
+    height: "100%"
+  },
   backgroundColor: "#000",
-  parent: "game-container",
   pixelArt: true,
   scene: DungeonScene,
   physics: {
