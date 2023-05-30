@@ -16,10 +16,10 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tiles", "./assets/tilesets/buch-tileset-48px-extruded-blue.png");
+    this.load.image("tiles", "./js/assets/tilesets/buch-tileset-48px-extruded-blue.png");
     this.load.spritesheet(
       "characters",
-      "./assets/spritesheets/buch-characters-64px-extruded.png",
+      "./js/assets/spritesheets/buch-characters-64px-extruded.png",
       {
         frameWidth: 64,
         frameHeight: 64,
@@ -190,7 +190,6 @@ export default class DungeonScene extends Phaser.Scene {
         contentType: false,
         processData: false,
         success: function(ans){
-          console.log(ans)
         }
       });
 

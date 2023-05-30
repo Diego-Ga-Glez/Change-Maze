@@ -24,7 +24,7 @@ export default class Alert {
                 showCancelButton: currentStep > 0,
                 currentProgressStep: currentStep,
                 html:
-                "<video width='320' height='240' autoplay loop><source src='./video/movie.mp4' type='video/mp4'></video><p>Explicacion</p>"
+                "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video><p>Explicacion</p>"
             })
 
             if (result.value) {
