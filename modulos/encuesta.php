@@ -833,10 +833,8 @@
 
 <?php
   
-  if(!isset($_SESSION["id"])){
+  if(!isset($_SESSION["id"],$_SESSION["encuesta"])){
     echo '<script> window.location = "index.php" </script>';
-  }else{
-    //session_destroy();
   }
 
 ?>

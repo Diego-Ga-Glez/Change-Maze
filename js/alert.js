@@ -91,6 +91,20 @@ export default class Alert {
     }
 
     you_win() {
+        var datos = new FormData();
+        datos.append("encuesta", true);
+
+        $.ajax({
+            url:"./ajax/usuarios.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(ans){
+            }
+        });
+        
         Swal.fire({
             title: 'Has ganado!',
             text: "Por último, serás redireccionado a una encuesta",

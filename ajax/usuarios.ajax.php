@@ -22,3 +22,8 @@ if(isset($_POST["num_resp"])){
     $agregar -> change = $_POST["change"];
     $agregar -> ajaxAgregarSeccion();
 }
+
+if(isset($_POST["encuesta"])){
+    $_SESSION["game"] = false;
+    $_SESSION["encuesta"] = true;
+}

@@ -231,7 +231,14 @@ export default class DungeonScene extends Phaser.Scene {
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
 
-    this.score()
+    this.text_score = this.add
+      .text(16, 16, `Nivel actual: ${this.level}\nMonedas: ${this.coins}`, {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff",
+      })
+      .setScrollFactor(0);
 
     //timer text
     this.text_timer = this.add
@@ -315,15 +322,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   score(){
-    // Help text that has a "fixed" position on the screen
-    this.add
-      .text(16, 16, `Nivel actual: ${this.level}\nMonedas: ${this.coins}`, {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff",
-      })
-      .setScrollFactor(0);
+    this.text_score.setText(`Nivel actual: ${this.level}\nMonedas: ${this.coins}`);
   }
   
   game_over(restart){
