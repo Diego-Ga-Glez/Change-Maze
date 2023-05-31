@@ -2,7 +2,7 @@ import Player from "./player.js";
 import TILES from "./tile-mapping.js";
 import Alert from "./alert.js";
 import TilemapVisibility from "./tilemap-visibility.js";
-
+import WebFontFile from "./web-font-loader.js";
 /**
  * Scene that generates a new dungeon
  */
@@ -16,7 +16,9 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
     this.load.image("tiles", "./js/assets/tilesets/buch-tileset-48px-extruded-blue.png");
+    this.load.image("coin", "./js/assets/menu/coin.png");
     this.load.spritesheet(
       "characters",
       "./js/assets/spritesheets/buch-characters-64px-extruded.png",
@@ -231,24 +233,50 @@ export default class DungeonScene extends Phaser.Scene {
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
 
-    this.text_score = this.add
-      .text(16, 16, `Nivel actual: ${this.level}\nMonedas: ${this.coins}`, {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff",
+    const screenLevelX = this.cameras.main.worldView.x + this.cameras.main.width / 2; 
+    const screenLevelY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+
+    this.text_level = this.add
+      .text(screenLevelX, screenLevelY, `Nivel: ${this.level}`, {
+        fontFamily: '"Press Start 2P"',
+			  fontSize: '18px',
+        fill: "#ffffff",
+        padding: { x: 20, y: 10 }
       })
+      .setOrigin(0.5)
+      .setScrollFactor(0);
+    
+    const screenScoreX = this.cameras.main.worldView.x + this.cameras.main.width / 15; 
+    const screenScoreY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+    const screenCoinX = this.cameras.main.worldView.x + this.cameras.main.width / 28; 
+
+    this.add.image(screenCoinX, screenScoreY, 'coin')
+      .setOrigin(0.5)
       .setScrollFactor(0);
 
+    this.text_score = this.add
+    .text(screenScoreX, screenScoreY, this.coins, {
+      fontFamily: '"Press Start 2P"',
+			fontSize: '18px',
+      fill: "#ffffff",
+      padding: { x: 20, y: 10 }
+    })
+    .setOrigin(0.5)
+    .setScrollFactor(0);
+
+    const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    const screenTimerY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+    
     //timer text
     this.text_timer = this.add
-      .text(584, 16, `Temporizador: ${this.formatTime(this.initialTimer)}`, {
-        font: "18px monospace",
-        fill: "#000000",
+      .text(screenTimerX, screenTimerY, this.formatTime(this.initialTimer), {
+        fontFamily: '"Press Start 2P"',
+			  fontSize: '18px',
+        fill: "#ffffff",
         padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff",
-      })
-      .setScrollFactor(0);
+    })
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
     
@@ -262,13 +290,17 @@ export default class DungeonScene extends Phaser.Scene {
       });
     /////////////////////////////////////////////  
     
+    const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    const screenButtonY = this.cameras.main.worldView.y + this.cameras.main.height / 6;
+
     this.click_button = this.add
-      .text(500, 16, '+30s', {
+      .text(screenButtonX, screenButtonY, '+30s', {
         font: "18px monospace",
         fill: "#000000",
         padding: { x: 20, y: 10 },
         backgroundColor: "#ffffff",
       })
+      .setOrigin(0.5)
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.enterButtonActiveState());
@@ -307,7 +339,7 @@ export default class DungeonScene extends Phaser.Scene {
       }
       this.game_over()
     }
-    this.text_timer.setText('Temporizador: ' + this.formatTime(this.initialTimer));
+    this.text_timer.setText(this.formatTime(this.initialTimer));
   }
 
   formatTime(seconds){
@@ -322,7 +354,7 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   score(){
-    this.text_score.setText(`Nivel actual: ${this.level}\nMonedas: ${this.coins}`);
+    this.text_score.setText(this.coins);
   }
   
   game_over(restart){
