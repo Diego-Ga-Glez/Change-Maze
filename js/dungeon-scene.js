@@ -19,6 +19,8 @@ export default class DungeonScene extends Phaser.Scene {
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
     this.load.image("tiles", "./js/assets/tilesets/buch-tileset-48px-extruded-blue.png");
     this.load.image("coin", "./js/assets/menu/coin.png");
+    this.load.image("clock", "./js/assets/menu/clock.png");
+    this.load.image("button", "./js/assets/menu/button.png");
     this.load.spritesheet(
       "characters",
       "./js/assets/spritesheets/buch-characters-64px-extruded.png",
@@ -266,6 +268,11 @@ export default class DungeonScene extends Phaser.Scene {
 
     const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
     const screenTimerY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+    const screenClockX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 16; 
+
+    this.add.image(screenClockX, screenTimerY, 'clock')
+    .setOrigin(0.5)
+    .setScrollFactor(0);
     
     //timer text
     this.text_timer = this.add
@@ -293,13 +300,7 @@ export default class DungeonScene extends Phaser.Scene {
     const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
     const screenButtonY = this.cameras.main.worldView.y + this.cameras.main.height / 6;
 
-    this.click_button = this.add
-      .text(screenButtonX, screenButtonY, '+30s', {
-        font: "18px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff",
-      })
+    this.add.image(screenButtonX, screenButtonY, 'button')
       .setOrigin(0.5)
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
