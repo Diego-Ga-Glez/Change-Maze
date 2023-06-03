@@ -11,12 +11,12 @@ export default class Alert {
         const steps = ['1', '2', '3','4','5','6','7']
 
         const titulos = ['ERC GAME',
-                         'Como moverse',
+                         'Cómo moverse',
+                         'Niveles',
                          'Monedas',
                          'Comprar tiempo',
-                         'Escaleras',
                          'Portales',
-                         'Advertencias']
+                         'Aviso importante']
 
         const videos = ["",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
@@ -26,17 +26,17 @@ export default class Alert {
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
                         ""]
         
-        const descripcion = ["<p align='justify'>Hola, bienvenido a nuestro juego. A continuación se te mostraran un pequeño tutorial que te ayudara a tener una mejor experiencia con el juego. Este tutorial te enseñara todos los mecanismos que hay dentro del juego.</p>",
-                             "<p align='justify'>Para mover a tu personaje deberás hacer uso de las flechas de dirección. </p>",
+        const descripcion = ["<p align='justify'>Hola, bienvenido/a a nuestro juego. A continuación se mostrará un pequeño tutorial que te enseñará todos los mecanismos que hay dentro del juego para que así puedas tener una mejor experiencia.</p>",
+                             "<p align='justify'>Para mover a tu personaje deberás hacer uso de las teclas de dirección.</p>",
+                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El objetivo del juego es finalizar el nivel 10. También, para cada nivel se tiene un máximo de 2 minutos para completarlo, si se acaba el tiempo se te regresará al nivel anterior. </p>",
                              "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
-                             "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o también presionando el botón rojo que se encuentra debajo del cronometro. Al comprar tiempo se agregaran 30 segundo al cronometro y esto te costara solo 1 moneda.</p>",
-                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevaran al siguiente nivel. El objetivo del juego es llegar al nivel 10. También, para cada nivel se tiene un máximo de 2 minutos para completarlo, si se acaba el tiempo se te regresara al nivel anterior. </p>",
-                             "<p align='justify'>En algunos niveles podrás encontrar portales, estos portales podrán llevarte a un nivel aleatorio. </p>",
-                             "<p align='justify'>Es importante que durante todo el juego no recargues la pagina. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'T'.</p>"]
+                             "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o el botón rojo que se encuentra debajo del temporizador. Al comprar tiempo se agregarán 30 segundos al temporizador y esto te costará solo una moneda.</p>",
+                             "<p align='justify'>En algunos niveles podrás encontrar portales, estos podrán llevarte a un nivel aleatorio. </p>",
+                             "<p align='justify'>Es fundamental que en el transcurso de todo el juego no recargues la página. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'G'.</p>"]
                              
         const swalQueueStep = Swal.mixin({
-            confirmButtonText: 'Forward',
-            cancelButtonText: 'Back',
+            confirmButtonText: 'Siguiente',
+            cancelButtonText: 'Anterior',
             progressSteps: steps,
             reverseButtons: true
         });
