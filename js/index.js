@@ -14,9 +14,11 @@ const config = {
   scale: {
     mode: Phaser.Scale.FIT,
     parent: 'game-container',
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: "100%",
-    height: "100%"
+    //autoCenter: Phaser.Scale.CENTER_BOTH,
+    //width: "100%",
+    //height: "100%"
+    width: 600,
+    height: 400
   },
   backgroundColor: "#000",
   pixelArt: true,

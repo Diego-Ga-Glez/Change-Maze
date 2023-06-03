@@ -256,9 +256,13 @@ export default class DungeonScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setScrollFactor(0);
     
-    const screenScoreX = this.cameras.main.worldView.x + this.cameras.main.width / 15; 
+    //const screenScoreX = this.cameras.main.worldView.x + this.cameras.main.width / 15; 
+    //const screenScoreY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+    //const screenCoinX = this.cameras.main.worldView.x + this.cameras.main.width / 28; 
+
+    const screenScoreX = this.cameras.main.worldView.x + this.cameras.main.width / 10; 
     const screenScoreY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
-    const screenCoinX = this.cameras.main.worldView.x + this.cameras.main.width / 28; 
+    const screenCoinX = this.cameras.main.worldView.x + this.cameras.main.width / 20; 
 
     this.add.image(screenCoinX, screenScoreY, 'coin')
       .setOrigin(0.5)
@@ -274,9 +278,13 @@ export default class DungeonScene extends Phaser.Scene {
     .setOrigin(0.5)
     .setScrollFactor(0);
 
-    const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    //const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    //const screenTimerY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
+    //const screenClockX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 16; 
+
+    const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 13; 
     const screenTimerY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
-    const screenClockX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 16; 
+    const screenClockX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 4  + this.cameras.main.width / 15;
 
     this.add.image(screenClockX, screenTimerY, 'clock')
     .setOrigin(0.5)
@@ -304,7 +312,10 @@ export default class DungeonScene extends Phaser.Scene {
       });
     /////////////////////////////////////////////  
     
-    const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    //const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
+    //const screenButtonY = this.cameras.main.worldView.y + this.cameras.main.height / 6;
+
+    const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 13; 
     const screenButtonY = this.cameras.main.worldView.y + this.cameras.main.height / 6;
 
     this.add.image(screenButtonX, screenButtonY, 'button')

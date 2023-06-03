@@ -19,16 +19,16 @@ export default class Alert {
                          'Aviso importante']
 
         const videos = ["",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/1moverse.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/2niveles.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/3monedas.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/4comprar.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/5portales.mp4' type='video/mp4'></video>",
                         ""]
         
         const descripcion = ["<p align='justify'>Hola, bienvenido/a a nuestro juego. A continuación se mostrará un pequeño tutorial que te enseñará todos los mecanismos que hay dentro del juego para que así puedas tener una mejor experiencia.</p>",
                              "<p align='justify'>Para mover a tu personaje deberás hacer uso de las teclas de dirección.</p>",
-                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El objetivo del juego es finalizar el nivel 10. También, para cada nivel se tiene un máximo de 2 minutos para completarlo, si se acaba el tiempo se te regresará al nivel anterior. </p>",
+                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El objetivo del juego es finalizar el nivel 10. Por cada nivel se tiene un máximo de 2 minutos para completarlo, si se acaba el tiempo se te regresará al nivel anterior. </p>",
                              "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
                              "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o el botón rojo que se encuentra debajo del temporizador. Al comprar tiempo se agregarán 30 segundos al temporizador y esto te costará solo una moneda.</p>",
                              "<p align='justify'>En algunos niveles podrás encontrar portales, estos podrán llevarte a un nivel aleatorio. </p>",
