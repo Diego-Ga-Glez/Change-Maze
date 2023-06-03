@@ -13,6 +13,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.coins = 0;
     this.num_resp = 0;
     this.initialTimer = 0;
+    this.gameplay = true;
   }
 
   preload() {
@@ -34,6 +35,13 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
+    this.alert = new Alert();
+    if (this.gameplay){
+      this.gameplay = false;
+      this.scene.pause();
+      this.alert.gameplay(this.scene);
+    }
+
     this.initialTimer = 120;
     this.level++;
     this.hasPlayerReachedStairs = false;
@@ -290,7 +298,6 @@ export default class DungeonScene extends Phaser.Scene {
     this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
 
     // show gameplay and pause game
-    this.alert = new Alert();
     this.input.keyboard.on('keyup-G', () => {
           this.scene.pause();
           this.alert.gameplay(this.scene);

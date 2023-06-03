@@ -8,7 +8,32 @@ export default class Alert {
     }
     
     async gameplay(scene){
-        const steps = ['1', '2', '3']
+        const steps = ['1', '2', '3','4','5','6','7']
+
+        const titulos = ['Objetivo del juego',
+                         'Como moverse',
+                         'Monedas',
+                         'Comprar tiempo',
+                         'Escaleras',
+                         'Portales',
+                         'Advertencias']
+
+        const videos = ["<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>"]
+        
+        const descripcion = ["<p>Explicacion 1</p>",
+                             "<p>Explicacion 2</p>",
+                             "<p>Explicacion 3</p>",
+                             "<p>Explicacion 4</p>",
+                             "<p>Explicacion 5</p>",
+                             "<p>Explicacion 6</p>",
+                             "<p>Explicacion 7</p>"]
+                             
         const swalQueueStep = Swal.mixin({
             confirmButtonText: 'Forward',
             cancelButtonText: 'Back',
@@ -20,11 +45,10 @@ export default class Alert {
         let result;
         for (currentStep = 0; currentStep < steps.length;) {
             result = await swalQueueStep.fire({
-                title: `Explicación ${steps[currentStep]}`,
+                title: titulos[currentStep],
                 showCancelButton: currentStep > 0,
                 currentProgressStep: currentStep,
-                html:
-                "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video><p>Explicacion</p>"
+                html: videos[currentStep] + descripcion[currentStep]
             })
 
             if (result.value) {
