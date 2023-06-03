@@ -10,7 +10,7 @@ export default class Alert {
     async gameplay(scene){
         const steps = ['1', '2', '3','4','5','6','7']
 
-        const titulos = ['Objetivo del juego',
+        const titulos = ['ERC GAME',
                          'Como moverse',
                          'Monedas',
                          'Comprar tiempo',
@@ -18,21 +18,21 @@ export default class Alert {
                          'Portales',
                          'Advertencias']
 
-        const videos = ["<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
+        const videos = ["",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
                         "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/movie.mp4' type='video/mp4'></video>"]
+                        ""]
         
-        const descripcion = ["<p>Explicacion 1</p>",
-                             "<p>Explicacion 2</p>",
-                             "<p>Explicacion 3</p>",
-                             "<p>Explicacion 4</p>",
-                             "<p>Explicacion 5</p>",
-                             "<p>Explicacion 6</p>",
-                             "<p>Explicacion 7</p>"]
+        const descripcion = ["<p align='justify'>Hola, bienvenido a nuestro juego. A continuación se te mostraran un pequeño tutorial que te ayudara a tener una mejor experiencia con el juego. Este tutorial te enseñara todos los mecanismos que hay dentro del juego.</p>",
+                             "<p align='justify'>Para mover a tu personaje deberás hacer uso de las flechas de dirección. </p>",
+                             "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
+                             "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o también presionando el botón rojo que se encuentra debajo del cronometro. Al comprar tiempo se agregaran 30 segundo al cronometro y esto te costara solo 1 moneda.</p>",
+                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevaran al siguiente nivel. El objetivo del juego es llegar al nivel 10. También, para cada nivel se tiene un máximo de 2 minutos para completarlo, si se acaba el tiempo se te regresara al nivel anterior. </p>",
+                             "<p align='justify'>En algunos niveles podrás encontrar portales, estos portales podrán llevarte a un nivel aleatorio. </p>",
+                             "<p align='justify'>Es importante que durante todo el juego no recargues la pagina. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'T'.</p>"]
                              
         const swalQueueStep = Swal.mixin({
             confirmButtonText: 'Forward',
