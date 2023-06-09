@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
-<body>
+<body style="background: #f8fafc;">
     <?php
         if (isset($_GET["ruta"])){
             if ($_GET["ruta"] == 'game')

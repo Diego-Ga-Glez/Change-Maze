@@ -1,6 +1,6 @@
 <div class="container mt-5" style="width: 40%;" id="contenedorForm">
 
-    <div class="card-deck mb-3 mt-5">
+    <div class="card-deck mb-5 mt-5">
 
         <div class="card mb-4 box-shadow">
 

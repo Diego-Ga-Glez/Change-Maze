@@ -130,7 +130,7 @@ export default class Alert {
         });
         
         Swal.fire({
-            title: 'Has ganado!',
+            title: '¡Has ganado!',
             text: "Por último, serás redireccionado a una encuesta",
             icon: 'success',
             allowEscapeKey: false,

@@ -1,5 +1,4 @@
 /**
- * Author: Michael Hadley, mikewesthad.com
  * Asset Credits:
  *  - Tileset, Michele "Buch" Bucelli (tileset artist) & Abram Connelly (tileset sponsor):
  *     https://opengameart.org/content/top-down-dungeon-tileset

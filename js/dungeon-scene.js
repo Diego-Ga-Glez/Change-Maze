@@ -60,7 +60,7 @@ export default class DungeonScene extends Phaser.Scene {
       },
     });
 
-    this.dungeon.drawToConsole();
+    //this.dungeon.drawToConsole();
 
     // Creating a blank tilemap with dimensions matching the dungeon
     const map = this.make.tilemap({
@@ -374,6 +374,7 @@ export default class DungeonScene extends Phaser.Scene {
 
       if (this.level == 10) {
         this.alert.you_win();
+        return;
       }
       
       this.player.destroy();
