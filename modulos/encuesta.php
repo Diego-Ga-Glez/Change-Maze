@@ -369,8 +369,8 @@
 
 <?php
   
-  if(!isset($_SESSION["id"],$_SESSION["encuesta"])){
+  /*if(!isset($_SESSION["id"],$_SESSION["encuesta"])){
     echo '<script> window.location = "index.php" </script>';
-  }
+  }*/
 
 ?>

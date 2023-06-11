@@ -25,9 +25,9 @@
     $_SESSION["game"] = false;
   }
    
-  else{
+  /*else{
     Usuario::eliminarUsuario();
     echo '<script> window.location = "index.php" </script>';
-  }
+  }*/
     
 ?>

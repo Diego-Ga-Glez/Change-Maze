@@ -8,9 +8,9 @@ export default class Alert {
     }
     
     async gameplay(scene){
-        const steps = ['1', '2', '3','4','5','6','7']
+        const steps = ['1','2','3','4','5','6','7']
 
-        const titulos = ['ERC GAME',
+        const titulos = ['ChangeMaze:\nEnfrentando el Laberinto del Cambio',
                          'Cómo moverse',
                          'Niveles',
                          'Monedas',
