@@ -17,6 +17,10 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
+    //Virtual Joystick
+    let url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+    this.load.plugin('rexvirtualjoystickplugin', url, true);
+    
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
     this.load.image("tiles", "./js/assets/tilesets/buch-tileset-48px-extruded-blue.png");
     this.load.image("coin", "./js/assets/menu/coin.png");
@@ -230,7 +234,23 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = startRoom;
     const x = map.tileToWorldX(playerRoom.centerX);
     const y = map.tileToWorldY(playerRoom.centerY);
-    this.player = new Player(this, x, y);
+    
+    //Virtual Joystick
+    let control = 'keyboard';
+    this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+      x: $(document).width()/2,
+      y: $(document).height()-($(document).height()/5),
+      radius: 100,
+      base: this.add.circle(0, 0, 50, 0x888888),
+      thumb: this.add.circle(0, 0, 25, 0xcccccc),
+    });
+
+    if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch)
+      control = 'joyStick' 
+    else
+      this.joyStick.visible = false;  
+
+    this.player = new Player(this, x, y, control);
 
     // Watch the player and tilemap layers for collisions, for the duration of the scene:
     this.physics.add.collider(this.player.sprite, this.groundLayer);

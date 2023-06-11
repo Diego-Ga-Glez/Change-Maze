@@ -1,5 +1,5 @@
 export default class Player {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, control) {
     this.scene = scene;
 
     const anims = scene.anims;
@@ -20,7 +20,10 @@ export default class Player {
 
     this.sprite.anims.play("player-walk-back");
 
-    this.keys = scene.input.keyboard.createCursorKeys();
+    if(control == 'joyStick')
+      this.keys= scene.joyStick.createCursorKeys();
+    else
+      this.keys = scene.input.keyboard.createCursorKeys();
   }
 
   freeze() {
