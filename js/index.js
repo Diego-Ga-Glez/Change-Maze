@@ -11,7 +11,7 @@ import DungeonScene from "./dungeon-scene.js";
 const config = {
   type: Phaser.AUTO,
   scale: {
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.RESIZE,
     parent: 'game-container',
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: "100%",
