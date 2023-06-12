@@ -1,4 +1,20 @@
-<div class="container mt-5" style="width: 40%;" id="contenedorForm">
+<style>
+    /* Cuando la pantalla es menor a 900px  (tablets y teléfonos inteligentes)*/
+    @media only screen and (max-width : 900px) {
+        .container{
+            width:90%;
+        }
+    }
+
+    /* Cuando la pantalla es mayor a 900px */
+    @media only screen and (min-width : 901px) {
+        .container{
+            width:40%;
+        }
+    }
+</style>
+
+<div class="container mt-5" id="contenedorForm">
 
     <div class="card-deck mb-5 mt-5">
 
