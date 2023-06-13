@@ -1,8 +1,10 @@
 import Player from "./player.js";
 import TILES from "./tile-mapping.js";
-import Alert from "./alert.js";
+import Alert from "./utilities/alert.js";
 import TilemapVisibility from "./tilemap-visibility.js";
-import WebFontFile from "./web-font-loader.js";
+import WebFontFile from "./utilities/web-font-loader.js";
+import Resize from "./utilities/resize.js";
+
 /**
  * Scene that generates a new dungeon
  */
@@ -210,7 +212,6 @@ export default class DungeonScene extends Phaser.Scene {
       });
 
       this.num_resp++;
-
       if (change == 'si') {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;
@@ -238,8 +239,6 @@ export default class DungeonScene extends Phaser.Scene {
     //Virtual Joystick
     let control = 'keyboard';
     this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-      x: $(document).width()/2,
-      y: $(document).height()-($(document).height()/5),
       radius: 100,
       base: this.add.circle(0, 0, 50, 0x888888),
       thumb: this.add.circle(0, 0, 25, 0xcccccc),
@@ -263,55 +262,28 @@ export default class DungeonScene extends Phaser.Scene {
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
 
-    const screenLevelX = this.cameras.main.worldView.x + this.cameras.main.width / 2; 
-    const screenLevelY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
-
-    this.text_level = this.add
-      .text(screenLevelX, screenLevelY, `Nivel: ${this.level}`, {
+    this.text_level = this.add.text(0,0, `Nivel: ${this.level}`, {
         fontFamily: '"Press Start 2P"',
 			  fontSize: '18px',
         fill: "#ffffff",
-        padding: { x: 20, y: 10 }
-      })
-      .setOrigin(0.5)
-      .setScrollFactor(0);
-    
-    const screenScoreX = this.cameras.main.worldView.x + this.cameras.main.width / 15; 
-    const screenScoreY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
-    const screenCoinX = this.cameras.main.worldView.x + this.cameras.main.width / 28; 
+      }).setOrigin(0.5).setScrollFactor(0);
 
-    this.add.image(screenCoinX, screenScoreY, 'coin')
-      .setOrigin(0.5)
-      .setScrollFactor(0);
+    this.image_coin = this.add.image(0, 0,'coin').setOrigin(0.5).setScrollFactor(0);
 
-    this.text_score = this.add
-    .text(screenScoreX, screenScoreY, this.coins, {
+    this.text_score = this.add.text(0, 0, this.coins,{
       fontFamily: '"Press Start 2P"',
 			fontSize: '18px',
       fill: "#ffffff",
-      padding: { x: 20, y: 10 }
-    })
-    .setOrigin(0.5)
-    .setScrollFactor(0);
+    }).setOrigin(0.5).setScrollFactor(0);
 
-    const screenTimerX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
-    const screenTimerY = this.cameras.main.worldView.y + this.cameras.main.height / 12;
-    const screenClockX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 16; 
-
-    this.add.image(screenClockX, screenTimerY, 'clock')
-    .setOrigin(0.5)
-    .setScrollFactor(0);
+    this.image_clock = this.add.image(0,0, 'clock').setOrigin(0.5).setScrollFactor(0);
     
     //timer text
-    this.text_timer = this.add
-      .text(screenTimerX, screenTimerY, this.formatTime(this.initialTimer), {
+    this.text_timer = this.add.text(0, 0, this.formatTime(this.initialTimer),{
         fontFamily: '"Press Start 2P"',
 			  fontSize: '18px',
         fill: "#ffffff",
-        padding: { x: 20, y: 10 },
-    })
-    .setOrigin(0.5)
-    .setScrollFactor(0);
+    }).setOrigin(0.5).setScrollFactor(0);
 
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
     
@@ -323,16 +295,15 @@ export default class DungeonScene extends Phaser.Scene {
           this.alert.gameplay(this.scene);
       });
     /////////////////////////////////////////////  
-    
-    const screenButtonX = this.cameras.main.worldView.x + this.cameras.main.width / 2 + this.cameras.main.width / 3 + this.cameras.main.width / 9; 
-    const screenButtonY = this.cameras.main.worldView.y + this.cameras.main.height / 6;
 
-    this.add.image(screenButtonX, screenButtonY, 'button')
+    this.image_button = this.add.image(0, 0, 'button')
       .setOrigin(0.5)
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.enterButtonActiveState());
 
+    this.resize();
+    this.scale.on('resize', this.resize, this); 
   }
   
   update(time, delta) {
@@ -346,6 +317,27 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY);
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
+  }
+
+  resize(){ 
+    this.rsize = new Resize({rows:11,cols:11});
+    this.rsize.update_size();
+
+    this.rsize.placeAtIndex(104,this.joyStick);
+    Resize.scaleToGameW(this.joyStick, .2)
+    this.rsize.placeAtIndex(5,this.text_level);
+    Resize.scaleToGameW(this.text_level, .1)
+    this.rsize.placeAtIndex(0,this.image_coin)
+    Resize.scaleToGameW(this.image_coin, .04);
+    this.rsize.placeAtIndex(1,this.text_score);
+    Resize.scaleToGameW(this.text_score, .017)
+    this.rsize.placeAtIndex(9,this.image_clock);
+    Resize.scaleToGameW(this.image_clock, .04);
+    this.rsize.placeAtIndex(10,this.text_timer);
+    Resize.scaleToGameW(this.text_timer, .06)
+    this.rsize.placeAtIndex(21,this.image_button);
+    Resize.scaleToGameW(this.image_button, .06);
+    this.rsize = null;
   }
 
   enterButtonActiveState() {
@@ -371,13 +363,9 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   formatTime(seconds){
-    // Minutes
     var minutes = Math.floor(seconds/60);
-    // Seconds
     var partInSeconds = seconds%60;
-    // Adds left zeros to seconds
     partInSeconds = partInSeconds.toString().padStart(2,'0');
-    // Returns formated time
     return `${minutes}:${partInSeconds}`;
   }
 
@@ -396,11 +384,9 @@ export default class DungeonScene extends Phaser.Scene {
         this.alert.you_win();
         return;
       }
-      
       this.player.destroy();
       this.scene.restart();
       
     });
   }
-
 }
