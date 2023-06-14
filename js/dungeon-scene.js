@@ -28,6 +28,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.load.image("coin", "./js/assets/menu/coin.png");
     this.load.image("clock", "./js/assets/menu/clock.png");
     this.load.image("button", "./js/assets/menu/button.png");
+    this.load.image("buttonTutorial", "./js/assets/menu/buttonTutorial.png");
     this.load.spritesheet(
       "characters",
       "./js/assets/spritesheets/buch-characters-64px-extruded.png",
@@ -44,8 +45,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.alert = new Alert();
     if (this.gameplay){
       this.gameplay = false;
-      this.scene.pause();
-      this.alert.gameplay(this.scene);
+      this.tutorial();
     }
 
     this.initialTimer = 120;
@@ -293,8 +293,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     // show gameplay and pause game
     this.input.keyboard.on('keyup-G', () => {
-          this.scene.pause();
-          this.alert.gameplay(this.scene);
+          this.tutorial();
       });
     /////////////////////////////////////////////  
 
@@ -303,6 +302,12 @@ export default class DungeonScene extends Phaser.Scene {
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.enterButtonActiveState());
+    
+    this.image_buttonTutorial = this.add.image(0, 0, 'buttonTutorial')
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setInteractive({ useHandCursor: true })
+      .on('pointerdown', () => this.tutorial());
 
     this.resize();
     this.scale.on('resize', this.resize, this); 
@@ -323,44 +328,41 @@ export default class DungeonScene extends Phaser.Scene {
 
   resize(){ 
     if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {
-      var numRows = 47;
-      var numCols = 19;
-    }
-    else {
-      var numRows = 35;
-      var numCols = 35;
-    }
-      
-    this.rsize = new Resize({rows:numRows,cols:numCols});
-    this.rsize.update_size();
+      this.rsize = new Resize({rows:45,cols:19});
+      this.rsize.update_size();
 
-    if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {        
-      this.rsize.placeAtIndex(788,this.joyStick);
+      this.rsize.placeAtIndex(750,this.joyStick);
       Resize.scaleToGameW(this.joyStick, .2);
       this.rsize.placeAtIndex(47,this.text_level);
       this.rsize.placeAtIndex(39,this.image_coin);
       this.rsize.placeAtIndex(40,this.text_score);
-      this.rsize.placeAtIndex(52,this.image_clock);
-      this.rsize.placeAtIndex(54,this.text_timer);
-      this.rsize.placeAtIndex(111,this.image_button);
-      this.rsize = null;
+      this.rsize.placeAtIndex(53,this.image_clock);
+      this.rsize.placeAtIndex(54.5,this.text_timer);
+      this.rsize.placeAtIndex(111.5,this.image_button);
+      this.rsize.placeAtIndex(96.5,this.image_buttonTutorial);
     }
     else {
+      this.rsize = new Resize({rows:35,cols:35});
+      this.rsize.update_size();
+
       this.rsize.placeAtIndex(87,this.text_level);
       this.rsize.placeAtIndex(71,this.image_coin);
       this.rsize.placeAtIndex(72,this.text_score);
-      this.rsize.placeAtIndex(100,this.image_clock);
-      this.rsize.placeAtIndex(102,this.text_timer);
-      this.rsize.placeAtIndex(207,this.image_button);
-      this.rsize = null;
+      this.rsize.placeAtIndex(101,this.image_clock);
+      this.rsize.placeAtIndex(102.5,this.text_timer);
+      this.rsize.placeAtIndex(207.5,this.image_button);
+      this.rsize.placeAtIndex(176.5,this.image_buttonTutorial);
     }
+
+    this.rsize = null;
 
     Resize.scaleToGameW(this.text_level, .1);
     Resize.scaleToGameW(this.image_coin, .04);
-    Resize.scaleToGameW(this.text_score, .03);
+    Resize.scaleToGameW(this.text_score, .025);
     Resize.scaleToGameW(this.image_clock, .04);
-    Resize.scaleToGameW(this.text_timer, .06);
+    Resize.scaleToGameW(this.text_timer, .05);
     Resize.scaleToGameW(this.image_button, .06);
+    Resize.scaleToGameW(this.image_buttonTutorial, .06);
   }
 
   enterButtonActiveState() {
@@ -369,6 +371,11 @@ export default class DungeonScene extends Phaser.Scene {
       this.coins--
       this.score()
     }
+  }
+
+  tutorial() {
+    this.scene.pause();
+    this.alert.gameplay(this.scene);
   }
   
   timer(){
