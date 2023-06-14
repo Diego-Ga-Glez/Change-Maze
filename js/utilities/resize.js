@@ -19,8 +19,8 @@ export default  class Resize{
 	}
 
 	placeAtIndex(index,obj){
-		var yy=Math.floor(index/11);
-		var xx=index-(yy*11);
+		var yy=Math.floor(index/this.config.cols);
+		var xx=index-(yy*this.config.cols);
 		this.placeAt(xx,yy,obj);
 	}
 

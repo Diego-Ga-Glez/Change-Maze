@@ -270,11 +270,13 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.image_coin = this.add.image(0, 0,'coin').setOrigin(0.5).setScrollFactor(0);
 
-    this.text_score = this.add.text(0, 0, this.coins,{
+    this.text_score = this.add.text(0, 0, this.coins, {
       fontFamily: '"Press Start 2P"',
 			fontSize: '18px',
       fill: "#ffffff",
     }).setOrigin(0.5).setScrollFactor(0);
+
+    this.score();
 
     this.image_clock = this.add.image(0,0, 'clock').setOrigin(0.5).setScrollFactor(0);
     
@@ -320,24 +322,45 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   resize(){ 
-    this.rsize = new Resize({rows:11,cols:11});
+    if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {
+      var numRows = 47;
+      var numCols = 19;
+    }
+    else {
+      var numRows = 35;
+      var numCols = 35;
+    }
+      
+    this.rsize = new Resize({rows:numRows,cols:numCols});
     this.rsize.update_size();
 
-    this.rsize.placeAtIndex(104,this.joyStick);
-    Resize.scaleToGameW(this.joyStick, .2)
-    this.rsize.placeAtIndex(5,this.text_level);
-    Resize.scaleToGameW(this.text_level, .1)
-    this.rsize.placeAtIndex(0,this.image_coin)
+    if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {        
+      this.rsize.placeAtIndex(788,this.joyStick);
+      Resize.scaleToGameW(this.joyStick, .2);
+      this.rsize.placeAtIndex(47,this.text_level);
+      this.rsize.placeAtIndex(39,this.image_coin);
+      this.rsize.placeAtIndex(40,this.text_score);
+      this.rsize.placeAtIndex(52,this.image_clock);
+      this.rsize.placeAtIndex(54,this.text_timer);
+      this.rsize.placeAtIndex(111,this.image_button);
+      this.rsize = null;
+    }
+    else {
+      this.rsize.placeAtIndex(87,this.text_level);
+      this.rsize.placeAtIndex(71,this.image_coin);
+      this.rsize.placeAtIndex(72,this.text_score);
+      this.rsize.placeAtIndex(100,this.image_clock);
+      this.rsize.placeAtIndex(102,this.text_timer);
+      this.rsize.placeAtIndex(207,this.image_button);
+      this.rsize = null;
+    }
+
+    Resize.scaleToGameW(this.text_level, .1);
     Resize.scaleToGameW(this.image_coin, .04);
-    this.rsize.placeAtIndex(1,this.text_score);
-    Resize.scaleToGameW(this.text_score, .017)
-    this.rsize.placeAtIndex(9,this.image_clock);
+    Resize.scaleToGameW(this.text_score, .03);
     Resize.scaleToGameW(this.image_clock, .04);
-    this.rsize.placeAtIndex(10,this.text_timer);
-    Resize.scaleToGameW(this.text_timer, .06)
-    this.rsize.placeAtIndex(21,this.image_button);
+    Resize.scaleToGameW(this.text_timer, .06);
     Resize.scaleToGameW(this.image_button, .06);
-    this.rsize = null;
   }
 
   enterButtonActiveState() {
@@ -370,7 +393,10 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   score(){
-    this.text_score.setText(this.coins);
+    if (this.coins > 9)
+      this.text_score.setText(this.coins);
+    else
+      this.text_score.setText('0' + this.coins);
   }
   
   game_over(restart){
