@@ -32,7 +32,7 @@ export default class Alert {
                              "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
                              "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o el botón rojo que se encuentra debajo del temporizador. Al comprar tiempo se agregarán 30 segundos al temporizador y esto te costará solo una moneda.</p>",
                              "<p align='justify'>En algunos niveles podrás encontrar portales, estos podrán llevarte a un nivel aleatorio. </p>",
-                             "<p align='justify'>Es fundamental que en el transcurso de todo el juego no recargues la página. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'G'.</p>"]
+                             "<p align='justify'>Es fundamental que en el transcurso de todo el juego no recargues la página. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'G' o el botón azul.</p>"]
                              
         const swalQueueStep = Swal.mixin({
             confirmButtonText: 'Siguiente',
