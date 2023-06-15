@@ -34,33 +34,35 @@ export default  class Resize{
 		obj.scaleY= obj.scaleX;
 	}
 
-	placeAt_and_Scale(objects, device){
-		if(device == 'pc'){
-			this.placeAtIndex(750,objects.joyStick);
-			this.scaleToGameW(objects.joyStick, .2);
-			this.placeAtIndex(47,objects.text_level);
-			this.placeAtIndex(39,objects.image_coin);
-			this.placeAtIndex(40,objects.text_score);
-			this.placeAtIndex(53,objects.image_clock);
-			this.placeAtIndex(54.5,objects.text_timer);
-			this.placeAtIndex(111.5,objects.image_button);
-			this.placeAtIndex(96.5,objects.image_buttonTutorial);
+	placeAt_and_Scale(game){
+		if(!game.sys.game.device.input.gamepads || game.sys.game.device.input.touch){
+			this.update_size(45,19);
+			this.placeAtIndex(750,game.joyStick);
+			this.scaleToGameW(game.joyStick, .2);
+			this.placeAtIndex(47,game.text_level);
+			this.placeAtIndex(39,game.image_coin);
+			this.placeAtIndex(40,game.text_score);
+			this.placeAtIndex(53,game.image_clock);
+			this.placeAtIndex(54.5,game.text_timer);
+			this.placeAtIndex(111.5,game.image_button);
+			this.placeAtIndex(96.5,game.image_buttonTutorial);
 		}else{
-			this.placeAtIndex(87,objects.text_level);
-			this.placeAtIndex(71,objects.image_coin);
-			this.placeAtIndex(72,objects.text_score);
-			this.placeAtIndex(101,objects.image_clock);
-			this.placeAtIndex(102.5,objects.text_timer);
-			this.placeAtIndex(207.5,objects.image_button);
-			this.placeAtIndex(176.5,objects.image_buttonTutorial);	
+			this.update_size(35,35)
+			this.placeAtIndex(87,game.text_level);
+			this.placeAtIndex(71,game.image_coin);
+			this.placeAtIndex(72,game.text_score);
+			this.placeAtIndex(101,game.image_clock);
+			this.placeAtIndex(102.5,game.text_timer);
+			this.placeAtIndex(207.5,game.image_button);
+			this.placeAtIndex(176.5,game.image_buttonTutorial);	
 		}
 
-		this.scaleToGameW(objects.text_level, .1);
-		this.scaleToGameW(objects.image_coin, .04);
-		this.scaleToGameW(objects.text_score, .025);
-		this.scaleToGameW(objects.image_clock, .04);
-		this.scaleToGameW(objects.text_timer, .05);
-		this.scaleToGameW(objects.image_button, .06);
-		this.scaleToGameW(objects.image_buttonTutorial, .06);
+		this.scaleToGameW(game.text_level, .1);
+		this.scaleToGameW(game.image_coin, .04);
+		this.scaleToGameW(game.text_score, .025);
+		this.scaleToGameW(game.image_clock, .04);
+		this.scaleToGameW(game.text_timer, .05);
+		this.scaleToGameW(game.image_button, .06);
+		this.scaleToGameW(game.image_buttonTutorial, .06);
 	}
 }

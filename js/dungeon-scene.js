@@ -284,9 +284,9 @@ export default class DungeonScene extends Phaser.Scene {
     this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
     this.input.keyboard.on('keyup-G',()=>{ this.tutorial(); }); 
 
-    this.rsize = new Resize({rows:0,cols:0});
-    this.resize();
-    this.scale.on('resize', this.resize, this); 
+    this.resize = new Resize({rows:0,cols:0});
+    this.resize.placeAt_and_Scale(this)
+    this.scale.on('resize', ()=>{ this.resize.placeAt_and_Scale(this) }, this); 
   }
   
   update(time, delta) {
@@ -300,17 +300,6 @@ export default class DungeonScene extends Phaser.Scene {
     const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY);
 
     this.tilemapVisibility.setActiveRoom(playerRoom);
-  }
-
-  resize(){ 
-    if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {
-      this.rsize.update_size(45,19);
-      this.rsize.placeAt_and_Scale(this,'pc');
-    }
-    else {
-      this.rsize.update_size(35,35);
-      this.rsize.placeAt_and_Scale(this,'mobile');
-    }
   }
 
   enterButtonActiveState() {
