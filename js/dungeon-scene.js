@@ -5,9 +5,6 @@ import TilemapVisibility from "./tilemap-visibility.js";
 import WebFontFile from "./utilities/web-font-loader.js";
 import Resize from "./utilities/resize.js";
 
-/**
- * Scene that generates a new dungeon
- */
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
     super();
@@ -19,7 +16,6 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   preload() {
-    //Virtual Joystick
     let url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
     this.load.plugin('rexvirtualjoystickplugin', url, true);
     
@@ -65,8 +61,6 @@ export default class DungeonScene extends Phaser.Scene {
         height: { min: 7, max: 15, onlyOdd: true },
       },
     });
-
-    //this.dungeon.drawToConsole();
 
     // Creating a blank tilemap with dimensions matching the dungeon
     const map = this.make.tilemap({
@@ -133,21 +127,18 @@ export default class DungeonScene extends Phaser.Scene {
     // Probability for stuff in the 90% "othersRooms"
     let prob_coin, prob_pot, prob_trap;
     const randi =  Math.floor(Math.random() * 3)
-    if(randi == 0){
-      // unlucky
-      prob_coin = 0.12; // 12% chance of coin
-      prob_pot = 0.50;  // 38% chance of a pot 
-      prob_trap = 0.98; // 02% chance of trap and 48% chance of towers
-    } else if(randi == 1){
-      // normal 
-      prob_coin = 0.25; // 25% chance of coin
-      prob_pot = 0.50;  // 25% chance of a pot
-      prob_trap = 0.90 //  10% chance of trap and 40% chance of towers
-    } else{
-      // lucky
-      prob_coin = 0.50; // 50% chance of coin
-      prob_pot = 0.75;  // 25% chance of a pot
-      prob_trap = 0.90; // 10% chance of a trap and 15% chanfe of towers
+    if(randi == 0){          // unlucky
+      prob_coin = 0.12;     // 12% chance of coin
+      prob_pot = 0.50;      // 38% chance of a pot 
+      prob_trap = 0.98;     // 02% chance of trap and 48% chance of towers
+    } else if(randi == 1){  // normal 
+      prob_coin = 0.25;     // 25% chance of coin
+      prob_pot = 0.50;      // 40% chance of a pot
+      prob_trap = 0.90      //  10% chance of trap and 40% chance of towers
+    } else{                 // lucky
+      prob_coin = 0.50;     // 50% chance of coin
+      prob_pot = 0.75;      // 25% chance of a pot
+      prob_trap = 0.90;     // 10% chance of a trap and 15% chanfe of towers
     }
     
     // Place stuff in the 90% "otherRooms"
@@ -175,8 +166,8 @@ export default class DungeonScene extends Phaser.Scene {
       }
     });
 
-    // Not exactly correct for the tileset since there are more possible floor tiles, but this will
-    // do for the example.
+    // Not exactly correct for the tileset since there are more possible floor tiles,
+    // but this will do for the example.
     this.groundLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
     this.stuffLayer.setCollisionByExclusion([-1, 6, 7, 8, 26]);
 
@@ -186,7 +177,6 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
     this.stuffLayer.setTileIndexCallback(TILES.PORTAL, async () => {
-      
       const playerTileX = this.groundLayer.worldToTileX(this.player.sprite.x);
       const playerTileY = this.groundLayer.worldToTileY(this.player.sprite.y);
       const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY)
@@ -207,8 +197,7 @@ export default class DungeonScene extends Phaser.Scene {
         cache: false,
         contentType: false,
         processData: false,
-        success: function(ans){
-        }
+        success: function(ans){}
       });
 
       this.num_resp++;
@@ -238,8 +227,7 @@ export default class DungeonScene extends Phaser.Scene {
     
     //Virtual Joystick
     let control = 'keyboard';
-    this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-      radius: 100,
+    this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this,{
       base: this.add.circle(0, 0, 50, 0x888888),
       thumb: this.add.circle(0, 0, 25, 0xcccccc),
     });
@@ -262,53 +250,41 @@ export default class DungeonScene extends Phaser.Scene {
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.startFollow(this.player.sprite);
 
+    // level (menu)
     this.text_level = this.add.text(0,0, `Nivel: ${this.level}`, {
         fontFamily: '"Press Start 2P"',
-			  fontSize: '18px',
-        fill: "#ffffff",
-      }).setOrigin(0.5).setScrollFactor(0);
-
+    }).setOrigin(0.5).setScrollFactor(0);
+    
+    // coins (menu)
     this.image_coin = this.add.image(0, 0,'coin').setOrigin(0.5).setScrollFactor(0);
-
     this.text_score = this.add.text(0, 0, this.coins, {
       fontFamily: '"Press Start 2P"',
-			fontSize: '18px',
-      fill: "#ffffff",
     }).setOrigin(0.5).setScrollFactor(0);
-
     this.score();
 
+    // countdown (menu)
     this.image_clock = this.add.image(0,0, 'clock').setOrigin(0.5).setScrollFactor(0);
-    
-    //timer text
     this.text_timer = this.add.text(0, 0, this.formatTime(this.initialTimer),{
         fontFamily: '"Press Start 2P"',
-			  fontSize: '18px',
-        fill: "#ffffff",
     }).setOrigin(0.5).setScrollFactor(0);
 
-    this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
-    
-    this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
-
-    // show gameplay and pause game
-    this.input.keyboard.on('keyup-G', () => {
-          this.tutorial();
-      });
-    /////////////////////////////////////////////  
-
+    // time button (menu)
     this.image_button = this.add.image(0, 0, 'button')
-      .setOrigin(0.5)
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.enterButtonActiveState());
     
-    this.image_buttonTutorial = this.add.image(0, 0, 'buttonTutorial')
-      .setOrigin(0.5)
+    // tutorial button (menu)
+      this.image_buttonTutorial = this.add.image(0, 0, 'buttonTutorial')
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
       .on('pointerdown', () => this.tutorial());
 
+    this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
+    this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
+    this.input.keyboard.on('keyup-G',()=>{ this.tutorial(); }); 
+
+    this.rsize = new Resize({rows:0,cols:0});
     this.resize();
     this.scale.on('resize', this.resize, this); 
   }
@@ -328,41 +304,13 @@ export default class DungeonScene extends Phaser.Scene {
 
   resize(){ 
     if (!this.sys.game.device.input.gamepads || this.sys.game.device.input.touch) {
-      this.rsize = new Resize({rows:45,cols:19});
-      this.rsize.update_size();
-
-      this.rsize.placeAtIndex(750,this.joyStick);
-      Resize.scaleToGameW(this.joyStick, .2);
-      this.rsize.placeAtIndex(47,this.text_level);
-      this.rsize.placeAtIndex(39,this.image_coin);
-      this.rsize.placeAtIndex(40,this.text_score);
-      this.rsize.placeAtIndex(53,this.image_clock);
-      this.rsize.placeAtIndex(54.5,this.text_timer);
-      this.rsize.placeAtIndex(111.5,this.image_button);
-      this.rsize.placeAtIndex(96.5,this.image_buttonTutorial);
+      this.rsize.update_size(45,19);
+      this.rsize.placeAt_and_Scale(this,'pc');
     }
     else {
-      this.rsize = new Resize({rows:35,cols:35});
-      this.rsize.update_size();
-
-      this.rsize.placeAtIndex(87,this.text_level);
-      this.rsize.placeAtIndex(71,this.image_coin);
-      this.rsize.placeAtIndex(72,this.text_score);
-      this.rsize.placeAtIndex(101,this.image_clock);
-      this.rsize.placeAtIndex(102.5,this.text_timer);
-      this.rsize.placeAtIndex(207.5,this.image_button);
-      this.rsize.placeAtIndex(176.5,this.image_buttonTutorial);
+      this.rsize.update_size(35,35);
+      this.rsize.placeAt_and_Scale(this,'mobile');
     }
-
-    this.rsize = null;
-
-    Resize.scaleToGameW(this.text_level, .1);
-    Resize.scaleToGameW(this.image_coin, .04);
-    Resize.scaleToGameW(this.text_score, .025);
-    Resize.scaleToGameW(this.image_clock, .04);
-    Resize.scaleToGameW(this.text_timer, .05);
-    Resize.scaleToGameW(this.image_button, .06);
-    Resize.scaleToGameW(this.image_buttonTutorial, .06);
   }
 
   enterButtonActiveState() {
@@ -381,12 +329,11 @@ export default class DungeonScene extends Phaser.Scene {
   timer(){
     this.initialTimer -= 1; // One second
     if (this.initialTimer == 0){
-      if (this.level == 1){
+      if (this.level == 1)
         this.level-=1
-      }
-      else{
+      else
         this.level-= 2
-      }
+
       this.game_over()
     }
     this.text_timer.setText(this.formatTime(this.initialTimer));
@@ -412,14 +359,12 @@ export default class DungeonScene extends Phaser.Scene {
     const cam = this.cameras.main;
     cam.fade(250, 0, 0, 0);
     cam.once("camerafadeoutcomplete", () => {
-
       if (this.level == 10) {
         this.alert.you_win();
         return;
       }
       this.player.destroy();
       this.scene.restart();
-      
     });
   }
 }

@@ -27,7 +27,7 @@ export default class Alert {
                         ""]
         
         const descripcion = ["<p align='justify'>Hola, bienvenido/a a nuestro juego. A continuación se mostrará un pequeño tutorial que te enseñará todos los mecanismos que hay dentro del juego para que así puedas tener una mejor experiencia.</p>",
-                             "<p align='justify'>Para mover a tu personaje deberás hacer uso de las teclas de dirección.</p>",
+                             "<p align='justify'>Para mover a tu personaje deberás hacer uso de las teclas de dirección o del joystick en caso de estar jugando en un dispositivo móvil.</p>",
                              "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El objetivo del juego es finalizar el nivel 10. Se tiene un máximo de 2 minutos para completar cada nivel, si se acaba el tiempo se te regresará al nivel anterior. </p>",
                              "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
                              "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o el botón rojo que se encuentra debajo del temporizador. Al comprar tiempo se agregarán 30 segundos al temporizador y esto te costará solo una moneda.</p>",
@@ -37,7 +37,6 @@ export default class Alert {
         const swalQueueStep = Swal.mixin({
             confirmButtonText: 'Siguiente',
             cancelButtonText: 'Anterior',
-            progressSteps: steps,
             reverseButtons: true
         });
  
