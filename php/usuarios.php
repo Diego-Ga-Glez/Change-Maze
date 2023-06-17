@@ -4,6 +4,14 @@ session_start();
 require_once "conexion.php";
 
 class Usuario{
+
+    static public function mostrarUsuarios() {
+        try{
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario");
+            $stmt -> execute();
+            return $stmt -> fetchAll();
+        }catch(Exception $e){} 
+    }
     
     static public function eliminarUsuario(){
         try{
