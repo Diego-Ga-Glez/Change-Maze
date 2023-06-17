@@ -40,9 +40,18 @@
   </div>
 </nav>
 
-<div class="container mt-5 mb-5" style="background:#ffffff;">
+<div class="container" style="background:#ffffff; padding:0; width:90%;">
+  <div class="card-deck mb-5 mt-5">
 
-        <table class="table table-striped dt-responsive nowrap tablas" width="100%">
+    <div class="card mb-2 box-shadow">
+
+      <div class="card-header">
+        <h6 class="text-center">Jugadores</h6>
+      </div>
+
+      <div class="card-body">
+
+        <table class="display compact cell-border dt-responsive mb-2 tablas" width="100%">
 
           <thead>
             <tr>
@@ -81,8 +90,10 @@
           </tbody>
 
         </table>
+        </div>
 </div>
-
+</div>
+</div>
 
 <script>
 $(document).ready(function () {
@@ -114,5 +125,9 @@ $('.tablas').DataTable({
 
     }
 });
+
+document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
+document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
 })
+
 </script>
