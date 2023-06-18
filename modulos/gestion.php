@@ -10,8 +10,17 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 1em;">
-            <li class="nav-item">
-                <a class="nav-link" href="jugadores">Jugadores</a>
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Jugadores
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="jugadores">Todos los jugadores</a></li>
+                    <li><a class="dropdown-item" href="incompletos">Registros incompletos</a></li>
+                </ul>
+
             </li>
 
             <li class="nav-item">

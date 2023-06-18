@@ -3,11 +3,11 @@
 session_start();
 require_once "conexion.php";
 
-class Usuario{
+class Jugador{
 
     static public function mostrarJugadores() {
         try{
-            $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario");
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM jugador");
             $stmt -> execute();
             return $stmt -> fetchAll();
         }catch(Exception $e){} 
@@ -15,7 +15,7 @@ class Usuario{
 
     static public function jugadoresIncompletos() {
         try{
-            $stmt = Conexion::conectar()->prepare("SELECT usuario.*, seccion.id_usuario, encuesta.id_usuario FROM usuario LEFT JOIN seccion ON seccion.id_usuario = usuario.id LEFT JOIN encuesta ON encuesta.id_usuario = usuario.id WHERE seccion.id_usuario IS NULL OR encuesta.id_usuario IS NULL");
+            $stmt = Conexion::conectar()->prepare("SELECT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NULL OR encuesta.id_jugador IS NULL");
             $stmt -> execute();
             return $stmt -> fetchAll();
         }catch(Exception $e){} 
@@ -23,17 +23,17 @@ class Usuario{
     
     static public function eliminarUsuario(){
         try{
-            $stmt = Conexion::conectar()->prepare("DELETE FROM usuario WHERE id = :id");
+            $stmt = Conexion::conectar()->prepare("DELETE FROM jugador WHERE id = :id");
             $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
             $stmt -> execute();
         }catch(Exception $e){} 
     }
 
     static public function eliminarJugador() {
-        if(isset($_GET['idUsuario'])){
+        if(isset($_GET['idJugador'])){
             try{
-                $stmt = Conexion::conectar()->prepare("DELETE FROM usuario WHERE id = :id");
-                $stmt->bindParam(":id", $_GET['idUsuario'], PDO::PARAM_INT);
+                $stmt = Conexion::conectar()->prepare("DELETE FROM jugador WHERE id = :id");
+                $stmt->bindParam(":id", $_GET['idJugador'], PDO::PARAM_INT);
                 $stmt -> execute();
 
                 echo '<script>
@@ -67,7 +67,7 @@ class Usuario{
     
     static public function agregarSeccionJugador($num_resp,$score,$change){
         try{
-            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_usuario)
+            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_jugador)
             VALUES(:num_resp,:score, :change, :id)");
             
             $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
@@ -80,8 +80,8 @@ class Usuario{
     }
     
     static public function obtenerJugador($nombre,$correo){
-        # obtener id del usuario
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario WHERE nombre_completo = :nombre and correo = :correo");
+        # obtener id del jugador
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM jugador WHERE nombre_completo = :nombre and correo = :correo");
         $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
         $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
         $stmt -> execute();
@@ -93,7 +93,7 @@ class Usuario{
             try{
                 # Ocupacion estudiante
                 if($_POST['ocupacion'] == 'ESTUDIANTE'){
-                    $stmt = Conexion::conectar()->prepare("INSERT INTO usuario (nombre_completo,correo,sexo,edad,ocupacion,escuela,carrera,semestre) 
+                    $stmt = Conexion::conectar()->prepare("INSERT INTO jugador (nombre_completo,correo,sexo,edad,ocupacion,escuela,carrera,semestre) 
                     VALUES (:nombre, :correo, :genero, :edad, :ocupacion,:escuela, :carrera, :semestre)");
 
                     $stmt->bindParam(":nombre", $_POST["nombre"], PDO::PARAM_STR);
@@ -106,7 +106,7 @@ class Usuario{
                     $stmt->bindParam(":semestre", $_POST["semestre"], PDO::PARAM_INT);
                 # Ocupacion profesionista
                 }else{
-                    $stmt = Conexion::conectar()->prepare("INSERT INTO usuario (nombre_completo,correo,sexo,edad,ocupacion,profesion) 
+                    $stmt = Conexion::conectar()->prepare("INSERT INTO jugador (nombre_completo,correo,sexo,edad,ocupacion,profesion) 
                     VALUES (:nombre, :correo, :genero, :edad, :ocupacion,:profesion)");
 
                     $stmt->bindParam(":nombre", $_POST["nombre"], PDO::PARAM_STR);
@@ -125,7 +125,7 @@ class Usuario{
                 
                 echo '<script>
                         Swal.fire({
-                            title: "Usuario registrado con éxito",
+                            title: "Jugador registrado con éxito",
                             text: "Ahora serás redireccionado al juego",
                             icon: "success",
                             allowEscapeKey: false,
@@ -140,7 +140,7 @@ class Usuario{
             }catch(Exception $e){
                 echo '<script>
                         Swal.fire({
-                            title: "Algo salió mal, usuario no registrado",
+                            title: "Algo salió mal, jugador no registrado",
                             text: "Por favor, intentalo de nuevo",
                             icon: "error",
                             allowEscapeKey: false,
@@ -159,7 +159,7 @@ class Usuario{
     public function agregarEncuesta() {
         if(isset($_POST['p1'])){
             try{
-                $stmt = Conexion::conectar()->prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,id_usuario) 
+                $stmt = Conexion::conectar()->prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,id_jugador) 
                 VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17, :id)");
 
                 $stmt->bindParam(":p1", $_POST['p1'], PDO::PARAM_INT);

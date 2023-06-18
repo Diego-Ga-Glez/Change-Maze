@@ -1,5 +1,5 @@
 <?php
-    include 'php/usuarios.php';  
+    include 'php/jugador.php';  
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +55,9 @@
 
             if ($_GET["ruta"] == 'jugadores')
                 include 'modulos/jugadores.php';
+            
+            if ($_GET["ruta"] == 'incompletos')
+                include 'modulos/incompletos.php';
         }else{
             include 'modulos/registro.php';
         }

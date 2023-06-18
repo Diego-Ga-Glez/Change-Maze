@@ -26,7 +26,7 @@
   }
    
   /*else{
-    Usuario::eliminarUsuario();
+    Jugador::eliminarUsuario();
     echo '<script> window.location = "index.php" </script>';
   }*/
     

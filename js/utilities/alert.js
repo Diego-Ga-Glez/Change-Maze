@@ -118,7 +118,7 @@ export default class Alert {
         datos.append("encuesta", true);
 
         $.ajax({
-            url:"./ajax/usuarios.ajax.php",
+            url:"./ajax/jugadores.ajax.php",
             method: "POST",
             data: datos,
             cache: false,

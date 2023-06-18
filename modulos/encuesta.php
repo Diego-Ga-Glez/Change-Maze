@@ -352,8 +352,8 @@
                     <input class="btn btn-primary btn-xs mt-5 mx-auto d-block" type="submit" id="btnEncuesta" value="Enviar cuestionario">
                 
                     <?php
-                        $usuario = new Usuario();
-                        $usuario -> agregarEncuesta();
+                        $jugador = new Jugador();
+                        $jugador -> agregarEncuesta();
                     ?>  
 
                 </form>

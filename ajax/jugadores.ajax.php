@@ -1,8 +1,8 @@
 <?php
 
-require_once '../php/usuarios.php';
+require_once '../php/jugador.php';
 
-class AjaxUsuarios{
+class AjaxJugadores{
 
     // Agregar seccion a la DB
     public $num_res;
@@ -10,13 +10,13 @@ class AjaxUsuarios{
     public $change;
 
     public function ajaxAgregarSeccion(){
-        Usuario::agregarSeccionUsuario($this->num_res,$this->score,$this->change);    
+        Jugador::agregarSeccionJugador($this->num_res,$this->score,$this->change);    
     }
 
 }
 
 if(isset($_POST["num_resp"])){
-    $agregar = new AjaxUsuarios();
+    $agregar = new AjaxJugadores();
     $agregar -> num_res = $_POST["num_resp"];
     $agregar -> score = $_POST["score"];
     $agregar -> change = $_POST["change"];

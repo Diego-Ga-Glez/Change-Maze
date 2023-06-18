@@ -77,8 +77,8 @@
                     <input class="btn btn-primary w-100 mt-3" type="submit" id="btnRegistro" value="Registrarse">
                 
                     <?php
-                        $usuario = new Usuario();
-                        $usuario -> agregarUsuario();
+                        $jugador = new Jugador();
+                        $jugador -> agregarJugador();
                     ?>  
                 
                 </form>

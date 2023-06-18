@@ -191,7 +191,7 @@ export default class DungeonScene extends Phaser.Scene {
       datos.append("change", change);
 
       $.ajax({
-        url:"./ajax/usuarios.ajax.php",
+        url:"./ajax/jugadores.ajax.php",
         method: "POST",
         data: datos,
         cache: false,

@@ -55,7 +55,7 @@
     <div class="card mb-2 box-shadow">
 
       <div class="card-header">
-        <h6 class="text-center">Todos los jugadores</h6>
+        <h6 class="text-center">Jugadores con registro incompleto</h6>
       </div>
 
       <div class="card-body">
@@ -77,7 +77,7 @@
           <tbody>
             <?php
             $jugador = new Jugador();
-            $jugadores = $jugador -> mostrarJugadores();
+            $jugadores = $jugador -> jugadoresIncompletos();
             
             foreach($jugadores as $key => $value) {
               echo '<tr>
@@ -89,7 +89,7 @@
                       <td>'.$value["ocupacion"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'">
+                          <button type="button" class="btn btn-danger Jugador" idJugador="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
                         </div>
@@ -166,4 +166,4 @@ $(document).on("click", ".btnEliminarJugador", function(){
 <?php
   $jugador = new Jugador();
   $jugador -> eliminarJugador();
-?>  
+?>
