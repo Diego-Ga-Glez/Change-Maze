@@ -46,7 +46,7 @@
     <div class="card mb-2 box-shadow">
 
       <div class="card-header">
-        <h6 class="text-center">Jugadores</h6>
+        <h6 class="text-center">Todos los jugadores</h6>
       </div>
 
       <div class="card-body">
@@ -80,7 +80,9 @@
                       <td>'.$value["ocupacion"].'</td>
                       <td>
                         <div class="btn-group">
-                          
+                          <button type="button" class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'">
+                            <i class="bi bi-trash text-light"></i>
+                          </button>
                         </div>
                       </td>
                     </tr>';
@@ -130,4 +132,29 @@ document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
 document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
 })
 
+$(document).on("click", ".btnEliminarUsuario", function(){
+
+  var idUsuario = $(this).attr("idUsuario");
+
+  swal.fire({
+      title:"¿Está seguro de borrar el jugador?",
+      text: "Esta acción es irreversible",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6", 
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Borrar",
+      cancelButtonText: "Cancelar"
+  }).then((result)=>{
+      if(result.value){
+        window.location = "jugadores?idUsuario="+idUsuario
+      }
+  })
+})
+
 </script>
+
+<?php
+  $usuario = new Usuario();
+  $usuario -> eliminarJugador();
+?>  

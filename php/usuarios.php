@@ -20,6 +20,42 @@ class Usuario{
             $stmt -> execute();
         }catch(Exception $e){} 
     }
+
+    static public function eliminarJugador() {
+        if(isset($_GET['idUsuario'])){
+            try{
+                $stmt = Conexion::conectar()->prepare("DELETE FROM usuario WHERE id = :id");
+                $stmt->bindParam(":id", $_GET['idUsuario'], PDO::PARAM_INT);
+                $stmt -> execute();
+
+                echo '<script>
+                        Swal.fire({
+                            title: "Jugador eliminado con éxito",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "jugadores";
+                            }
+                        }) 
+                        </script>';
+    
+            }catch(Exception $e){
+                echo '<script>
+                            Swal.fire({
+                                title: "Algo salió mal, jugador no eliminado",
+                                text: "Por favor, intentalo de nuevo",
+                                icon: "error",
+                                confirmButtonText: "OK"
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location = "jugadores";
+                                }
+                            }) 
+                          </script>';
+            } 
+        }
+    }
     
     static public function agregarSeccionUsuario($num_resp,$score,$change){
         try{
