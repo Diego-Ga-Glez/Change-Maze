@@ -1,7 +1,11 @@
+<?php
+    if(!isset($_SESSION["usuario"],$_SESSION["privilegios"]))
+      echo '<script> window.location = "admin" </script>';
+?> 
 <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: #ffffff;">
   <div class="container-fluid">
     
-    <a class="navbar-brand" href="#" style="margin-left: 1em;">Inicio</a>
+    <a class="navbar-brand" href="gestion" style="margin-left: 1em;">Inicio</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -24,7 +28,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Usuarios</a>
+                <a class="nav-link" href="usuarios">Usuarios</a>
             </li>
         </ul>
 
@@ -37,7 +41,7 @@
                 </a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="salir">Cerrar sesión</a></li>
                 </ul>
 
             </li>

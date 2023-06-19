@@ -1,3 +1,8 @@
+<?php
+    if(isset($_SESSION['usuario'],$_SESSION['privilegios']))
+        echo '<script> window.location = "gestion" </script>';
+?> 
+
 <style>
     /* Cuando la pantalla es menor a 900px  (tablets y teléfonos inteligentes)*/
     @media only screen and (max-width : 900px) {
@@ -45,6 +50,8 @@
                     <input class="btn btn-primary w-100 mt-3" type="submit" id="btnAdmin" value="Iniciar sesión">
                 
                     <?php
+                        $jugador = new Usuario();
+                        $jugador -> mostrarUsuario();
                         
                     ?>  
                 
