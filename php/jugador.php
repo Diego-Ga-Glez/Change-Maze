@@ -159,8 +159,8 @@ class Jugador{
     public function agregarEncuesta() {
         if(isset($_POST['p1'])){
             try{
-                $stmt = Conexion::conectar()->prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,id_jugador) 
-                VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17, :id)");
+                $stmt = Conexion::conectar()-> prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,busqueda_rutina,reaccion_emocional,enfoque_corto_plazo,rigidez_cognitiva,puntaje_total,id_jugador) 
+                VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17,:busqueda_rutina, :reaccion_emocional, :enfoque_corto_plazo, :rigidez_cognitiva, :puntaje_total, :id)");
 
                 $stmt->bindParam(":p1", $_POST['p1'], PDO::PARAM_INT);
                 $stmt->bindParam(":p2", $_POST['p2'], PDO::PARAM_INT);
@@ -179,6 +179,21 @@ class Jugador{
                 $stmt->bindParam(":p15", $_POST['p15'], PDO::PARAM_INT);
                 $stmt->bindParam(":p16", $_POST['p16'], PDO::PARAM_INT);
                 $stmt->bindParam(":p17", $_POST['p17'], PDO::PARAM_INT);
+
+                $busqueda_rutina = ($_POST['p1'] + $_POST['p2'] + $_POST['p3'] + abs($_POST['p4']-7) + $_POST['p5'])/5;
+                $stmt->bindParam(":busqueda_rutina", $busqueda_rutina, PDO::PARAM_STR);
+
+                $reaccion_emocional = ($_POST['p6'] + $_POST['p7'] + $_POST['p8'] + $_POST['p9'])/4;
+                $stmt->bindParam(":reaccion_emocional", $reaccion_emocional, PDO::PARAM_STR);
+
+                $enfoque_corto_plazo = ($_POST['p10'] + $_POST['p11'] + $_POST['p12'] + $_POST['p13'])/4;
+                $stmt->bindParam(":enfoque_corto_plazo", $enfoque_corto_plazo, PDO::PARAM_STR);
+
+                $rigidez_cognitiva = (abs($_POST['p14']-7) + $_POST['p15'] + $_POST['p16'] + $_POST['p17'])/4;
+                $stmt->bindParam(":rigidez_cognitiva", $rigidez_cognitiva, PDO::PARAM_STR);
+
+                $puntaje_total = ($busqueda_rutina + $reaccion_emocional + $enfoque_corto_plazo + $rigidez_cognitiva)/4;
+                $stmt->bindParam(":puntaje_total",$puntaje_total, PDO::PARAM_STR);
                 $stmt->bindParam(":id", $_SESSION['id'], PDO::PARAM_INT);
 
             
