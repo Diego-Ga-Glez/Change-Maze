@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION["usuario"],$_SESSION["privilegios"]))
+    if(!isset($_SESSION["usuario"],$_SESSION["rol"]))
         echo '<script> window.location = "admin" </script>';
 ?> 
 
