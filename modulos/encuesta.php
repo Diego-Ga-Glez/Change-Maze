@@ -349,7 +349,7 @@
 
                     </ul>
 
-                    <input class="btn btn-primary btn-xs mt-5 mx-auto d-block" type="submit" id="btnEncuesta" value="Enviar cuestionario">
+                    <input class="btn btn-primary mt-5 mx-auto d-block" type="submit" id="btnEncuesta" value="Enviar cuestionario">
                 
                     <?php
                         $jugador = new Jugador();

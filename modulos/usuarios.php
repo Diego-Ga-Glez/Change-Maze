@@ -40,6 +40,9 @@
                       <td>'.$value["ultimo_login"].'</td>
                       <td>
                         <div class="btn-group">
+                          <button type="button" class="btn btn-warning">
+                            <i class="bi bi-pencil-fill text-light"></i>
+                          </button>
                           <button type="button" class="btn btn-danger btnEliminarUsuario" correoUsuario="'.$value["correo"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
@@ -52,9 +55,10 @@
           </tbody>
 
         </table>
-        </div>
-</div>
-</div>
+        <button type="button" class="btn btn-primary mx-auto d-block mt-3">Agregar usuario</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
