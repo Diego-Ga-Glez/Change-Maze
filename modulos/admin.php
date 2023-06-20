@@ -51,7 +51,7 @@
                 
                     <?php
                         $jugador = new Usuario();
-                        $jugador -> mostrarUsuario();
+                        $jugador -> validarUsuario();
                         
                     ?>  
                 
