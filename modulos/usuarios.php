@@ -40,7 +40,7 @@
                       <td>'.$value["ultimo_login"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario">
+                          <button type="button" class="btn btn-warning" idUsuario="'.$value["id"].'" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
                             <i class="bi bi-pencil-fill text-light"></i>
                           </button>
                           <button type="button" class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'">
@@ -62,148 +62,113 @@
 </div>
 
 <!-- Modal Modificar Usuario -->
-<div id="modalEditarUsuario" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
+<div class="modal fade" id="modalEditarUsuario" role="dialog" tabindex="-1">
+  <div class="modal-dialog"> 
     <div class="modal-content">
 
-      <form role="form" method="post" enctype="multipart/form-data">
+      <div class="modal-header card-header">
+        <h5 class="modal-title">Editar usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
-        <!-- Header del formulario -->
-        <div class="modal-header" style="background:#3c8dbc; color:white;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Editar usuario</h4>
-        </div>
+      <div class="modal-body">
+        <form role="form" method="post" enctype="multipart/form-data">
 
-        <!-- Body del formulario -->
-        <div class="modal-body">
-
-          <div class="box-body">
-
-            <!-- Input de nombre -->
+          <ul class="list-unstyled mb-4">
             <div class="form-group">
-              <div class="input-group">   
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input class="form-control input-lg" type="text" id="editarNombre" name="editarNombre" value=""> 
-              </div>
+                <label class="form-label" for="email">Correo electrónico</label>
+                <input class="form-control" type="email" id="email" name="correo" onkeyup="minuscula(this)">
             </div>
 
-            <!-- Input Usuario -->
-            <div class="form-group">
-              <div class="input-group">   
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                <input class="form-control input-lg" type="text" id="editarUsuario" name="editarUsuario" value="" readonly> 
-              </div>
+            <div class="form-group mt-2">
+                <label class="form-label">Usuario</label>
+                <input class="form-control" type="text" id="usuario" name="usuario">
             </div>
 
-            <!-- Input contraseña -->
-            <div class="form-group">
-              <div class="input-group">   
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input class="form-control input-lg" type="password" name="editarPassword" placeholder="Ingrese la nueva contraseña"> 
-                <input type="hidden" id="passwordActual" name="passwordActual">
-              </div>
+            <div class="form-group mt-2">
+                <label class="form-label" for="password">Nueva contraseña</label>
+                <input class="form-control" type="password" id="password" name="password">
             </div>
 
-            <!-- Input perfil -->
-            <div class="form-group">
-              <div class="input-group">   
-                <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                <select name="editarPerfil" class="form-control input-lg">
-                  <option value="" id="editarPerfil"></option>
-                  <option value="Administrador">Administrador</option>
-                  <option value="Especial">Especial</option>
-                  <option value="Vendedor">Vendedor</option>
+            <div class="form-group mt-2">
+                <label class="form-label">Rol</label>
+                <select class="form-select" id="rol" name="rol">
+                    <option selected></option>
+                    <option value="F">Administrador</option>
+                    <option value="M">Usuario</option>
                 </select>
-              </div>
             </div>
+          </ul>
+        </form>
+      </div>
 
-            <!-- Input imagen -->
-            <div class="form-group">
-              <div class="panel ">Subir foto</div>
-              <input type="file" class="foto" name="editarFoto">
-              <p class="help-block">Peso maximo de 2 MB</p>
-              <img src="vistas/img/usuarios/default/default-user.png" class="img-thumbnail previsualizar" width="100px">
-              <input type="hidden" id="fotoActual" name="fotoActual">
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- Footer del formulario -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-
-        <?php
-          /*$editarUsuario = new ControladorUsuarios();
-          $editarUsuario -> ctrEditarUsuario();*/
-        ?>
-      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
 
     </div>
-    <!-- Modal-content-->
-
   </div>
-  <!-- Modal-dialog-->
 </div>
 
 <script>
-$(document).ready(function () {
-$('.tablas').DataTable({
-    "language": {
+  $(document).ready(function () {
+  $('.tablas').DataTable({
+      "language": {
 
-        "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
-        "sSearch":         "Buscar:",
-        "sUrl":            "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-        "sFirst":    "Primero",
-        "sLast":     "Último",
-        "sNext":     "Siguiente",
-        "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
+          "sProcessing":     "Procesando...",
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+          "sZeroRecords":    "No se encontraron resultados",
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+          "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+          "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+          "sInfoPostFix":    "",
+          "sSearch":         "Buscar:",
+          "sUrl":            "",
+          "sInfoThousands":  ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+          "sFirst":    "Primero",
+          "sLast":     "Último",
+          "sNext":     "Siguiente",
+          "sPrevious": "Anterior"
+          },
+          "oAria": {
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          }
 
-    }
-});
-
-document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
-document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
-})
-
-$(document).on("click", ".btnEliminarUsuario", function(){
-
-  var idUsuario = $(this).attr("idUsuario");
-
-  swal.fire({
-      title:"¿Está seguro de borrar el usuario?",
-      text: "Esta acción es irreversible",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6", 
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Borrar",
-      cancelButtonText: "Cancelar"
-  }).then((result)=>{
-      if(result.value){
-        window.location = "usuarios?idUsuario="+idUsuario;
       }
+  });
+
+  document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
+  document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
   })
-})
+
+  $(document).on("click", ".btnEliminarUsuario", function(){
+
+    var idUsuario = $(this).attr("idUsuario");
+
+    swal.fire({
+        title:"¿Está seguro de borrar el usuario?",
+        text: "Esta acción es irreversible",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6", 
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Borrar",
+        cancelButtonText: "Cancelar"
+    }).then((result)=>{
+        if(result.value){
+          window.location = "usuarios?idUsuario="+idUsuario;
+        }
+    })
+  })
+
+  function minuscula(input){
+        input.value = input.value.toLowerCase();
+  }
 
 </script>
 
