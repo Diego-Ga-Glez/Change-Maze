@@ -3,7 +3,76 @@
 require_once "conexion.php";
 
 class Usuario{
+    static public function agregarUsuario(){
+        try{
+            if(isset($_POST['agregarUsuario'])){
+                $stmt = Conexion::conectar()->prepare("INSERT INTO usuario(correo, usuario, password, rol) 
+                                                       VALUES (:correo, :usuario,:password,:rol)");
 
+                $stmt->bindParam(":correo", $_POST["agregarCorreo"], PDO::PARAM_STR);
+                $stmt->bindParam(":usuario", $_POST["agregarUsuario"], PDO::PARAM_STR);
+                $stmt->bindParam(":password", $_POST["agregarPassword"], PDO::PARAM_STR);
+                $stmt->bindParam(":rol", $_POST["agregarRol"], PDO::PARAM_STR);
+                $stmt -> execute();
+
+                echo '<script>
+                        Swal.fire({
+                        title: "Usuario agregado con exito",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                        }).then((result) => {window.location = "usuarios";}) 
+                      </script>';
+            }
+
+        }catch(Exception $e){
+            echo '<script>
+                    Swal.fire({
+                        title: "Algo salió mal, usuario no agregado",
+                        text: "Por favor, intentalo de nuevo",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                        }).then((result)=>{window.location = "usuarios";}) 
+                  </script>';
+        }
+    }
+    
+    static public function editarUsuario(){
+        try{
+            if(isset($_POST['editarUsuario'])){
+
+                $stmt = Conexion::conectar()->prepare("UPDATE usuario SET correo = :correo,
+                    usuario = :usuario, password = :password, rol = :rol WHERE id = :id");
+            
+                $stmt->bindParam(":correo", $_POST["editarCorreo"], PDO::PARAM_STR);
+                $stmt->bindParam(":usuario", $_POST["editarUsuario"], PDO::PARAM_STR);
+                if(isset($_POST["editarPassword"])) 
+                    $stmt->bindParam(":password", $_POST["editarPassword"], PDO::PARAM_STR);
+                else
+                    $stmt->bindParam(":password", $_POST["passwordActual"], PDO::PARAM_STR);
+                $stmt->bindParam(":rol", $_POST["editarRol"], PDO::PARAM_STR);
+                $stmt->bindParam(":id", $_POST["idActual"], PDO::PARAM_INT);
+                $stmt -> execute();
+
+                echo '<script>
+                        Swal.fire({
+                        title: "Usuario modificado con exito",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                        }).then((result) => {window.location = "usuarios";}) 
+                      </script>';
+            }
+        }catch(Exception $e){
+            echo '<script>
+                    Swal.fire({
+                        title: "Algo salió mal, usuario no modificado",
+                        text: "Por favor, intentalo de nuevo",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                        }).then((result)=>{window.location = "usuarios";}) 
+                  </script>';
+        }
+    }
+    
     static public function modificarUltimoLogin($id){
         try{
             $stmt = Conexion::conectar()->prepare("UPDATE usuario SET ultimo_login = :ultimo_login WHERE id = :id");
@@ -53,11 +122,20 @@ class Usuario{
 
     }
     
-    static public function mostrarUsuarios() {
+    static public function mostrarUsuarios($id) {
         try{
-            $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario");
-            $stmt -> execute();
-            return $stmt -> fetchAll();
+            if($id == null){
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario");
+                $stmt -> execute();
+                return $stmt -> fetchAll();
+            }
+            else{
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario WHERE id = :id");
+                $stmt->bindParam(":id",$id, PDO::PARAM_INT); 
+                $stmt -> execute();
+                return $stmt -> fetch();
+            }    
+
         }catch(Exception $e){}     
     }
     
@@ -96,5 +174,4 @@ class Usuario{
         }
         
     }
-
 }

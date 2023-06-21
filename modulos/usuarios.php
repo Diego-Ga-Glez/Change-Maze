@@ -29,7 +29,7 @@
           <tbody>
             <?php
             $usuarios = new Usuario();
-            $usuarios = $usuarios -> mostrarUsuarios();
+            $usuarios = $usuarios -> mostrarUsuarios(null);
             
             foreach($usuarios as $key => $value) {
               echo '<tr>
@@ -40,7 +40,7 @@
                       <td>'.$value["ultimo_login"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning" idUsuario="'.$value["id"].'" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                          <button type="button" class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
                             <i class="bi bi-pencil-fill text-light"></i>
                           </button>
                           <button type="button" class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'">
@@ -55,7 +55,7 @@
           </tbody>
 
         </table>
-        <button type="button" class="btn btn-primary mx-auto d-block mt-3">Agregar usuario</button>
+        <button type="button" class="btn btn-primary mx-auto d-block mt-3" data-bs-toggle="modal" data-bs-target="#modalAgregarUsuario">Agregar usuario</button>
       </div>
     </div>
   </div>
@@ -77,42 +77,102 @@
           <ul class="list-unstyled mb-4">
             <div class="form-group">
                 <label class="form-label" for="email">Correo electrónico</label>
-                <input class="form-control" type="email" id="email" name="correo" onkeyup="minuscula(this)">
+                <input class="form-control" type="email" id="editarCorreo" name="editarCorreo" onkeyup="minuscula(this)">
             </div>
 
             <div class="form-group mt-2">
                 <label class="form-label">Usuario</label>
-                <input class="form-control" type="text" id="usuario" name="usuario">
+                <input class="form-control" type="text" id="editarUsuario" name="editarUsuario">
+                <input type="hidden" id="idActual" name="idActual">
             </div>
 
             <div class="form-group mt-2">
                 <label class="form-label" for="password">Nueva contraseña</label>
-                <input class="form-control" type="password" id="password" name="password">
+                <input class="form-control" type="password" id="editarPassword" name="editarPassword">
+                <input type="hidden" id="passwordActual" name="passwordActual">
             </div>
 
             <div class="form-group mt-2">
                 <label class="form-label">Rol</label>
-                <select class="form-select" id="rol" name="rol">
+                <select class="form-select" id="editarRol" name="editarRol">
                     <option selected></option>
-                    <option value="F">Administrador</option>
-                    <option value="M">Usuario</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Usuario">Usuario</option>
                 </select>
             </div>
           </ul>
-        </form>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
       </div>
 
+      <?php
+          $editarUsuario = new Usuario();
+          $editarUsuario -> editarUsuario();
+      ?>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Agregar Usuario -->
+<div class="modal fade" id="modalAgregarUsuario" role="dialog" tabindex="-1">
+  <div class="modal-dialog"> 
+    <div class="modal-content">
+
+      <div class="modal-header card-header">
+        <h5 class="modal-title">Editar usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form role="form" method="post" enctype="multipart/form-data">
+
+          <ul class="list-unstyled mb-4">
+            <div class="form-group">
+                <label class="form-label" for="email">Correo electrónico</label>
+                <input class="form-control" type="email" id="agregarCorreo" name="agregarCorreo" onkeyup="minuscula(this)" required>
+            </div>
+
+            <div class="form-group mt-2">
+                <label class="form-label">Usuario</label>
+                <input class="form-control" type="text" id="agregarUsuario" name="agregarUsuario" required>
+            </div>
+
+            <div class="form-group mt-2">
+                <label class="form-label" for="password">Nueva contraseña</label>
+                <input class="form-control" type="password" id="agregarPassword" name="agregarPassword" required>
+            </div>
+
+            <div class="form-group mt-2">
+                <label class="form-label">Rol</label>
+                <select class="form-select" id="agregarRol" name="agregarRol" required>
+                    <option selected></option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Usuario">Usuario</option>
+                </select>
+            </div>
+          </ul>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+
+      <?php
+          $agregarUsuario = new Usuario();
+          $agregarUsuario -> agregarUsuario();
+      ?>
+      </form>
     </div>
   </div>
 </div>
 
 <script>
-  $(document).ready(function () {
+ $(document).ready(function () {
   $('.tablas').DataTable({
       "language": {
 
@@ -165,6 +225,33 @@
         }
     })
   })
+
+  //Editar usuario
+$(document).on("click", ".btnEditarUsuario", function(){
+    var idUsuario = $(this).attr("idUsuario");
+    var datos = new FormData();
+    datos.append("idUsuario", idUsuario);
+
+    $.ajax({
+        url:"./ajax/usuarios.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+            $("#editarUsuario").val(respuesta["usuario"]);
+            $("#idActual").val(respuesta["id"]);
+            $("#editarCorreo").val(respuesta["correo"]);
+            $("#PasswordActual").val(respuesta["password"]);
+            $("#editarRol").val(respuesta["rol"]);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+          alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+        }  
+    });
+})
 
   function minuscula(input){
         input.value = input.value.toLowerCase();
