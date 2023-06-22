@@ -11,7 +11,8 @@ class Usuario{
 
                 $stmt->bindParam(":correo", $_POST["agregarCorreo"], PDO::PARAM_STR);
                 $stmt->bindParam(":usuario", $_POST["agregarUsuario"], PDO::PARAM_STR);
-                $stmt->bindParam(":password", $_POST["agregarPassword"], PDO::PARAM_STR);
+                $encriptar = crypt($_POST["agregarPassword"],'$2a$07$usesomesillystringforsalt$');
+                $stmt->bindParam(":password", $encriptar, PDO::PARAM_STR);
                 $stmt->bindParam(":rol", $_POST["agregarRol"], PDO::PARAM_STR);
                 $stmt -> execute();
 
@@ -45,10 +46,11 @@ class Usuario{
             
                 $stmt->bindParam(":correo", $_POST["editarCorreo"], PDO::PARAM_STR);
                 $stmt->bindParam(":usuario", $_POST["editarUsuario"], PDO::PARAM_STR);
-                if(isset($_POST["editarPassword"])) 
-                    $stmt->bindParam(":password", $_POST["editarPassword"], PDO::PARAM_STR);
+                if(isset($_POST["editarPassword"]))
+                    $encriptar = crypt($_POST["editarPassword"],'$2a$07$usesomesillystringforsalt$');
                 else
-                    $stmt->bindParam(":password", $_POST["passwordActual"], PDO::PARAM_STR);
+                    $encriptar =  $_POST["passwordActual"];        
+                $stmt->bindParam(":password", $encriptar, PDO::PARAM_STR);
                 $stmt->bindParam(":rol", $_POST["editarRol"], PDO::PARAM_STR);
                 $stmt->bindParam(":id", $_POST["idActual"], PDO::PARAM_INT);
                 $stmt -> execute();
@@ -142,29 +144,36 @@ class Usuario{
     public function validarUsuario(){
         if(isset($_POST['correo'])){
             try{
-                $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario WHERE correo = :correo and password = :password");
+                $stmt = Conexion::conectar()->prepare("SELECT * FROM usuario WHERE correo = :correo");
                 $stmt->bindParam(":correo",$_POST['correo'], PDO::PARAM_STR);
-                $stmt->bindParam(":password", $_POST['password'], PDO::PARAM_STR);
                 $stmt -> execute();
                 $respuesta = $stmt -> fetch();
 
                 if(is_array($respuesta)){
 
-                    if($respuesta["correo"] == $_POST["correo"] &&
-                    $respuesta["password"] == $_POST['password']){
+                    $encriptar = crypt($_POST["password"],'$2a$07$usesomesillystringforsalt$');
+                    if($respuesta["password"] ==  $encriptar){
 
                         $_SESSION["usuario"] = $respuesta["usuario"];
                         $_SESSION["id"] = $respuesta["id"];
                         $_SESSION["rol"] = $respuesta["rol"];
                         Usuario::modificarUltimoLogin($_SESSION["id"]);
                         echo '<script> window.location = "gestion" </script>';
+                    }else{
+                        echo '<script>
+                                Swal.fire({
+                                title: "Error al ingresar los datos",
+                                icon: "error",
+                                confirmButtonText: "OK"
+                                }).then((result) => {window.location = "admin";}) 
+                              </script>';    
                     }
 
                 }else{
                     echo '<script>
                     Swal.fire({
                         title: "Algo salió mal",
-                        text: "Contraseña o correo incorrecto",
+                        text: "Inténtelo de nuevo ",
                         icon: "error",
                         confirmButtonText: "OK"
                         }).then((result) => {window.location = "admin";}) 

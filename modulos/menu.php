@@ -28,9 +28,12 @@
 
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="usuarios">Usuarios</a>
-            </li>
+            <?php
+                if($_SESSION["rol"] == "Administrador")
+                echo '<li class="nav-item">
+                        <a class="nav-link" href="usuarios">Usuarios</a>
+                      </li>'
+            ?>
         </ul>
 
         <ul class="navbar-nav" style="margin-right: 1em;">

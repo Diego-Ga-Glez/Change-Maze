@@ -1,5 +1,8 @@
 <?php
-  include 'menu.php';
+  if($_SESSION["rol"] == "Usuario")
+    echo '<script> window.location = "gestion"; </script>';
+    
+  include 'menu.php'; 
 ?>
 
 <div class="container" style="background:#ffffff; padding:0; width:90%;">
@@ -21,7 +24,7 @@
               <th>Usuario</th>
               <th>Correo</th>
               <th>Rol</th>
-              <th>Ultimo Login</th>
+              <th>Último Login</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -123,7 +126,7 @@
     <div class="modal-content">
 
       <div class="modal-header card-header">
-        <h5 class="modal-title">Editar usuario</h5>
+        <h5 class="modal-title">Agregar usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 

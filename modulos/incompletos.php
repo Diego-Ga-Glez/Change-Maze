@@ -114,6 +114,13 @@ $(document).on("click", ".btnEliminarJugador", function(){
   })
 })
 
+var rol = '<?php echo $_SESSION['rol'];?>' ;
+if(rol == "Usuario"){
+  const btns = document.getElementsByClassName('btnEliminarJugador')
+  for(const btn of btns)
+    btn.style.visibility = 'hidden';
+}
+
 </script>
 
 <?php

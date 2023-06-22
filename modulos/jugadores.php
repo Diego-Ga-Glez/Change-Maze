@@ -92,6 +92,14 @@ $('.tablas').DataTable({
 
 document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
 document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
+
+var rol = '<?php echo $_SESSION['rol'];?>' ;
+if(rol == "Usuario"){
+  const btns = document.getElementsByClassName('btnEliminarJugador')
+  for(const btn of btns)
+    btn.style.visibility = 'hidden';
+}
+  
 })
 
 $(document).on("click", ".btnEliminarJugador", function(){
