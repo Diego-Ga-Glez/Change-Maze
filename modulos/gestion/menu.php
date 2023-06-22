@@ -1,12 +1,12 @@
 <?php
     if(!isset($_SESSION["usuario"],$_SESSION["rol"]))
-        echo '<script> window.location = "admin" </script>';
+        echo '<script> window.location = "login" </script>';
 ?> 
 
 <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: #ffffff;">
   <div class="container-fluid">
     
-    <a class="navbar-brand" href="gestion" style="margin-left: 1em;">Inicio</a>
+    <a class="navbar-brand" href="inicio" style="margin-left: 1em;">Inicio</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

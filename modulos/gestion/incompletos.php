@@ -42,7 +42,7 @@
                       <td>'.$value["ocupacion"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-danger Jugador" idJugador="'.$value["id"].'">
+                          <button type="button" class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
                         </div>

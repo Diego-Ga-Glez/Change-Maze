@@ -1,6 +1,6 @@
 <?php
     if(isset($_SESSION['usuario'],$_SESSION['rol']))
-        echo '<script> window.location = "gestion" </script>';
+        echo '<script> window.location = "inicio" </script>';
 ?> 
 
 <style>

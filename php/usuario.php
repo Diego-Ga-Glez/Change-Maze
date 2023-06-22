@@ -158,14 +158,14 @@ class Usuario{
                         $_SESSION["id"] = $respuesta["id"];
                         $_SESSION["rol"] = $respuesta["rol"];
                         Usuario::modificarUltimoLogin($_SESSION["id"]);
-                        echo '<script> window.location = "gestion" </script>';
+                        echo '<script> window.location = "inicio" </script>';
                     }else{
                         echo '<script>
                                 Swal.fire({
                                 title: "Error al ingresar los datos",
                                 icon: "error",
                                 confirmButtonText: "OK"
-                                }).then((result) => {window.location = "admin";}) 
+                                }).then((result) => {window.location = "login";}) 
                               </script>';    
                     }
 
@@ -176,7 +176,7 @@ class Usuario{
                         text: "Inténtelo de nuevo ",
                         icon: "error",
                         confirmButtonText: "OK"
-                        }).then((result) => {window.location = "admin";}) 
+                        }).then((result) => {window.location = "login";}) 
                   </script>';      
                 }
             }catch(Exception $e){ } 

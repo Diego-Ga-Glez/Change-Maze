@@ -43,30 +43,30 @@
     <?php
         if (isset($_GET["ruta"])){
             if ($_GET["ruta"] == 'game')
-                include 'modulos/game.php';
+                include 'modulos/juego/game.php';
             
             if ($_GET["ruta"] == 'encuesta')
-                include 'modulos/encuesta.php';
+                include 'modulos/juego/encuesta.php';
                 
-            if ($_GET["ruta"] == 'admin')
-                include 'modulos/admin.php';
+            if ($_GET["ruta"] == 'login')
+                include 'modulos/gestion/login.php';
             
-            if ($_GET["ruta"] == 'gestion')
-                include 'modulos/gestion.php';
+            if ($_GET["ruta"] == 'inicio')
+                include 'modulos/gestion/inicio.php';
 
             if ($_GET["ruta"] == 'jugadores')
-                include 'modulos/jugadores.php';
+                include 'modulos/gestion/jugadores.php';
             
             if ($_GET["ruta"] == 'incompletos')
-                include 'modulos/incompletos.php';
+                include 'modulos/gestion/incompletos.php';
             
             if ($_GET["ruta"] == 'usuarios')
-                include 'modulos/usuarios.php';
+                include 'modulos/gestion/usuarios.php';
 
             if($_GET["ruta"] == 'salir')
-                include 'modulos/salir.php';
+                include 'modulos/gestion/salir.php';
         }else{
-            include 'modulos/registro.php';
+            include 'modulos/juego/registro.php';
         }
     ?>
 </body>
