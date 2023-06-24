@@ -1,6 +1,6 @@
 <?php
   if($_SESSION["rol"] == "Usuario")
-    echo '<script> window.location = "gestion"; </script>';
+    echo '<script> window.location = "inicio"; </script>';
     
   include 'menu.php'; 
 ?>
