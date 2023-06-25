@@ -232,4 +232,108 @@ class Jugador{
             }
         }
     }
+
+    static public function mediasERC(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT AVG(busqueda_rutina) AS media1, AVG(reaccion_emocional) AS media2, AVG(enfoque_corto_plazo) AS media3, AVG(rigidez_cognitiva) AS media4, AVG(puntaje_total) AS mediaTotal, COUNT(*) AS cantidad FROM encuesta;");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarEstudiantes(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM jugador WHERE ocupacion = 'ESTUDIANTE';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarProfesionistas(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM jugador WHERE ocupacion = 'PROFESIONISTA';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarExcelenteNo(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'excelente' AND cambiar_juego = 'no';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarExcelenteSi(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'excelente' AND cambiar_juego = 'si';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarBuenoNo(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'bueno' AND cambiar_juego = 'no';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarBuenoSi(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'bueno' AND cambiar_juego = 'si';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarRegularNo(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'regular' AND cambiar_juego = 'no';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarRegularSi(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'regular' AND cambiar_juego = 'si';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarMaloNo(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'malo' AND cambiar_juego = 'no';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarMaloSi(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'malo' AND cambiar_juego = 'si';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarPesimoNo(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'pesimo' AND cambiar_juego = 'no';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
+
+    static public function contarPesimoSi(){
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'pesimo' AND cambiar_juego = 'si';");
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
+    }
 }

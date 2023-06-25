@@ -1,5 +1,51 @@
+<style>
+    /* Cuando la pantalla es menor a 900px  (tablets y teléfonos inteligentes)*/
+    @media only screen and (max-width : 900px) {
+        .container{
+            width:90%;
+        }
+    }
+
+    /* Cuando la pantalla es mayor a 900px */
+    @media only screen and (min-width : 901px) {
+        .container{
+            width:60%;
+        }
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 50vh;
+      margin: auto;
+    }
+</style>
+
 <?php
   include 'menu.php';
+
+  $jugador = new Jugador();
+
+  $estudiantes = $jugador -> contarEstudiantes() -> cantidad;
+  $profesionistas = $jugador -> contarProfesionistas() -> cantidad;
+
+  $medias = $jugador -> mediasERC();
+  $media1 = round($medias -> media1,2);
+  $media2 = round($medias -> media2,2);
+  $media3 = round($medias -> media3,2);
+  $media4 = round($medias -> media4,2);
+  $media_total = round($medias -> mediaTotal,2);
+  $cant_muestra = $medias -> cantidad;
+
+  $excelente_no = $jugador -> contarExcelenteNo() -> cantidad;
+  $excelente_si = $jugador -> contarExcelenteSi() -> cantidad;
+  $bueno_no = $jugador -> contarBuenoNo() -> cantidad;
+  $bueno_si = $jugador -> contarBuenoSi() -> cantidad;
+  $regular_no = $jugador -> contarRegularNo() -> cantidad;
+  $regular_si = $jugador -> contarRegularSi() -> cantidad;
+  $malo_no = $jugador -> contarMaloNo() -> cantidad;
+  $malo_si = $jugador -> contarMaloSi() -> cantidad;
+  $pesimo_no = $jugador -> contarPesimoNo() -> cantidad;
+  $pesimo_si = $jugador -> contarPesimoSi() -> cantidad;
 ?>
 
 <div class="container mt-5">
@@ -9,7 +55,7 @@
         <div class="card mb-4 box-shadow">
 
             <div class="card-header">
-                <h6 class="text-center">Perfil ERC</h6>
+                <h6 class="text-center">Perfil de Resistencia al Cambio</h6>
             </div>
             
             <div class="card-body p-5">
@@ -50,7 +96,7 @@
         
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
 
     <div class="card-deck mb-5 mt-5">
 
@@ -63,7 +109,7 @@
             <div class="card-body p-5">
 
               <div class="card chart-container">
-                <canvas id="pieChart" height="400"></canvas>
+                <canvas id="pieChart"></canvas>
               </div>
 
             </div>
@@ -74,30 +120,22 @@
         
 </div>
 
-<style>
-.chart-container {
-    width: 60%;
-    height: 60%;
-    margin: auto;
-  }
-</style>
 
 <script>
-
+  // Gráfica de líneas
   var lineCanvas = document.getElementById("lineChart");
 
   var lineData = {
     labels: ["Búsqueda de rutina", "Reacción emocional", "Enfoque a corto plazo", "Rigidez cognitiva"],
     datasets: [{
-      label: 'Resultados de una muestra de N = 49710',
-      data: [2.36, 2.97, 2.42, 3.09],
+      label: 'Resultados de una muestra de N = <?php echo $cant_muestra ?>',
+      data: [<?php echo $media1 ?>, <?php echo $media2 ?>, <?php echo $media3 ?>, <?php echo $media4 ?>],
       lineTension: 0,
       fill: false,
       borderColor: 'orange',
       backgroundColor: 'transparent',
       pointBorderColor: 'orange',
       pointBackgroundColor: 'rgba(255,150,0,0.5)',
-      //borderDash: [5, 5], Linea punteada
       pointRadius: 10,
       pointHoverRadius: 10,
       pointHitRadius: 30,
@@ -105,8 +143,8 @@
       pointStyle: 'rectRounded'
     },
     {
-      label: 'Puntuación ERC media de la muestra = 2.59',
-      data: [2.59, 2.59, 2.59, 2.59],
+      label: 'Puntuación ERC media de la muestra = <?php echo $media_total ?>',
+      data: [<?php echo $media_total ?>, <?php echo $media_total ?>, <?php echo $media_total ?>, <?php echo $media_total ?>],
       lineTension: 0,
       fill: false,
       borderColor: 'blue',
@@ -116,23 +154,18 @@
   };
 
   var lineOptions = {
-    legend: {
-      display: true,
-      position: 'top',
-      labels: {
-        fontColor: 'black'
-      }
-    },
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       xAxes: [{
         gridLines: {
           display: false,
-          color: "black"
+          color: "grey"
         }
       }],
       yAxes: [{
         gridLines: {
-          color: "black",
+          color: "grey",
           borderDash: [2, 5],
         },
         scaleLabel: {
@@ -155,19 +188,19 @@
     options: lineOptions
   });
   
-
+  // Gráfica de barras
   var barCanvas = document.getElementById("barChart");
 
   var yesData = {
     label: 'Sí cambiar el juego',
-    data: [8, 10, 5, 2, 16],
-    backgroundColor: 'blue'
+    data: [<?php echo $excelente_si ?>, <?php echo $bueno_si ?>, <?php echo $regular_si ?>, <?php echo $malo_si ?>, <?php echo $pesimo_si ?>],
+    backgroundColor: '#3D55F3'
   };
   
   var noData = {
     label: 'No cambiar el juego',
-    data: [16, 8, 9, 3, 12],
-    backgroundColor: 'red'
+    data: [<?php echo $excelente_no ?>, <?php echo $bueno_no ?>, <?php echo $regular_no ?>, <?php echo $malo_no ?>, <?php echo $pesimo_no ?>],
+    backgroundColor: '#EE313F'
   };
   
   var barData = {
@@ -176,6 +209,8 @@
   };
   
   var barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       xAxes: [{
         scaleLabel: {
@@ -194,8 +229,8 @@
         },
         ticks: {
             min: 0,
-            max: 20,
-            stepSize: 2
+            max: <?php echo max($excelente_si, $excelente_no, $bueno_si, $bueno_no, $regular_si, $regular_no, $malo_si, $malo_no, $pesimo_si, $pesimo_no) ?>,
+            callback: function(value) {if (value % 1 === 0) {return value;}}
         }
       }]
     }
@@ -207,7 +242,7 @@
     options: barOptions
   });
 
-
+  // Gráfica de pastel
   var pieCanvas = document.getElementById("pieChart");
 
   var pieData = {
@@ -217,17 +252,23 @@
       ],
       datasets: [
       {
-        data: [45, 26],
+        data: [<?php echo $estudiantes ?>, <?php echo $profesionistas ?>],
         backgroundColor: [
             "#FF6384",
-            "#63FF84"
+            "#3DEBF3"
         ]
       }]
   };
 
+  var pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
   var pieChart = new Chart(pieCanvas, {
     type: 'pie',
-    data: pieData
+    data: pieData,
+    options: pieOptions
   });
 
 </script>
