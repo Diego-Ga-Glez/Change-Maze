@@ -15,7 +15,7 @@ class Jugador{
 
     static public function jugadoresIncompletos() {
         try{
-            $stmt = Conexion::conectar()->prepare("SELECT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NULL OR encuesta.id_jugador IS NULL");
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NULL OR encuesta.id_jugador IS NULL");
             $stmt -> execute();
             return $stmt -> fetchAll();
         }catch(Exception $e){} 
