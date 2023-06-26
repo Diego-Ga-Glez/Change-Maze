@@ -145,7 +145,7 @@
             </div>
 
             <div class="form-group mt-2">
-                <label class="form-label" for="password">Nueva contraseña</label>
+                <label class="form-label" for="password">Contraseña</label>
                 <input class="form-control" type="password" id="agregarPassword" name="agregarPassword" required>
             </div>
 
@@ -175,39 +175,6 @@
 </div>
 
 <script>
- $(document).ready(function () {
-  $('.tablas').DataTable({
-      "language": {
-
-          "sProcessing":     "Procesando...",
-          "sLengthMenu":     "Mostrar _MENU_ registros",
-          "sZeroRecords":    "No se encontraron resultados",
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
-          "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-          "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-          "sInfoPostFix":    "",
-          "sSearch":         "Buscar:",
-          "sUrl":            "",
-          "sInfoThousands":  ",",
-          "sLoadingRecords": "Cargando...",
-          "oPaginate": {
-          "sFirst":    "Primero",
-          "sLast":     "Último",
-          "sNext":     "Siguiente",
-          "sPrevious": "Anterior"
-          },
-          "oAria": {
-              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-          }
-
-      }
-  });
-
-  document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
-  document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
-  })
 
   $(document).on("click", ".btnEliminarUsuario", function(){
 
@@ -255,10 +222,6 @@ $(document).on("click", ".btnEditarUsuario", function(){
         }  
     });
 })
-
-  function minuscula(input){
-        input.value = input.value.toLowerCase();
-  }
 
 </script>
 

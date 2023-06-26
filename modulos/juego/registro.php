@@ -211,12 +211,4 @@
         }
     }
 
-    function mayuscula(input){
-        input.value = input.value.toUpperCase();
-    }
-
-    function minuscula(input){
-        input.value = input.value.toLowerCase();
-    }
-
 </script>
