@@ -19,11 +19,11 @@ export default class Alert {
                          'Aviso importante']
 
         const videos = ["",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/1moverse.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/2niveles.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/3monedas.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/4comprar.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./js/assets/video/5portales.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/1moverse.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/2niveles.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/3monedas.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/4comprar.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/5portales.mp4' type='video/mp4'></video>",
                         ""]
         
         const descripcion = ["<p align='justify'>Hola, bienvenido/a a nuestro juego. A continuación se mostrará un pequeño tutorial que te enseñará todos los mecanismos que hay dentro del juego para que así puedas tener una mejor experiencia.</p>",

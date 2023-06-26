@@ -25,8 +25,8 @@
 
   $jugador = new Jugador();
 
-  $estudiantes = $jugador -> contarEstudiantes() -> cantidad;
-  $profesionistas = $jugador -> contarProfesionistas() -> cantidad;
+  $estudiantes = $jugador -> contarJugadores('ESTUDIANTE') -> cantidad;
+  $profesionistas = $jugador -> contarJugadores('PROFESIONISTA') -> cantidad;
 
   $medias = $jugador -> mediasERC();
   $media1 = round($medias -> media1,2);
@@ -36,16 +36,16 @@
   $media_total = round($medias -> mediaTotal,2);
   $cant_muestra = $medias -> cantidad;
 
-  $excelente_no = $jugador -> contarExcelenteNo() -> cantidad;
-  $excelente_si = $jugador -> contarExcelenteSi() -> cantidad;
-  $bueno_no = $jugador -> contarBuenoNo() -> cantidad;
-  $bueno_si = $jugador -> contarBuenoSi() -> cantidad;
-  $regular_no = $jugador -> contarRegularNo() -> cantidad;
-  $regular_si = $jugador -> contarRegularSi() -> cantidad;
-  $malo_no = $jugador -> contarMaloNo() -> cantidad;
-  $malo_si = $jugador -> contarMaloSi() -> cantidad;
-  $pesimo_no = $jugador -> contarPesimoNo() -> cantidad;
-  $pesimo_si = $jugador -> contarPesimoSi() -> cantidad;
+  $excelente_no = $jugador -> seccionesJuego('excelente','no') -> cantidad;
+  $excelente_si = $jugador -> seccionesJuego('excelente','si') -> cantidad;
+  $bueno_no = $jugador -> seccionesJuego('bueno','no') -> cantidad;
+  $bueno_si = $jugador -> seccionesJuego('bueno','si') -> cantidad;
+  $regular_no = $jugador -> seccionesJuego('regular','no') -> cantidad;
+  $regular_si = $jugador -> seccionesJuego('regular','si') -> cantidad;
+  $malo_no = $jugador -> seccionesJuego('malo','no') -> cantidad;
+  $malo_si = $jugador -> seccionesJuego('malo','si') -> cantidad;
+  $pesimo_no = $jugador -> seccionesJuego('pesimo','no') -> cantidad;
+  $pesimo_si = $jugador -> seccionesJuego('pesimo','si') -> cantidad;
 ?>
 
 <div class="container mt-5">

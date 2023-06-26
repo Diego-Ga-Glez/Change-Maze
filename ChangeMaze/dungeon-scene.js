@@ -20,14 +20,14 @@ export default class DungeonScene extends Phaser.Scene {
     this.load.plugin('rexvirtualjoystickplugin', url, true);
     
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
-    this.load.image("tiles", "./js/assets/tilesets/buch-tileset-48px-extruded-blue.png");
-    this.load.image("coin", "./js/assets/menu/coin.png");
-    this.load.image("clock", "./js/assets/menu/clock.png");
-    this.load.image("button", "./js/assets/menu/button.png");
-    this.load.image("buttonTutorial", "./js/assets/menu/buttonTutorial.png");
+    this.load.image("tiles", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-blue.png");
+    this.load.image("coin", "./ChangeMaze/assets/menu/coin.png");
+    this.load.image("clock", "./ChangeMaze/assets/menu/clock.png");
+    this.load.image("button", "./ChangeMaze/assets/menu/button.png");
+    this.load.image("buttonTutorial", "./ChangeMaze/assets/menu/buttonTutorial.png");
     this.load.spritesheet(
       "characters",
-      "./js/assets/spritesheets/buch-characters-64px-extruded.png",
+      "./ChangeMaze/assets/spritesheets/buch-characters-64px-extruded.png",
       {
         frameWidth: 64,
         frameHeight: 64,

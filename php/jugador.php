@@ -2,6 +2,7 @@
 
 session_start();
 require_once "conexion.php";
+require_once "alert.php";
 
 class Jugador{
 
@@ -35,32 +36,11 @@ class Jugador{
                 $stmt = Conexion::conectar()->prepare("DELETE FROM jugador WHERE id = :id");
                 $stmt->bindParam(":id", $_GET['idJugador'], PDO::PARAM_INT);
                 $stmt -> execute();
-
-                echo '<script>
-                        Swal.fire({
-                            title: "Jugador eliminado con éxito",
-                            icon: "success",
-                            confirmButtonText: "OK"
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "jugadores";
-                            }
-                        }) 
-                        </script>';
+                echo alerts("Jugador eliminado con éxito","","success","OK", "jugadores");
     
             }catch(Exception $e){
-                echo '<script>
-                            Swal.fire({
-                                title: "Algo salió mal, jugador no eliminado",
-                                text: "Por favor, intentalo de nuevo",
-                                icon: "error",
-                                confirmButtonText: "OK"
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location = "jugadores";
-                                }
-                            }) 
-                          </script>';
+                echo alerts("Algo salió mal, jugador no eliminado",
+                            "Por favor, intentalo de nuevo","error","OK","jugadores" );
             } 
         }
     }
@@ -123,35 +103,11 @@ class Jugador{
                 $_SESSION["id"] = $result -> id;
                 $_SESSION["game"] = true;
                 
-                echo '<script>
-                        Swal.fire({
-                            title: "Jugador registrado con éxito",
-                            text: "Ahora serás redireccionado al juego",
-                            icon: "success",
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            confirmButtonText: "OK"
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "game";
-                            }
-                        }) 
-                      </script>'; 
+                echo alerts("Jugador registrado con éxito",
+                            "Ahora serás redireccionado al juego","success","OK","game");
             }catch(Exception $e){
-                echo '<script>
-                        Swal.fire({
-                            title: "Algo salió mal, jugador no registrado",
-                            text: "Por favor, intentalo de nuevo",
-                            icon: "error",
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            confirmButtonText: "OK"
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "";
-                            }
-                        }) 
-                      </script>'; 
+                echo alerts("Algo salió mal, jugador no registrado",
+                            "Por favor, intentalo de nuevo","error","OK","");
             }
         }  
     }
@@ -198,37 +154,12 @@ class Jugador{
 
             
                 $stmt->execute();
-                echo '<script>
-                        Swal.fire({
-                            title: "Resultados guardados con éxito",
-                            text: "Muchas gracias por participar en este experimento",
-                            icon: "success",
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            confirmButtonText: "OK"
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "";
-                            }
-                        }) 
-                      </script>';
-
+                echo alerts("Resultados guardados con éxito",
+                            "Muchas gracias por participar en este experimento","success","OK","");
                 session_destroy(); 
             }catch(Exception $e){
-                echo '<script>
-                        Swal.fire({
-                            title: "Algo salió mal, respuestas no registradas",
-                            text: "Por favor, intentalo de nuevo",
-                            icon: "error",
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            confirmButtonText: "OK"
-                            }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location = "encuesta";
-                            }
-                        }) 
-                      </script>'; 
+                echo alerts("Algo salió mal, respuestas no registradas",
+                            "Por favor, intentalo de nuevo","error","OK","encuesta");
             }
         }
     }
@@ -240,100 +171,25 @@ class Jugador{
             return $stmt -> fetch(PDO::FETCH_OBJ);
         }catch(Exception $e){}
     }
-
-    static public function contarEstudiantes(){
+        
+    static public function contarJugadores($ocupacion){
         try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM jugador WHERE ocupacion = 'ESTUDIANTE';");
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM jugador WHERE ocupacion = :ocupacion;");
+            $stmt->bindParam(":ocupacion",$ocupacion, PDO::PARAM_STR);
             $stmt -> execute();
             return $stmt -> fetch(PDO::FETCH_OBJ);
         }catch(Exception $e){}
     }
 
-    static public function contarProfesionistas(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM jugador WHERE ocupacion = 'PROFESIONISTA';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
+    static public function seccionesJuego($calificacion_juego, $cambiar_juego){
+        try{
+            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion 
+            WHERE calificacion_juego = :calificacion_juego AND cambiar_juego = :cambiar_juego;");
 
-    static public function contarExcelenteNo(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'excelente' AND cambiar_juego = 'no';");
+            $stmt->bindParam(":calificacion_juego",$calificacion_juego, PDO::PARAM_STR);
+            $stmt->bindParam(":cambiar_juego",$cambiar_juego, PDO::PARAM_STR);
             $stmt -> execute();
             return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarExcelenteSi(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'excelente' AND cambiar_juego = 'si';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarBuenoNo(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'bueno' AND cambiar_juego = 'no';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarBuenoSi(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'bueno' AND cambiar_juego = 'si';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarRegularNo(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'regular' AND cambiar_juego = 'no';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarRegularSi(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'regular' AND cambiar_juego = 'si';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarMaloNo(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'malo' AND cambiar_juego = 'no';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarMaloSi(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'malo' AND cambiar_juego = 'si';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarPesimoNo(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'pesimo' AND cambiar_juego = 'no';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
-
-    static public function contarPesimoSi(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT count(*) AS cantidad FROM seccion WHERE calificacion_juego = 'pesimo' AND cambiar_juego = 'si';");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
+        }catch(Exception $e) {}
     }
 }

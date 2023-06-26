@@ -1,4 +1,4 @@
-<script src="./js/index.js" type="module"></script>
+<script src="./ChangeMaze/index.js" type="module"></script>
 <style>
     html,
     body,

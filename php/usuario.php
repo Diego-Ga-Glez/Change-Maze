@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexion.php";
+require_once "alert.php";
 
 class Usuario{
     static public function agregarUsuario(){
@@ -15,25 +16,11 @@ class Usuario{
                 $stmt->bindParam(":password", $encriptar, PDO::PARAM_STR);
                 $stmt->bindParam(":rol", $_POST["agregarRol"], PDO::PARAM_STR);
                 $stmt -> execute();
-
-                echo '<script>
-                        Swal.fire({
-                        title: "Usuario agregado con exito",
-                        icon: "success",
-                        confirmButtonText: "OK"
-                        }).then((result) => {window.location = "usuarios";}) 
-                      </script>';
+                echo alerts("Usuario agregado con exito","","success","OK","usuarios");
             }
-
         }catch(Exception $e){
-            echo '<script>
-                    Swal.fire({
-                        title: "Algo salió mal, usuario no agregado",
-                        text: "Por favor, intentalo de nuevo",
-                        icon: "error",
-                        confirmButtonText: "OK"
-                        }).then((result)=>{window.location = "usuarios";}) 
-                  </script>';
+            echo alerts("Algo salió mal, usuario no agregado",
+                        "Por favor, intentalo de nuevo", "error","OK","usuarios");
         }
     }
     
@@ -54,24 +41,11 @@ class Usuario{
                 $stmt->bindParam(":rol", $_POST["editarRol"], PDO::PARAM_STR);
                 $stmt->bindParam(":id", $_POST["idActual"], PDO::PARAM_INT);
                 $stmt -> execute();
-
-                echo '<script>
-                        Swal.fire({
-                        title: "Usuario modificado con exito",
-                        icon: "success",
-                        confirmButtonText: "OK"
-                        }).then((result) => {window.location = "usuarios";}) 
-                      </script>';
+                echo alerts("Usuario modificado con exito","","success","OK","usuarios");
             }
         }catch(Exception $e){
-            echo '<script>
-                    Swal.fire({
-                        title: "Algo salió mal, usuario no modificado",
-                        text: "Por favor, intentalo de nuevo",
-                        icon: "error",
-                        confirmButtonText: "OK"
-                        }).then((result)=>{window.location = "usuarios";}) 
-                  </script>';
+            echo alerts("Algo salió mal, usuario no modificado",
+                        "Por favor, intentalo de nuevo","error", "OK","usuarios");
         }
     }
     
@@ -96,29 +70,15 @@ class Usuario{
                 $stmt = Conexion::conectar()->prepare("DELETE FROM usuario WHERE id = :id");
                 $stmt->bindParam(":id", $_GET['idUsuario'], PDO::PARAM_STR);
                 $stmt -> execute();
-
-                echo '<script>
-                        Swal.fire({
-                            title: "Usuario eliminado con éxito",
-                            icon: "success",
-                            confirmButtonText: "OK"
-                            }).then((result) => {window.location = "usuarios";}) 
-                        </script>';
-
+                echo alerts("Usuario eliminado con éxito","","success","OK","usuarios");
                 
                 # sacar al usuario si elimina su propio usuario
                 if($_GET['idUsuario'] == $_SESSION["id"])
                     echo '<script> window.location = "salir"; </script>';      
 
             }catch(Exception $e){
-                echo '<script>
-                            Swal.fire({
-                                title: "Algo salió mal, usuario no eliminado",
-                                text: "Por favor, intentalo de nuevo",
-                                icon: "error",
-                                confirmButtonText: "OK"
-                                }).then((result)=>{window.location = "usuarios";}) 
-                          </script>';
+                echo alerts("Algo salió mal, usuario no eliminado",
+                            "Por favor, intentalo de nuevo","error","OK","usuarios");
             }
         }
 
@@ -160,26 +120,12 @@ class Usuario{
                         Usuario::modificarUltimoLogin($_SESSION["id"]);
                         echo '<script> window.location = "inicio" </script>';
                     }else{
-                        echo '<script>
-                                Swal.fire({
-                                title: "Error al ingresar los datos",
-                                icon: "error",
-                                confirmButtonText: "OK"
-                                }).then((result) => {window.location = "login";}) 
-                              </script>';    
+                        echo alerts("Error al ingresar los datos","","error","OK","login"); 
                     }
-
                 }else{
-                    echo '<script>
-                    Swal.fire({
-                        title: "Algo salió mal",
-                        text: "Inténtelo de nuevo ",
-                        icon: "error",
-                        confirmButtonText: "OK"
-                        }).then((result) => {window.location = "login";}) 
-                  </script>';      
+                    echo alerts("Algo salió mal","Inténtelo de nuevo","error","OK","login");    
                 }
-            }catch(Exception $e){ } 
+            }catch(Exception $e){} 
         }
         
     }
