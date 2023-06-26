@@ -216,10 +216,7 @@ $(document).on("click", ".btnEditarUsuario", function(){
             $("#editarCorreo").val(respuesta["correo"]);
             $("#PasswordActual").val(respuesta["password"]);
             $("#editarRol").val(respuesta["rol"]);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-          alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-        }  
+        }
     });
 })
 

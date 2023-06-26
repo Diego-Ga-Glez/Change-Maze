@@ -50,8 +50,8 @@
                     <input class="btn btn-primary w-100 mt-3" type="submit" id="btnAdmin" value="Iniciar sesión">
                 
                     <?php
-                        $jugador = new Usuario();
-                        $jugador -> validarUsuario();
+                        $usuario = new Usuario();
+                        $usuario -> validarUsuario();
                         
                     ?>  
                 
@@ -64,9 +64,3 @@
     </div>
         
 </div>
-
-<script>
-    function minuscula(input){
-        input.value = input.value.toLowerCase();
-    }
-</script>
