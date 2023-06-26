@@ -78,7 +78,7 @@ class Usuario{
     static public function modificarUltimoLogin($id){
         try{
             $stmt = Conexion::conectar()->prepare("UPDATE usuario SET ultimo_login = :ultimo_login WHERE id = :id");
-            date_default_timezone_set('America/Mexico_City');
+            date_default_timezone_set('America/Mazatlan');
             $fecha = date('Y-m-d');
             $hora = date('H-i-s');
             $ultimo_login = $fecha." ".$hora;
