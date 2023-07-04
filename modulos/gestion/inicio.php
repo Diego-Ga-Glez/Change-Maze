@@ -46,6 +46,14 @@
   $malo_si = $jugador -> seccionesJuego('malo','si') -> cantidad;
   $pesimo_no = $jugador -> seccionesJuego('pesimo','no') -> cantidad;
   $pesimo_si = $jugador -> seccionesJuego('pesimo','si') -> cantidad;
+
+  $entre16y20 = $jugador -> contarEdades(16,20) -> cantidad;
+  $entre21y25 = $jugador -> contarEdades(21,25) -> cantidad;
+  $entre26y30 = $jugador -> contarEdades(26,30) -> cantidad;
+  $entre31y35 = $jugador -> contarEdades(31,35) -> cantidad;
+  $entre36y40 = $jugador -> contarEdades(36,40) -> cantidad;
+  $entre41y45 = $jugador -> contarEdades(41,45) -> cantidad;
+  $mayorA45 = $jugador -> contarEdades(45,99) -> cantidad;
 ?>
 
 <div class="container mt-5">
@@ -96,7 +104,7 @@
         
 </div>
 
-<div class="container mt-5 mb-5">
+<div class="container mt-5">
 
     <div class="card-deck mb-5 mt-5">
 
@@ -110,6 +118,30 @@
 
               <div class="card chart-container">
                 <canvas id="pieChart"></canvas>
+              </div>
+
+            </div>
+        
+        </div>
+    
+    </div>
+        
+</div>
+
+<div class="container mt-5 mb-5">
+
+    <div class="card-deck mb-5 mt-5">
+
+        <div class="card mb-4 box-shadow">
+
+            <div class="card-header">
+                <h6 class="text-center">Edades</h6>
+            </div>
+            
+            <div class="card-body p-5">
+
+              <div class="card chart-container">
+                <canvas id="horizontalBarChart"></canvas>
               </div>
 
             </div>
@@ -269,6 +301,53 @@
     type: 'pie',
     data: pieData,
     options: pieOptions
+  });
+
+  //Gráfica de barras horizontal
+  var horizontalBarCanvas = document.getElementById("horizontalBarChart");
+
+  var ageData = {
+    label: 'Jugadores',
+    data: [<?php echo $mayorA45 ?>, <?php echo $entre41y45 ?>, <?php echo $entre36y40 ?>, <?php echo $entre31y35 ?>, <?php echo $entre26y30 ?>, <?php echo $entre21y25?>, <?php echo $entre16y20 ?>],
+    backgroundColor: '#037CA4'
+  };
+
+  var horizontalBarData = {
+    labels: ["Mayor a 45", "Entre 41 y 45", "Entre 36 y 40", "Entre 31 y 35", "Entre 26 y 30", "Entre 21 y 25", "Entre 16 y 20"],
+    datasets: [ageData]
+  };
+
+  var horizontalBarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: "Número de jugadores",
+          fontColor: "grey"
+        },
+        ticks: {
+            min: 0,
+            max: <?php echo max($mayorA45, $entre41y45, $entre36y40, $entre31y35, $entre26y30, $entre21y25, $entre16y20) ?>,
+            callback: function(value) {if (value % 1 === 0) {return value;}}
+        }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: "Rangos de edad (años)",
+          fontColor: "grey"
+        },
+        barPercentage: 1
+      }]
+    }
+  };
+
+  var horizontalBarChart = new Chart(horizontalBarCanvas, {
+    type: 'horizontalBar',
+    data: horizontalBarData,
+    options: horizontalBarOptions
   });
 
 </script>

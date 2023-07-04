@@ -214,7 +214,7 @@ $(document).on("click", ".btnEditarUsuario", function(){
             $("#editarUsuario").val(respuesta["usuario"]);
             $("#idActual").val(respuesta["id"]);
             $("#editarCorreo").val(respuesta["correo"]);
-            $("#PasswordActual").val(respuesta["password"]);
+            $("#passwordActual").val(respuesta["password"]);
             $("#editarRol").val(respuesta["rol"]);
         }
     });

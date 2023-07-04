@@ -33,7 +33,7 @@ class Usuario{
             
                 $stmt->bindParam(":correo", $_POST["editarCorreo"], PDO::PARAM_STR);
                 $stmt->bindParam(":usuario", $_POST["editarUsuario"], PDO::PARAM_STR);
-                if(isset($_POST["editarPassword"]))
+                if(!empty($_POST["editarPassword"]))
                     $encriptar = crypt($_POST["editarPassword"],'$2a$07$usesomesillystringforsalt$');
                 else
                     $encriptar =  $_POST["passwordActual"];        
@@ -41,6 +41,10 @@ class Usuario{
                 $stmt->bindParam(":rol", $_POST["editarRol"], PDO::PARAM_STR);
                 $stmt->bindParam(":id", $_POST["idActual"], PDO::PARAM_INT);
                 $stmt -> execute();
+                if($_POST["idActual"] == $_SESSION["id"]){
+                    $_SESSION["usuario"] = $_POST["editarUsuario"];
+                    $_SESSION["rol"] = $_POST["editarRol"];
+                }
                 echo alerts("Usuario modificado con exito","","success","OK","usuarios");
             }
         }catch(Exception $e){
@@ -52,7 +56,7 @@ class Usuario{
     static public function modificarUltimoLogin($id){
         try{
             $stmt = Conexion::conectar()->prepare("UPDATE usuario SET ultimo_login = :ultimo_login WHERE id = :id");
-            date_default_timezone_set('America/Mazatlan');
+            date_default_timezone_set('America/Mexico_City');
             $fecha = date('Y-m-d');
             $hora = date('H-i-s');
             $ultimo_login = $fecha." ".$hora;
