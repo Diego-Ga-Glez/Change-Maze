@@ -76,7 +76,7 @@ $(document).on("click", ".btnEliminarJugador", function(){
       cancelButtonText: "Cancelar"
   }).then((result)=>{
       if(result.value){
-        window.location = "jugadores?idJugador="+idJugador;
+        window.location = "incompletos?idJugador="+idJugador;
       }
   })
 })
@@ -92,5 +92,5 @@ if(rol == "Usuario"){
 
 <?php
   $jugador = new Jugador();
-  $jugador -> eliminarJugador();
+  $jugador -> eliminarJugador("incompletos");
 ?>

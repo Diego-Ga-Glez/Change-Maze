@@ -6,9 +6,9 @@ require_once "alert.php";
 
 class Jugador{
 
-    static public function mostrarJugadores() {
+    static public function jugadoresCompletos() {
         try{
-            $stmt = Conexion::conectar()->prepare("SELECT * FROM jugador");
+            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NOT NULL AND encuesta.id_jugador IS NOT NULL;");
             $stmt -> execute();
             return $stmt -> fetchAll();
         }catch(Exception $e){} 
@@ -30,17 +30,17 @@ class Jugador{
         }catch(Exception $e){} 
     }
 
-    static public function eliminarJugador() {
+    static public function eliminarJugador($ruta) {
         if(isset($_GET['idJugador'])){
             try{
                 $stmt = Conexion::conectar()->prepare("DELETE FROM jugador WHERE id = :id");
                 $stmt->bindParam(":id", $_GET['idJugador'], PDO::PARAM_INT);
                 $stmt -> execute();
-                echo alerts("Jugador eliminado con éxito","","success","OK", "jugadores");
+                echo alerts("Jugador eliminado con éxito","","success","OK",$ruta);
     
             }catch(Exception $e){
                 echo alerts("Algo salió mal, jugador no eliminado",
-                            "Por favor, intentalo de nuevo","error","OK","jugadores" );
+                            "Por favor, intentalo de nuevo","error","OK",$ruta);
             } 
         }
     }

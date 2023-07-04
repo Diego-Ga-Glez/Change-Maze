@@ -8,7 +8,7 @@
     <div class="card mb-2 box-shadow">
 
       <div class="card-header">
-        <h6 class="text-center">Todos los jugadores</h6>
+        <h6 class="text-center">Jugadores con registro completo</h6>
       </div>
 
       <div class="card-body">
@@ -30,7 +30,7 @@
           <tbody>
             <?php
             $jugador = new Jugador();
-            $jugadores = $jugador -> mostrarJugadores();
+            $jugadores = $jugador -> jugadoresCompletos();
             
             foreach($jugadores as $key => $value) {
               echo '<tr>
@@ -42,6 +42,9 @@
                       <td>'.$value["ocupacion"].'</td>
                       <td>
                         <div class="btn-group">
+                          <button type="button" class="btn btn-primary">
+                            <i class="bi bi-file-text text-light"></i>
+                          </button>
                           <button type="button" class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
@@ -86,7 +89,7 @@ $(document).on("click", ".btnEliminarJugador", function(){
       cancelButtonText: "Cancelar"
   }).then((result)=>{
       if(result.value){
-        window.location = "jugadores?idJugador="+idJugador;
+        window.location = "completos?idJugador="+idJugador;
       }
   })
 })
@@ -95,5 +98,5 @@ $(document).on("click", ".btnEliminarJugador", function(){
 
 <?php
   $jugador = new Jugador();
-  $jugador -> eliminarJugador();
+  $jugador -> eliminarJugador("completos");
 ?>  

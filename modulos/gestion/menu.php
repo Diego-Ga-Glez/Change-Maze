@@ -22,7 +22,7 @@
                 </a>
 
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="jugadores">Todos los jugadores</a></li>
+                    <li><a class="dropdown-item" href="completos">Registros completos</a></li>
                     <li><a class="dropdown-item" href="incompletos">Registros incompletos</a></li>
                 </ul>
 

@@ -59,8 +59,8 @@
             if ($_GET["ruta"] == 'inicio')
                 include 'modulos/gestion/inicio.php';
 
-            if ($_GET["ruta"] == 'jugadores')
-                include 'modulos/gestion/jugadores.php';
+            if ($_GET["ruta"] == 'completos')
+                include 'modulos/gestion/completos.php';
             
             if ($_GET["ruta"] == 'incompletos')
                 include 'modulos/gestion/incompletos.php';
