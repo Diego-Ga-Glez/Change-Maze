@@ -156,8 +156,10 @@ $(document).on("click", ".btnInfoJugador", function(){
           for (var i = table_sec.rows.length - 1; i > 0; i--)
             table_sec.deleteRow(i);
 
+          
+          let rows = 1;
           for(let registro of respuesta){
-            let row = table_sec.insertRow(registro["num_respuesta"] + 1);
+            let row = table_sec.insertRow(rows++);
             row.insertCell(0).innerHTML = registro["num_respuesta"];
             row.insertCell(1).innerHTML = registro["calificacion_juego"];
             row.insertCell(2).innerHTML = registro["cambiar_juego"];
@@ -171,8 +173,8 @@ $(document).on("click", ".btnInfoJugador", function(){
           row.insertCell(0).innerHTML = respuesta[0]["busqueda_rutina"];
           row.insertCell(1).innerHTML = respuesta[0]["reaccion_emocional"];
           row.insertCell(2).innerHTML = respuesta[0]["enfoque_corto_plazo"];
-          row.insertCell(2).innerHTML = respuesta[0]["rigidez_cognitiva"];
-          row.insertCell(2).innerHTML = respuesta[0]["puntaje_total"];  
+          row.insertCell(3).innerHTML = respuesta[0]["rigidez_cognitiva"];
+          row.insertCell(4).innerHTML = respuesta[0]["puntaje_total"];  
         }
     });
 })
