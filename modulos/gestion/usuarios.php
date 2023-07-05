@@ -43,10 +43,10 @@
                       <td>'.$value["ultimo_login"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                          <button type="button" class="btn btn-warning btnEditarUsuario" title="Editar" idUsuario="'.$value["id"].'" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
                             <i class="bi bi-pencil-fill text-light"></i>
                           </button>
-                          <button type="button" class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'">
+                          <button type="button" class="btn btn-danger btnEliminarUsuario" title="Eliminar" idUsuario="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
                         </div>
@@ -175,6 +175,11 @@
 </div>
 
 <script>
+
+  $(document).ready(function () {
+    document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
+    document.getElementById("DataTables_Table_0_filter").classList.add("mb-3"); 
+  })
 
   $(document).on("click", ".btnEliminarUsuario", function(){
 

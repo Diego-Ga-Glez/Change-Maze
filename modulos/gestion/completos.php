@@ -45,7 +45,7 @@
                           <button type="button" class="btn btn-primary btnInfoJugador" title="Mostrar información" data-bs-toggle="modal" data-bs-target="#modalInfoJugador" idInfoJugador="'.$value["id"].'">
                             <i class="bi bi-file-text text-light"></i>
                           </button>
-                          <button type="button" class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'">
+                          <button type="button" class="btn btn-danger btnEliminarJugador" title="Eliminar" idJugador="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
                         </div>
@@ -72,35 +72,46 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <div class="modal-body table-responsive">
+      <div class="modal-body">
+        <div>
+          <h6 class="text-center">Secciones jugadas</h6>
+        </div>
+
+        <div class="table-responsive">
           <table class="table table-bordered text-center" id="table_modal_secciones">
             <thead>
               <tr>
-                <th >Numero de respuesta</th>
+                <th>Numero de respuesta</th>
                 <th>Calificacion del juego</th>
-                <th >Cambiar de juego</th>
+                <th>Cambiar de juego</th>
               </tr>
             </thead>
 
             <tbody>
             </tbody>
           </table>
+        </div>
 
-          <table class="table table-bordered text-center " id="table_modal_erc">
+        <div>
+          <h6 class="text-center">Resultados de la encuesta ERC</h6>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered text-center" id="table_modal_erc">
             <thead>
               <tr>
-                <th >Búsqueda de rutina</th>
+                <th>Búsqueda de rutina</th>
                 <th>Reacción emocional</th>
-                <th >Enfoque a corto plazo</th>
-                <th >Rigidez cognitiva</th>
-                <th >Puntaje total</th>
+                <th>Enfoque a corto plazo</th>
+                <th>Rigidez cognitiva</th>
+                <th>Puntaje total</th>
               </tr>
             </thead>
 
             <tbody>
             </tbody>
           </table>
-
+        </div>
       </div>
     </div>
   </div>
@@ -115,6 +126,9 @@ if(rol == "Usuario"){
   for(const btn of btns)
     btn.style.visibility = 'hidden';
 }
+
+document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
+document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
   
 })
 
@@ -160,7 +174,7 @@ $(document).on("click", ".btnInfoJugador", function(){
           let rows = 1;
           for(let registro of respuesta){
             let row = table_sec.insertRow(rows++);
-            row.insertCell(0).innerHTML = registro["num_respuesta"];
+            row.insertCell(0).innerHTML = Number(registro["num_respuesta"]) + 1;
             row.insertCell(1).innerHTML = registro["calificacion_juego"];
             row.insertCell(2).innerHTML = registro["cambiar_juego"];
           }
@@ -170,11 +184,11 @@ $(document).on("click", ".btnInfoJugador", function(){
             table_erc.deleteRow(1);
 
           let row = table_erc.insertRow(1);
-          row.insertCell(0).innerHTML = respuesta[0]["busqueda_rutina"];
-          row.insertCell(1).innerHTML = respuesta[0]["reaccion_emocional"];
-          row.insertCell(2).innerHTML = respuesta[0]["enfoque_corto_plazo"];
-          row.insertCell(3).innerHTML = respuesta[0]["rigidez_cognitiva"];
-          row.insertCell(4).innerHTML = respuesta[0]["puntaje_total"];  
+          row.insertCell(0).innerHTML = Number(respuesta[0]["busqueda_rutina"]).toFixed(2);
+          row.insertCell(1).innerHTML = Number(respuesta[0]["reaccion_emocional"]).toFixed(2);
+          row.insertCell(2).innerHTML = Number(respuesta[0]["enfoque_corto_plazo"]).toFixed(2);
+          row.insertCell(3).innerHTML = Number(respuesta[0]["rigidez_cognitiva"]).toFixed(2);
+          row.insertCell(4).innerHTML = Number(respuesta[0]["puntaje_total"]).toFixed(2);  
         }
     });
 })

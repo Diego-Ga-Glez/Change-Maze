@@ -27,9 +27,6 @@ $(document).ready(function () {
   
         }
     });
-  
-    document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
-    document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
 })
 
 function mayuscula(input){

@@ -42,7 +42,7 @@
                       <td>'.$value["ocupacion"].'</td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-danger btnEliminarJugador" idJugador="'.$value["id"].'">
+                          <button type="button" class="btn btn-danger btnEliminarJugador" title="Eliminar" idJugador="'.$value["id"].'">
                             <i class="bi bi-trash text-light"></i>
                           </button>
                         </div>
@@ -54,12 +54,17 @@
           </tbody>
 
         </table>
-        </div>
-</div>
-</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
+
+$(document).ready(function () {
+  document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
+  document.getElementById("DataTables_Table_0_filter").classList.add("mb-3"); 
+})
 
 $(document).on("click", ".btnEliminarJugador", function(){
 
