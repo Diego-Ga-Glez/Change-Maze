@@ -13,6 +13,14 @@ class AjaxJugadores{
         Jugador::agregarSeccionJugador($this->num_res,$this->score,$this->change);    
     }
 
+    public $id;
+
+    public function ajaxJugadorSeccionesyEncuesta(){
+        $respuesta = Jugador::jugadorSeccionesyEncuesta($this->id);
+        echo json_encode($respuesta);
+    }
+
+
 }
 
 if(isset($_POST["num_resp"])){
@@ -26,4 +34,10 @@ if(isset($_POST["num_resp"])){
 if(isset($_POST["encuesta"])){
     $_SESSION["game"] = false;
     $_SESSION["encuesta"] = true;
+}
+
+if(isset($_POST["idInfoJugador"])){
+    $mostrar = new AjaxJugadores();
+    $mostrar -> id = $_POST["idInfoJugador"];
+    $mostrar -> ajaxJugadorSeccionesyEncuesta();
 }

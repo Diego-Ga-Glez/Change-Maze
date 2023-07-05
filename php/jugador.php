@@ -6,6 +6,16 @@ require_once "alert.php";
 
 class Jugador{
 
+    static public function jugadorSeccionesyEncuesta($id){
+        try{
+            $stmt = Conexion::conectar()->prepare("SELECT* FROM seccion,encuesta WHERE seccion.id_jugador = :id_s AND encuesta.id_jugador = :id_e;");
+            $stmt->bindParam(":id_s", $id, PDO::PARAM_INT);
+            $stmt->bindParam(":id_e", $id, PDO::PARAM_INT);
+            $stmt -> execute();
+            return $stmt -> fetchAll();
+        }catch(Exception $e){}
+    }
+    
     static public function jugadoresCompletos() {
         try{
             $stmt = Conexion::conectar()->prepare("SELECT DISTINCT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NOT NULL AND encuesta.id_jugador IS NOT NULL;");
