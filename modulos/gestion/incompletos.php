@@ -13,7 +13,7 @@
 
       <div class="card-body">
 
-        <table class="display compact cell-border dt-responsive mb-2 tablas" width="100%">
+        <table class="display compact cell-border dt-responsive mb-2 tablas" id="table_incompletos" width="100%">
 
           <thead>
             <tr>
@@ -88,9 +88,11 @@ $(document).on("click", ".btnEliminarJugador", function(){
 
 var rol = '<?php echo $_SESSION['rol'];?>' ;
 if(rol == "Usuario"){
-  const btns = document.getElementsByClassName('btnEliminarJugador')
-  for(const btn of btns)
-    btn.style.visibility = 'hidden';
+  var table = document.getElementById('table_incompletos');
+  for (var i = 0; i < table.rows.length; i++){
+    table.rows[i].deleteCell(6);
+  }
+  
 }
 
 </script>
