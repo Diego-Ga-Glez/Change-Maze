@@ -13,6 +13,11 @@ export default class DungeonScene extends Phaser.Scene {
     this.num_resp = 0;
     this.initialTimer = 0;
     this.gameplay = true;
+    this.skin = Math.floor(Math.random() * 4);
+
+    this.luck = 0;
+    this.coins_level = 0;
+    this.coins_obtained = 0;
   }
 
   preload() {
@@ -47,6 +52,9 @@ export default class DungeonScene extends Phaser.Scene {
   }
 
   create() {
+    this.coins_obtained = 0;
+    this.coins_level = 0;
+
     this.alert = new Alert();
     if (this.gameplay){
       this.gameplay = false;
@@ -162,15 +170,11 @@ export default class DungeonScene extends Phaser.Scene {
 
     // Probability for stuff in the 90% "othersRooms"
     let prob_coin, prob_pot, prob_trap;
-    const randi =  Math.floor(Math.random() * 3)
-    if(randi == 0){          // unlucky
+    this.luck =  Math.floor(Math.random() * 2)
+    if(this.luck == 0){          // unlucky
       prob_coin = 0.12;     // 12% chance of coin
       prob_pot = 0.50;      // 38% chance of a pot 
       prob_trap = 0.90;     // 10% chance of trap and 40% chance of towers
-    } else if(randi == 1){  // normal 
-      prob_coin = 0.25;     // 25% chance of coin
-      prob_pot = 0.50;      // 25% chance of a pot
-      prob_trap = 0.85;     // 15% chance of trap and 35% chance of towers
     } else{                 // lucky
       prob_coin = 0.50;     // 50% chance of coin
       prob_pot = 0.75;      // 25% chance of a pot
@@ -182,6 +186,7 @@ export default class DungeonScene extends Phaser.Scene {
       const rand = Math.random();
       if (rand <= prob_coin) {
         this.stuffLayer.putTileAt(TILES.COIN, room.centerX, room.centerY);
+        this.coins_level++;
       } else if (rand <= prob_pot) {
         //chance of a pot anywhere in the room... except don't block a door!
         const x = Phaser.Math.Between(room.left + 2, room.right - 2);
@@ -225,6 +230,10 @@ export default class DungeonScene extends Phaser.Scene {
       datos.append("num_resp", this.num_resp);
       datos.append("score", score);
       datos.append("change", change);
+      datos.append("luck", this.luck);
+      datos.append("coins_level", this.coins_level);
+      datos.append("coins_obtained", this.coins_obtained);
+      this.coins_obtained = 0;
 
       $.ajax({
         url:"./ajax/jugadores.ajax.php",
@@ -237,7 +246,7 @@ export default class DungeonScene extends Phaser.Scene {
       });
 
       this.num_resp++;
-      if (change == 'si') {
+      if (change == 1) {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;
         this.stuffLayer.setTileIndexCallback(TILES.PORTAL, null);
@@ -252,6 +261,7 @@ export default class DungeonScene extends Phaser.Scene {
       if(this.stuffLayer.hasTileAt(coinX,coinY)){
         this.stuffLayer.removeTileAt(coinX,coinY)
         this.coins++
+        this.coins_obtained++;
         this.score()
       }
     });
@@ -273,6 +283,8 @@ export default class DungeonScene extends Phaser.Scene {
     else
       this.joyStick.visible = false;  
 
+    const old_skin = this.skin;
+    while(old_skin == this.skin) {this.skin = Math.floor(Math.random() * 4);}
     this.player = new Player(this, x, y, control);
 
     // Watch the player and tilemap layers for collisions, for the duration of the scene:

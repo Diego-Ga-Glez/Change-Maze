@@ -3,13 +3,18 @@ export default class Player {
     this.scene = scene;
 
     // Atributes for random player
-    this.skin = Math.floor(Math.random() * 2);
-    if (this.skin == 0){
+    if(this.scene.skin == 0){
+      this.walk = [0, 3]; 
+      this.walk_back = [19, 22];
+    }else if (this.scene.skin == 1){
       this.walk = [23, 26]; 
       this.walk_back = [42, 45]; 
-    }else{
+    }else if(this.scene.skin == 2){
       this.walk = [46, 49]; 
       this.walk_back = [65, 68];
+    }else if(this.scene.skin == 3){
+      this.walk = [69, 72]; 
+      this.walk_back = [69, 72];
     }
 
     const anims = scene.anims;

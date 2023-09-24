@@ -55,14 +55,17 @@ class Jugador{
         }
     }
     
-    static public function agregarSeccionJugador($num_resp,$score,$change){
+    static public function agregarSeccionJugador($num_resp,$score,$change,$luck,$coins_level,$coins_obtained){
         try{
-            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,id_jugador)
-            VALUES(:num_resp,:score, :change, :id)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,suerte,monedas_nivel,monedas_obtenidas,id_jugador)
+            VALUES(:num_resp,:score, :change,:luck,:coins_level,:coins_obtained, :id)");
             
             $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
-            $stmt->bindParam(":score", $score, PDO::PARAM_STR);
-            $stmt->bindParam(":change", $change, PDO::PARAM_STR);
+            $stmt->bindParam(":score", $score, PDO::PARAM_INT);
+            $stmt->bindParam(":change", $change, PDO::PARAM_INT);
+            $stmt->bindParam(":luck", $luck, PDO::PARAM_INT);
+            $stmt->bindParam(":coins_level", $coins_level, PDO::PARAM_INT);
+            $stmt->bindParam(":coins_obtained", $coins_obtained, PDO::PARAM_INT);
             $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
 
             $stmt -> execute();

@@ -69,8 +69,8 @@ export default class Alert {
                 allowEscapeKey : false,
                 allowOutsideClick: false,
                 inputOptions: {
-                    bueno: 'Bueno',
-                    malo: 'Malo'
+                    1: 'Bueno',
+                    0: 'Malo'
                 },
                 inputPlaceholder: 'Selecciona una opción',
                 inputValidator: (value) => {
@@ -93,8 +93,8 @@ export default class Alert {
                 allowEscapeKey : false,
                 allowOutsideClick: false,
                 inputOptions: {
-                    si: 'Sí',
-                    no: 'No'
+                    1: 'Sí',
+                    0: 'No'
                 },
                 inputPlaceholder: 'Selecciona una opción',
                 inputValidator: (value) => {
