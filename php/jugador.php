@@ -121,66 +121,6 @@ class Jugador{
             }
         }  
     }
-
-    public function agregarEncuesta() {
-        if(isset($_POST['p1'])){
-            try{
-                $stmt = Conexion::conectar()-> prepare("INSERT INTO encuesta (p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,busqueda_rutina,reaccion_emocional,enfoque_corto_plazo,rigidez_cognitiva,puntaje_total,id_jugador) 
-                VALUES (:p1, :p2, :p3, :p4, :p5, :p6, :p7, :p8, :p9, :p10, :p11, :p12, :p13, :p14, :p15, :p16, :p17,:busqueda_rutina, :reaccion_emocional, :enfoque_corto_plazo, :rigidez_cognitiva, :puntaje_total, :id)");
-
-                $stmt->bindParam(":p1", $_POST['p1'], PDO::PARAM_INT);
-                $stmt->bindParam(":p2", $_POST['p2'], PDO::PARAM_INT);
-                $stmt->bindParam(":p3", $_POST['p3'], PDO::PARAM_INT);
-                $stmt->bindParam(":p4", $_POST['p4'], PDO::PARAM_INT);
-                $stmt->bindParam(":p5", $_POST['p5'], PDO::PARAM_INT);
-                $stmt->bindParam(":p6", $_POST['p6'], PDO::PARAM_INT);
-                $stmt->bindParam(":p7", $_POST['p7'], PDO::PARAM_INT);
-                $stmt->bindParam(":p8", $_POST['p8'], PDO::PARAM_INT);
-                $stmt->bindParam(":p9", $_POST['p9'], PDO::PARAM_INT);
-                $stmt->bindParam(":p10", $_POST['p10'], PDO::PARAM_INT);
-                $stmt->bindParam(":p11", $_POST['p11'], PDO::PARAM_INT);
-                $stmt->bindParam(":p12", $_POST['p12'], PDO::PARAM_INT);
-                $stmt->bindParam(":p13", $_POST['p13'], PDO::PARAM_INT);
-                $stmt->bindParam(":p14", $_POST['p14'], PDO::PARAM_INT);
-                $stmt->bindParam(":p15", $_POST['p15'], PDO::PARAM_INT);
-                $stmt->bindParam(":p16", $_POST['p16'], PDO::PARAM_INT);
-                $stmt->bindParam(":p17", $_POST['p17'], PDO::PARAM_INT);
-
-                $busqueda_rutina = ($_POST['p1'] + $_POST['p2'] + $_POST['p3'] + abs($_POST['p4']-7) + $_POST['p5'])/5;
-                $stmt->bindParam(":busqueda_rutina", $busqueda_rutina, PDO::PARAM_STR);
-
-                $reaccion_emocional = ($_POST['p6'] + $_POST['p7'] + $_POST['p8'] + $_POST['p9'])/4;
-                $stmt->bindParam(":reaccion_emocional", $reaccion_emocional, PDO::PARAM_STR);
-
-                $enfoque_corto_plazo = ($_POST['p10'] + $_POST['p11'] + $_POST['p12'] + $_POST['p13'])/4;
-                $stmt->bindParam(":enfoque_corto_plazo", $enfoque_corto_plazo, PDO::PARAM_STR);
-
-                $rigidez_cognitiva = (abs($_POST['p14']-7) + $_POST['p15'] + $_POST['p16'] + $_POST['p17'])/4;
-                $stmt->bindParam(":rigidez_cognitiva", $rigidez_cognitiva, PDO::PARAM_STR);
-
-                $puntaje_total = ($busqueda_rutina + $reaccion_emocional + $enfoque_corto_plazo + $rigidez_cognitiva)/4;
-                $stmt->bindParam(":puntaje_total",$puntaje_total, PDO::PARAM_STR);
-                $stmt->bindParam(":id", $_SESSION['id'], PDO::PARAM_INT);
-
-            
-                $stmt->execute();
-                echo alerts("Resultados guardados con éxito",
-                            "Muchas gracias por participar en este experimento","success","OK","");
-                session_destroy(); 
-            }catch(Exception $e){
-                echo alerts("Algo salió mal, respuestas no registradas",
-                            "Por favor, intentalo de nuevo","error","OK","encuesta");
-            }
-        }
-    }
-
-    static public function mediasERC(){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT AVG(busqueda_rutina) AS media1, AVG(reaccion_emocional) AS media2, AVG(enfoque_corto_plazo) AS media3, AVG(rigidez_cognitiva) AS media4, AVG(puntaje_total) AS mediaTotal, COUNT(*) AS cantidad FROM encuesta;");
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
         
     static public function contarJugadores($ocupacion){
         try {

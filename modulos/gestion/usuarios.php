@@ -178,7 +178,9 @@
 
   $(document).ready(function () {
     document.getElementById("DataTables_Table_0_length").classList.add("mb-3");
-    document.getElementById("DataTables_Table_0_filter").classList.add("mb-3"); 
+    document.getElementById("DataTables_Table_0_filter").classList.add("mb-3");
+
+    document.getElementsByClassName("dt-buttons")[0].style.visibility = 'hidden';
   })
 
   $(document).on("click", ".btnEliminarUsuario", function(){

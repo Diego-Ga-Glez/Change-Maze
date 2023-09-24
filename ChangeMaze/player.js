@@ -2,16 +2,27 @@ export default class Player {
   constructor(scene, x, y, control) {
     this.scene = scene;
 
+    // Atributes for random player
+    this.skin = Math.floor(Math.random() * 2);
+    if (this.skin == 0){
+      this.walk = [23, 26]; 
+      this.walk_back = [42, 45]; 
+    }else{
+      this.walk = [46, 49]; 
+      this.walk_back = [65, 68];
+    }
+
     const anims = scene.anims;
+
     anims.create({
       key: "player-walk",
-      frames: anims.generateFrameNumbers("characters", { start: 23, end: 26 }),
+      frames: anims.generateFrameNumbers("characters", { start:this.walk[0], end:this.walk[1] }),
       frameRate: 8,
       repeat: -1,
     });
     anims.create({
       key: "player-walk-back",
-      frames: anims.generateFrameNumbers("characters", { start: 42, end: 45 }),
+      frames: anims.generateFrameNumbers("characters", { start:this.walk_back[0],end:this.walk_back[1] }),
       frameRate: 8,
       repeat: -1,
     });
@@ -67,8 +78,12 @@ export default class Player {
       sprite.anims.stop();
 
       // If we were moving, pick and idle frame to use
-      if (prevVelocity.y < 0) sprite.setTexture("characters", 42);
-      else sprite.setTexture("characters", 23);
+      if (prevVelocity.y < 0) {
+        sprite.setTexture("characters", this.walk_back[0]);
+      }
+      else { 
+        sprite.setTexture("characters", this.walk[0]);
+      }
     }
   }
 

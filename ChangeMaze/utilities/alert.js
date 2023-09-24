@@ -69,11 +69,8 @@ export default class Alert {
                 allowEscapeKey : false,
                 allowOutsideClick: false,
                 inputOptions: {
-                    excelente: 'Excelente',
                     bueno: 'Bueno',
-                    regular: 'Regular',
-                    malo: 'Malo',
-                    pesimo: 'Pésimo'
+                    malo: 'Malo'
                 },
                 inputPlaceholder: 'Selecciona una opción',
                 inputValidator: (value) => {
@@ -130,14 +127,14 @@ export default class Alert {
         
         Swal.fire({
             title: '¡Has ganado!',
-            text: "Por último, serás redireccionado/a a una encuesta",
+            text: "",
             icon: 'success',
             allowEscapeKey: false,
             allowOutsideClick: false,
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "encuesta";
+              window.location.href = "registro";
             }
         })
     }

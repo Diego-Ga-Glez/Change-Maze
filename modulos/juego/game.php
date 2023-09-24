@@ -23,9 +23,11 @@
   
   if(isset($_SESSION["id"]) and $_SESSION["game"]){
     $_SESSION["game"] = false;
-  }else{
+  }
+  
+  /*else{
     Jugador::eliminarUsuario();
     echo '<script> window.location = "index.php" </script>';
-  }
+  }*/
     
 ?>

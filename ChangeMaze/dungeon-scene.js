@@ -21,6 +21,15 @@ export default class DungeonScene extends Phaser.Scene {
     
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
     this.load.image("tiles", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-blue.png");
+    this.load.image("tiles2", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-purple.png");
+    this.load.image("tiles3", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-pink.png");
+    this.load.image("tiles4", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-yellow.png");
+    this.load.image("tiles5", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-grey.png");
+    this.load.image("tiles6", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-pinkblue.png");
+    this.load.image("tiles7", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-orange.png");
+    this.load.image("tiles8", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-brown.png");
+    this.load.image("tiles9", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-red.png");
+    this.load.image("tiles10", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-purpleblue.png");
     this.load.image("coin", "./ChangeMaze/assets/menu/coin.png");
     this.load.image("clock", "./ChangeMaze/assets/menu/clock.png");
     this.load.image("button", "./ChangeMaze/assets/menu/button.png");
@@ -69,7 +78,34 @@ export default class DungeonScene extends Phaser.Scene {
       width: this.dungeon.width,
       height: this.dungeon.height,
     });
-    const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    
+    var tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
+    if (tilesColor == 0)
+      var tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    else if (tilesColor == 1)
+      var tileset = map.addTilesetImage("tiles2", null, 48, 48, 1, 2);
+    else if (tilesColor == 2)
+      var tileset = map.addTilesetImage("tiles3", null, 48, 48, 1, 2);
+    else if (tilesColor == 3)
+      var tileset = map.addTilesetImage("tiles4", null, 48, 48, 1, 2);
+    else if (tilesColor == 4)
+      var tileset = map.addTilesetImage("tiles5", null, 48, 48, 1, 2);
+    else if (tilesColor == 5)
+      var tileset = map.addTilesetImage("tiles6", null, 48, 48, 1, 2);
+    else if (tilesColor == 6)
+      var tileset = map.addTilesetImage("tiles7", null, 48, 48, 1, 2);
+    else if (tilesColor == 7)
+      var tileset = map.addTilesetImage("tiles8", null, 48, 48, 1, 2);
+    else if (tilesColor == 8)
+      var tileset = map.addTilesetImage("tiles9", null, 48, 48, 1, 2);
+    else if (tilesColor == 9)
+      var tileset = map.addTilesetImage("tiles10", null, 48, 48, 1, 2);
+
+    //console.log("Tileset: ", tileset);
+
+    //const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+
+
     this.groundLayer = map.createBlankLayer("Ground", tileset).fill(TILES.BLANK);
     this.stuffLayer = map.createBlankLayer("Stuff", tileset);
     const shadowLayer = map.createBlankLayer("Shadow", tileset).fill(TILES.BLANK);
@@ -353,6 +389,8 @@ export default class DungeonScene extends Phaser.Scene {
         return;
       }
       this.player.destroy();
+      this.anims.remove("player-walk");
+      this.anims.remove("player-walk-back");
       this.scene.restart();
     });
   }
