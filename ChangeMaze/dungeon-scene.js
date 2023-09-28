@@ -20,6 +20,8 @@ export default class DungeonScene extends Phaser.Scene {
     this.luck = 0;
     this.coins_level = 0;
     this.coins_obtained = 0;
+    this.alert_change = false;
+    this.changes_in_level = [0,0,0] // []
   }
 
   preload() {
@@ -27,7 +29,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.load.plugin('rexvirtualjoystickplugin', url, true);
     
     this.load.addFile(new WebFontFile(this.load, 'Press Start 2P'));
-    this.load.image("tiles", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-blue.png");
+    this.load.image("tiles1", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-blue.png");
     this.load.image("tiles2", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-purple.png");
     this.load.image("tiles3", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-pink.png");
     this.load.image("tiles4", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-yellow.png");
@@ -63,7 +65,12 @@ export default class DungeonScene extends Phaser.Scene {
       this.tutorial();
     }
 
-    this.initialTimer = 120;
+    if(this.alert_change){
+      // this.changes_in_level = [level_change,coins_change,time_change]
+      // agrega una alerta
+      this.alert_change = false;
+    }
+
     this.level++;
     this.hasPlayerReachedStairs = false;
 
@@ -100,30 +107,31 @@ export default class DungeonScene extends Phaser.Scene {
     });
 
     const old_tilesColor = this.tilesColor;
-    while(old_tilesColor == this.tilesColor) {this.tilesColor = Math.floor(Math.random() * 10);}
+    while(old_tilesColor == this.tilesColor) {this.tilesColor = Math.floor(Math.random() * 10) + 1;}
+    const tileset = "tiles"+this.tilesColor;
+    map.addTilesetImage(tileset, null, 48, 48, 1, 2); // 1px margin, 2px spacing
     
     //var tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
-    if (this.tilesColor == 0)
-      var tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
-    else if (this.tilesColor == 1)
-      var tileset = map.addTilesetImage("tiles2", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 2)
-      var tileset = map.addTilesetImage("tiles3", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 3)
-      var tileset = map.addTilesetImage("tiles4", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 4)
-      var tileset = map.addTilesetImage("tiles5", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 5)
-      var tileset = map.addTilesetImage("tiles6", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 6)
-      var tileset = map.addTilesetImage("tiles7", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 7)
-      var tileset = map.addTilesetImage("tiles8", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 8)
-      var tileset = map.addTilesetImage("tiles9", null, 48, 48, 1, 2);
-    else if (this.tilesColor == 9)
-      var tileset = map.addTilesetImage("tiles10", null, 48, 48, 1, 2);
-
+    // if (this.tilesColor == 0)
+    //   var tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    // else if (this.tilesColor == 1)
+    //   var tileset = map.addTilesetImage("tiles2", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 2)
+    //   var tileset = map.addTilesetImage("tiles3", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 3)
+    //   var tileset = map.addTilesetImage("tiles4", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 4)
+    //   var tileset = map.addTilesetImage("tiles5", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 5)
+    //   var tileset = map.addTilesetImage("tiles6", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 6)
+    //   var tileset = map.addTilesetImage("tiles7", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 7)
+    //   var tileset = map.addTilesetImage("tiles8", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 8)
+    //   var tileset = map.addTilesetImage("tiles9", null, 48, 48, 1, 2);
+    // else if (this.tilesColor == 9)
+    //   var tileset = map.addTilesetImage("tiles10", null, 48, 48, 1, 2);
     //console.log("Tileset: ", tileset);
 
     //const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
@@ -238,35 +246,7 @@ export default class DungeonScene extends Phaser.Scene {
       const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY)
       this.stuffLayer.removeTileAt(playerRoom.centerX,playerRoom.centerY)
 
-      this.scene.pause()
-      const score = await this.alert.score_section();
-      const change = await this.alert.change_section(this.scene);
-      var datos = new FormData();
-      datos.append("num_resp", this.num_resp);
-      datos.append("score", score);
-      datos.append("change", change);
-      datos.append("luck", this.luck);
-      datos.append("coins_level", this.coins_level);
-      datos.append("coins_obtained", this.coins_obtained);
-      this.coins_obtained = 0;
-
-      $.ajax({
-        url:"./ajax/jugadores.ajax.php",
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(ans){}
-      });
-
-      this.num_resp++;
-      if (change == 1) {
-        const rand = Math.floor(Math.random() * 10)
-        this.level = rand;
-        this.stuffLayer.setTileIndexCallback(this.portal, null);
-        this.game_over()
-      }
+      this.add_section();
     });
 
     this.stuffLayer.setCollision(TILES.COIN, false)
@@ -344,7 +324,7 @@ export default class DungeonScene extends Phaser.Scene {
       .on('pointerdown', () => this.tutorial());
 
     this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.timer, callbackScope: this, loop: true });
-    this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
+    //this.input.keyboard.on('keyup-A', () => this.enterButtonActiveState());
     this.input.keyboard.on('keyup-G',()=>{ this.tutorial(); }); 
 
     this.resize = new Resize({rows:0,cols:0});
@@ -365,13 +345,13 @@ export default class DungeonScene extends Phaser.Scene {
     this.tilemapVisibility.setActiveRoom(playerRoom);
   }
 
-  enterButtonActiveState() {
-    if(this.coins > 0){
-      this.initialTimer += 31
-      this.coins--
-      this.score()
-    }
-  }
+  // enterButtonActiveState() {
+  //   if(this.coins > 0){
+  //     this.initialTimer += 31
+  //     this.coins--
+  //     this.score()
+  //   }
+  // }
 
   tutorial() {
     this.scene.pause();
@@ -379,14 +359,9 @@ export default class DungeonScene extends Phaser.Scene {
   }
   
   timer(){
-    this.initialTimer -= 1; // One second
-    if (this.initialTimer == 0){
-      if (this.level == 1)
-        this.level-=1
-      else
-        this.level-= 2
-
-      this.game_over()
+    this.initialTimer += 1; // One second
+    if (this.initialTimer % 45 ==  0){
+      this.add_section();  
     }
     this.text_timer.setText(this.formatTime(this.initialTimer));
   }
@@ -420,5 +395,62 @@ export default class DungeonScene extends Phaser.Scene {
       this.anims.remove("player-walk-back");
       this.scene.restart();
     });
+  }
+
+  async add_section(){
+    this.scene.pause()
+    const score = await this.alert.score_section();
+    const change = await this.alert.change_section(this.scene);
+    var datos = new FormData();
+    datos.append("num_resp", this.num_resp);
+    datos.append("score", score);
+    datos.append("change", change);
+    datos.append("luck", this.luck);
+    datos.append("coins_level", this.coins_level);
+    datos.append("coins_obtained", this.coins_obtained);
+    this.coins_obtained = 0;
+
+    $.ajax({
+      url:"./ajax/jugadores.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(ans){}
+    });
+
+    this.num_resp++;
+    if (change == 1) {
+
+      const level_change = Math.floor(Math.random() * 2);
+      if(level_change){ this.level += 1;}
+      else{
+        if(this.level - 1 != 0) { this.level -= 1; }
+      }
+
+      const coins_change =  Math.floor(Math.random() * 2);
+      let coins_add =  Math.floor(Math.random() * 10) + 1;
+      if(coins_change){this.coins+= coins_add;}
+      else{
+        while(this.coins - coins_add < 0){coins_add =  Math.floor(Math.random() * 10) + 1 }
+        this.coins-= coins_add;
+      }
+
+      const time_change = Math.floor(Math.random() * 2);
+      let time_add = Math.floor(Math.random() * 60) + 1;
+      if(time_change){ this.initialTimer+= time_add; }
+      else{
+        while(this.initialTimer - time_change < 0){ time_change =  Math.floor(Math.random() * 60) + 1 }
+        this.initialTimer-= time_change;
+
+      }
+
+      this.changes_in_level = [level_change,coins_change,time_change]
+     
+      this.alert_change = true;
+      this.stuffLayer.setTileIndexCallback(this.portal, null);
+      this.game_over()
+    }
   }
 }
