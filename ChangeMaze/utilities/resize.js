@@ -44,7 +44,7 @@ export default  class Resize{
 			this.placeAtIndex(40,game.text_score);
 			this.placeAtIndex(53,game.image_clock);
 			this.placeAtIndex(54.5,game.text_timer);
-			this.placeAtIndex(111.5,game.image_button);
+			//this.placeAtIndex(111.5,game.image_button);
 			this.placeAtIndex(96.5,game.image_buttonTutorial);
 		}else{
 			this.update_size(35,35)
@@ -53,7 +53,7 @@ export default  class Resize{
 			this.placeAtIndex(72,game.text_score);
 			this.placeAtIndex(101,game.image_clock);
 			this.placeAtIndex(102.5,game.text_timer);
-			this.placeAtIndex(207.5,game.image_button);
+			//this.placeAtIndex(207.5,game.image_button);
 			this.placeAtIndex(176.5,game.image_buttonTutorial);	
 		}
 
@@ -62,7 +62,7 @@ export default  class Resize{
 		this.scaleToGameW(game.text_score, .025);
 		this.scaleToGameW(game.image_clock, .04);
 		this.scaleToGameW(game.text_timer, .05);
-		this.scaleToGameW(game.image_button, .06);
+		//this.scaleToGameW(game.image_button, .06);
 		this.scaleToGameW(game.image_buttonTutorial, .06);
 	}
 }

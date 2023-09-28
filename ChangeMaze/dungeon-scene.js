@@ -41,7 +41,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.load.image("tiles10", "./ChangeMaze/assets/tilesets/buch-tileset-48px-extruded-purpleblue.png");
     this.load.image("coin", "./ChangeMaze/assets/menu/coin.png");
     this.load.image("clock", "./ChangeMaze/assets/menu/clock.png");
-    this.load.image("button", "./ChangeMaze/assets/menu/button.png");
+    //this.load.image("button", "./ChangeMaze/assets/menu/button.png");
     this.load.image("buttonTutorial", "./ChangeMaze/assets/menu/buttonTutorial.png");
     this.load.spritesheet(
       "characters",
@@ -67,7 +67,8 @@ export default class DungeonScene extends Phaser.Scene {
 
     if(this.alert_change){
       // this.changes_in_level = [level_change,coins_change,time_change]
-      // agrega una alerta
+      this.scene.pause();
+      this.alert.level_changes(this.changes_in_level, this.scene);
       this.alert_change = false;
     }
 
@@ -108,32 +109,9 @@ export default class DungeonScene extends Phaser.Scene {
 
     const old_tilesColor = this.tilesColor;
     while(old_tilesColor == this.tilesColor) {this.tilesColor = Math.floor(Math.random() * 10) + 1;}
-    const tileset = "tiles"+this.tilesColor;
-    map.addTilesetImage(tileset, null, 48, 48, 1, 2); // 1px margin, 2px spacing
+    const tilesetX = "tiles"+this.tilesColor;
+    const tileset = map.addTilesetImage(tilesetX, null, 48, 48, 1, 2); // 1px margin, 2px spacing
     
-    //var tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
-    // if (this.tilesColor == 0)
-    //   var tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
-    // else if (this.tilesColor == 1)
-    //   var tileset = map.addTilesetImage("tiles2", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 2)
-    //   var tileset = map.addTilesetImage("tiles3", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 3)
-    //   var tileset = map.addTilesetImage("tiles4", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 4)
-    //   var tileset = map.addTilesetImage("tiles5", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 5)
-    //   var tileset = map.addTilesetImage("tiles6", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 6)
-    //   var tileset = map.addTilesetImage("tiles7", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 7)
-    //   var tileset = map.addTilesetImage("tiles8", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 8)
-    //   var tileset = map.addTilesetImage("tiles9", null, 48, 48, 1, 2);
-    // else if (this.tilesColor == 9)
-    //   var tileset = map.addTilesetImage("tiles10", null, 48, 48, 1, 2);
-    //console.log("Tileset: ", tileset);
-
     //const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
 
     this.groundLayer = map.createBlankLayer("Ground", tileset).fill(TILES.BLANK);
@@ -312,10 +290,10 @@ export default class DungeonScene extends Phaser.Scene {
     }).setOrigin(0.5).setScrollFactor(0);
 
     // time button (menu)
-    this.image_button = this.add.image(0, 0, 'button')
+    /*this.image_button = this.add.image(0, 0, 'button')
       .setScrollFactor(0)
       .setInteractive({ useHandCursor: true })
-      .on('pointerdown', () => this.enterButtonActiveState());
+      .on('pointerdown', () => this.enterButtonActiveState());*/
     
     // tutorial button (menu)
       this.image_buttonTutorial = this.add.image(0, 0, 'buttonTutorial')
@@ -423,27 +401,34 @@ export default class DungeonScene extends Phaser.Scene {
     this.num_resp++;
     if (change == 1) {
 
-      const level_change = Math.floor(Math.random() * 2);
-      if(level_change){ this.level += 1;}
-      else{
-        if(this.level - 1 != 0) { this.level -= 1; }
+      var level_change = Math.floor(Math.random() * 2);
+      if(!level_change){
+        if(this.level - 1 != 0)
+          this.level -= 2;
       }
 
-      const coins_change =  Math.floor(Math.random() * 2);
+      var coins_change =  Math.floor(Math.random() * 2);
       let coins_add =  Math.floor(Math.random() * 10) + 1;
       if(coins_change){this.coins+= coins_add;}
       else{
-        while(this.coins - coins_add < 0){coins_add =  Math.floor(Math.random() * 10) + 1 }
-        this.coins-= coins_add;
+        if (this.coins > 0) {
+          while(this.coins - coins_add < 0){coins_add =  Math.floor(Math.random() * 10) + 1 }
+          this.coins-= coins_add;
+        }
+        else
+          coins_change = 2;
       }
 
-      const time_change = Math.floor(Math.random() * 2);
+      var time_change = Math.floor(Math.random() * 2);
       let time_add = Math.floor(Math.random() * 60) + 1;
       if(time_change){ this.initialTimer+= time_add; }
       else{
-        while(this.initialTimer - time_change < 0){ time_change =  Math.floor(Math.random() * 60) + 1 }
-        this.initialTimer-= time_change;
-
+        if (this.initialTimer > 0) {
+          while(this.initialTimer - time_add < 0){ time_add =  Math.floor(Math.random() * 60) + 1 }
+          this.initialTimer-= time_add;
+        }
+        else
+          time_change = 2;
       }
 
       this.changes_in_level = [level_change,coins_change,time_change]

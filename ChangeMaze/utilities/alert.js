@@ -134,9 +134,42 @@ export default class Alert {
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "registro";
+              window.location.href = "";
             }
         })
     }
 
+    level_changes(changes, scene) {  //[level_change,coins_change,time_change]
+        if (changes[0] == 1)
+            var resp_nivel = 'El nivel ha aumentado\n';
+        else if (changes[0] == 0)
+            var resp_nivel = 'El nivel ha disminuido\n';
+        else if (changes[0] == 2)
+            var resp_nivel = '';
+
+        if (changes[1] == 1)
+            var resp_monedas = 'Las monedas han aumentado\n';
+        else if (changes[1] == 0)
+            var resp_monedas = 'Las monedas han disminuido\n';
+        else if (changes[1] == 2)
+            var resp_monedas = '';
+
+        if (changes[2] == 1)
+            var resp_tiempo = 'El tiempo ha aumentado\n';
+        else if (changes[2] == 0)
+            var resp_tiempo = 'El tiempo ha disminuido\n';
+        else if (changes[2] == 2)
+            var resp_tiempo = '';
+
+        Swal.fire({
+            title: resp_nivel + resp_monedas + resp_tiempo,
+            icon: 'warning',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            confirmButtonText: 'OK'
+        }).then((result)=>{
+            if (result.isConfirmed)
+                scene.resume();
+        })
+    }
 }
