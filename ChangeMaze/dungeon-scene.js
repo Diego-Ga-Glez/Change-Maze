@@ -14,7 +14,9 @@ export default class DungeonScene extends Phaser.Scene {
     this.initialTimer = 0;
     this.gameplay = true;
     this.skin = Math.floor(Math.random() * 4);
-
+    this.tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
+    this.xPortal = 0;
+    this.portal = TILES.PORTAL;
     this.luck = 0;
     this.coins_level = 0;
     this.coins_obtained = 0;
@@ -65,6 +67,16 @@ export default class DungeonScene extends Phaser.Scene {
     this.level++;
     this.hasPlayerReachedStairs = false;
 
+    //Random portal
+    var old_xPortal = this.xPortal;
+    while(old_xPortal == this.xPortal) {this.xPortal = Math.floor(Math.random() * 3);}
+    if (this.xPortal == 0) 
+      this.portal = TILES.PORTAL;
+    else if (this.xPortal == 1)
+      this.portal = TILES.PORTAL2;
+    else if (this.xPortal == 2)
+      this.portal = TILES.PORTAL3;
+
     // Generate a random world with a few extra options:
     //  - Rooms should only have odd number dimensions so that they have a center tile.
     //  - Doors should be at least 2 tiles away from corners, so that we can place a corner tile on
@@ -86,33 +98,35 @@ export default class DungeonScene extends Phaser.Scene {
       width: this.dungeon.width,
       height: this.dungeon.height,
     });
+
+    const old_tilesColor = this.tilesColor;
+    while(old_tilesColor == this.tilesColor) {this.tilesColor = Math.floor(Math.random() * 10);}
     
-    var tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
-    if (tilesColor == 0)
+    //var tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
+    if (this.tilesColor == 0)
       var tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
-    else if (tilesColor == 1)
+    else if (this.tilesColor == 1)
       var tileset = map.addTilesetImage("tiles2", null, 48, 48, 1, 2);
-    else if (tilesColor == 2)
+    else if (this.tilesColor == 2)
       var tileset = map.addTilesetImage("tiles3", null, 48, 48, 1, 2);
-    else if (tilesColor == 3)
+    else if (this.tilesColor == 3)
       var tileset = map.addTilesetImage("tiles4", null, 48, 48, 1, 2);
-    else if (tilesColor == 4)
+    else if (this.tilesColor == 4)
       var tileset = map.addTilesetImage("tiles5", null, 48, 48, 1, 2);
-    else if (tilesColor == 5)
+    else if (this.tilesColor == 5)
       var tileset = map.addTilesetImage("tiles6", null, 48, 48, 1, 2);
-    else if (tilesColor == 6)
+    else if (this.tilesColor == 6)
       var tileset = map.addTilesetImage("tiles7", null, 48, 48, 1, 2);
-    else if (tilesColor == 7)
+    else if (this.tilesColor == 7)
       var tileset = map.addTilesetImage("tiles8", null, 48, 48, 1, 2);
-    else if (tilesColor == 8)
+    else if (this.tilesColor == 8)
       var tileset = map.addTilesetImage("tiles9", null, 48, 48, 1, 2);
-    else if (tilesColor == 9)
+    else if (this.tilesColor == 9)
       var tileset = map.addTilesetImage("tiles10", null, 48, 48, 1, 2);
 
     //console.log("Tileset: ", tileset);
 
     //const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
-
 
     this.groundLayer = map.createBlankLayer("Ground", tileset).fill(TILES.BLANK);
     this.stuffLayer = map.createBlankLayer("Stuff", tileset);
@@ -193,7 +207,8 @@ export default class DungeonScene extends Phaser.Scene {
         const y = Phaser.Math.Between(room.top + 2, room.bottom - 2);
         this.stuffLayer.weightedRandomize(TILES.POT,x, y, 1, 1);
       } else if (rand >= prob_trap){
-        this.stuffLayer.putTileAt(TILES.PORTAL, room.centerX, room.centerY);
+
+        this.stuffLayer.putTileAt(this.portal, room.centerX, room.centerY);
       } else {
         if (room.height >= 9) {
           this.stuffLayer.putTilesAt(TILES.TOWER, room.centerX - 1, room.centerY + 1);
@@ -217,7 +232,7 @@ export default class DungeonScene extends Phaser.Scene {
       this.game_over()
     });
 
-    this.stuffLayer.setTileIndexCallback(TILES.PORTAL, async () => {
+    this.stuffLayer.setTileIndexCallback(this.portal, async () => {
       const playerTileX = this.groundLayer.worldToTileX(this.player.sprite.x);
       const playerTileY = this.groundLayer.worldToTileY(this.player.sprite.y);
       const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY)
@@ -249,7 +264,7 @@ export default class DungeonScene extends Phaser.Scene {
       if (change == 1) {
         const rand = Math.floor(Math.random() * 10)
         this.level = rand;
-        this.stuffLayer.setTileIndexCallback(TILES.PORTAL, null);
+        this.stuffLayer.setTileIndexCallback(this.portal, null);
         this.game_over()
       }
     });

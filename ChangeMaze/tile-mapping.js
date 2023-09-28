@@ -54,7 +54,9 @@ const TILE_MAPPING = {
   },
   COIN: 18,
   STAIRS: 81,
-  PORTAL: 37,
+  PORTAL: 37, //blue
+  PORTAL2: 56, //purple
+  PORTAL3: 75, //red
   // prettier-ignore
   TOWER: [
     [186],
