@@ -6,6 +6,21 @@ require_once "alert.php";
 
 class Jugador{
 
+    static public function topJugadores($limit) {
+        try{
+            if($limit == 1){
+                $stmt = Conexion::conectar()->prepare("SELECT p.*, j.nombre_completo FROM puntaje AS p INNER JOIN jugador AS j ON p.id_jugador = j.id ORDER BY p.monedas_total DESC, p.tiempo_total ASC LIMIT 10;");
+                $stmt -> execute();
+                return $stmt -> fetchAll();
+            }
+            else {
+                $stmt = Conexion::conectar()->prepare("SELECT p.*, j.nombre_completo FROM puntaje AS p INNER JOIN jugador AS j ON p.id_jugador = j.id ORDER BY p.monedas_total DESC, p.tiempo_total ASC;");
+                $stmt -> execute();
+                return $stmt -> fetchAll();
+            }
+        }catch(Exception $e){} 
+    }
+
     static public function agregarPuntajeJugador($total_time,$total_coins){
         try{
             $stmt = Conexion::conectar()->prepare("INSERT INTO puntaje (tiempo_total,monedas_total,id_jugador)

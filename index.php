@@ -55,6 +55,9 @@
         if (isset($_GET["ruta"])){
             if ($_GET["ruta"] == 'game')
                 include 'modulos/juego/game.php';
+
+            if ($_GET["ruta"] == 'puntajes')
+                include 'modulos/juego/puntajes.php';
                 
             if ($_GET["ruta"] == 'login')
                 include 'modulos/gestion/login.php';
