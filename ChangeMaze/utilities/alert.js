@@ -141,24 +141,24 @@ export default class Alert {
 
     level_changes(changes, scene) {  //[level_change,coins_change,time_change]
         if (changes[0] == 1)
-            var resp_nivel = 'El nivel ha aumentado\n';
+            var resp_nivel = 'Has subido 1 nivel\n';
         else if (changes[0] == 0)
-            var resp_nivel = 'El nivel ha disminuido\n';
+            var resp_nivel = 'Has bajado 1 nivel\n';
         else if (changes[0] == 2)
             var resp_nivel = '';
 
-        if (changes[1] == 1)
-            var resp_monedas = 'Las monedas han aumentado\n';
+        if (changes[1] > 0)
+            var resp_monedas = 'Has obtenido '+Math.abs(changes[1])+' monedas\n';
+        else if (changes[1] < 0)
+            var resp_monedas = 'Has perdido '+Math.abs(changes[1])+' monedas\n';
         else if (changes[1] == 0)
-            var resp_monedas = 'Las monedas han disminuido\n';
-        else if (changes[1] == 2)
             var resp_monedas = '';
 
-        if (changes[2] == 1)
-            var resp_tiempo = 'El tiempo ha aumentado\n';
+        if (changes[2] > 0)
+            var resp_tiempo = 'El tiempo ha aumentado '+Math.abs(changes[2])+' segundos\n';
+        else if (changes[2] < 0)
+            var resp_tiempo = 'El tiempo ha disminuido '+Math.abs(changes[2])+' segundos\n';
         else if (changes[2] == 0)
-            var resp_tiempo = 'El tiempo ha disminuido\n';
-        else if (changes[2] == 2)
             var resp_tiempo = '';
 
         Swal.fire({

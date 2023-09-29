@@ -14,6 +14,10 @@
       align-items: center;
       justify-content: center;
     }
+
+    .swal2-title{
+      font-size: 24px;
+    }
 </style>
 
 <div id="game-container"></div>

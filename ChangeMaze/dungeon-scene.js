@@ -438,9 +438,10 @@ export default class DungeonScene extends Phaser.Scene {
         if (this.coins > 0) {
           while(this.coins - coins_add < 0){coins_add =  Math.floor(Math.random() * 10) + 1 }
           this.coins-= coins_add;
+          coins_add *= -1;
         }
         else
-          coins_change = 2;
+          coins_add = 0;
       }
 
       var time_change = Math.floor(Math.random() * 2);
@@ -450,12 +451,13 @@ export default class DungeonScene extends Phaser.Scene {
         if (this.initialTimer > 0) {
           while(this.initialTimer - time_add < 0){ time_add =  Math.floor(Math.random() * 60) + 1 }
           this.initialTimer-= time_add;
+          time_add *= -1;
         }
         else
-          time_change = 2;
+          time_add = 0;
       }
 
-      this.changes_in_level = [level_change,coins_change,time_change]
+      this.changes_in_level = [level_change,coins_add,time_add]
      
       this.alert_change = true;
       this.stuffLayer.setTileIndexCallback(this.portal, null);
