@@ -12,6 +12,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.coins = 0;
     this.num_resp = 0;
     this.initialTimer = 0;
+    this.timer_change = 0;
     this.gameplay = true;
     this.skin = Math.floor(Math.random() * 4);
     this.tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
@@ -111,8 +112,6 @@ export default class DungeonScene extends Phaser.Scene {
     while(old_tilesColor == this.tilesColor) {this.tilesColor = Math.floor(Math.random() * 10) + 1;}
     const tilesetX = "tiles"+this.tilesColor;
     const tileset = map.addTilesetImage(tilesetX, null, 48, 48, 1, 2); // 1px margin, 2px spacing
-    
-    //const tileset = map.addTilesetImage("tiles", null, 48, 48, 1, 2); // 1px margin, 2px spacing
 
     this.groundLayer = map.createBlankLayer("Ground", tileset).fill(TILES.BLANK);
     this.stuffLayer = map.createBlankLayer("Stuff", tileset);
@@ -338,8 +337,11 @@ export default class DungeonScene extends Phaser.Scene {
   
   timer(){
     this.initialTimer += 1; // One second
-    if (this.initialTimer % 45 ==  0){
-      this.add_section();  
+    this.timer_change +=1;
+    console.log(this.timer_change);
+    if (this.timer_change ==  45){
+      this.add_section();
+      this.timer_change = 0;  
     }
     this.text_timer.setText(this.formatTime(this.initialTimer));
   }
@@ -423,6 +425,10 @@ export default class DungeonScene extends Phaser.Scene {
       if(!level_change){
         if(this.level - 1 != 0)
           this.level -= 2;
+        else{
+          this.level -= 1;
+          level_change = 2;
+        }
       }
 
       var coins_change =  Math.floor(Math.random() * 2);
