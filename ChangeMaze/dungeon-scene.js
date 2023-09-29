@@ -8,7 +8,7 @@ import Resize from "./utilities/resize.js";
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
     super();
-    this.level = 9;
+    this.level = 0;
     this.coins = 0;
     this.num_resp = 0;
     this.initialTimer = 0;
