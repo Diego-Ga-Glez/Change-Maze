@@ -127,14 +127,14 @@ export default class Alert {
         
         Swal.fire({
             title: '¡Has ganado!',
-            text: "",
+            text: "A continuación se mostrará el top 10 de jugadores.",
             icon: 'success',
             allowEscapeKey: false,
             allowOutsideClick: false,
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "";
+              //window.location.href = "top_puntajes";
             }
         })
     }

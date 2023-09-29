@@ -6,6 +6,19 @@ require_once "alert.php";
 
 class Jugador{
 
+    static public function agregarPuntajeJugador($total_time,$total_coins){
+        try{
+            $stmt = Conexion::conectar()->prepare("INSERT INTO puntaje (tiempo_total,monedas_total,id_jugador)
+            VALUES(:total_time,:total_coins,:id)");
+            
+            $stmt->bindParam(":total_time", $total_time, PDO::PARAM_INT);
+            $stmt->bindParam(":total_coins", $total_coins, PDO::PARAM_INT);
+            $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
+
+            $stmt -> execute();
+        }catch(Exception $e){}
+    }
+
     static public function jugadorSeccionesyEncuesta($id){
         try{
             $stmt = Conexion::conectar()->prepare("SELECT* FROM seccion,encuesta WHERE seccion.id_jugador = :id_s AND encuesta.id_jugador = :id_e;");
@@ -55,10 +68,10 @@ class Jugador{
         }
     }
     
-    static public function agregarSeccionJugador($num_resp,$score,$change,$luck,$coins_level,$coins_obtained){
+    static public function agregarSeccionJugador($num_resp,$score,$change,$luck,$coins_level,$coins_obtained,$current_level,$time_elapsed){
         try{
-            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,suerte,monedas_nivel,monedas_obtenidas,id_jugador)
-            VALUES(:num_resp,:score, :change,:luck,:coins_level,:coins_obtained, :id)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO seccion (num_respuesta,calificacion_juego,cambiar_juego,suerte,monedas_nivel,monedas_obtenidas,nivel_actual,tiempo_transcurrido,id_jugador)
+            VALUES(:num_resp,:score, :change,:luck,:coins_level,:coins_obtained,:current_level,:time_elapsed,:id)");
             
             $stmt->bindParam(":num_resp", $num_resp, PDO::PARAM_INT);
             $stmt->bindParam(":score", $score, PDO::PARAM_INT);
@@ -66,6 +79,8 @@ class Jugador{
             $stmt->bindParam(":luck", $luck, PDO::PARAM_INT);
             $stmt->bindParam(":coins_level", $coins_level, PDO::PARAM_INT);
             $stmt->bindParam(":coins_obtained", $coins_obtained, PDO::PARAM_INT);
+            $stmt->bindParam(":current_level", $current_level, PDO::PARAM_INT);
+            $stmt->bindParam(":time_elapsed", $time_elapsed, PDO::PARAM_INT);
             $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
 
             $stmt -> execute();

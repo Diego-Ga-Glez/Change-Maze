@@ -8,7 +8,7 @@ import Resize from "./utilities/resize.js";
 export default class DungeonScene extends Phaser.Scene {
   constructor() {
     super();
-    this.level = 0;
+    this.level = 9;
     this.coins = 0;
     this.num_resp = 0;
     this.initialTimer = 0;
@@ -176,7 +176,7 @@ export default class DungeonScene extends Phaser.Scene {
       prob_pot = 0.50;      // 38% chance of a pot 
       prob_trap = 0.90;     // 10% chance of trap and 40% chance of towers
     } else{                 // lucky
-      prob_coin = 0.50;     // 50% chance of coin
+      prob_coin = 0.75;     // 50% chance of coin
       prob_pot = 0.75;      // 25% chance of a pot
       prob_trap = 0.85;     // 15% chance of a trap and 10% chanfe of towers
     }
@@ -365,6 +365,22 @@ export default class DungeonScene extends Phaser.Scene {
     cam.fade(250, 0, 0, 0);
     cam.once("camerafadeoutcomplete", () => {
       if (this.level == 10) {
+        this.scene.pause();
+
+        var datos = new FormData();
+        datos.append("total_time", this.initialTimer);
+        datos.append("total_coins", this.coins_obtained);
+
+        $.ajax({
+          url:"./ajax/jugadores.ajax.php",
+          method: "POST",
+          data: datos,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function(ans){}
+        });
+
         this.alert.you_win();
         return;
       }
@@ -386,6 +402,8 @@ export default class DungeonScene extends Phaser.Scene {
     datos.append("luck", this.luck);
     datos.append("coins_level", this.coins_level);
     datos.append("coins_obtained", this.coins_obtained);
+    datos.append("current_level", this.level);
+    datos.append("time", this.initialTimer);
     this.coins_obtained = 0;
 
     $.ajax({
