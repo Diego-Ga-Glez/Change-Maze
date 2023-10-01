@@ -111,20 +111,6 @@ export default class Alert {
     }
 
     you_win() {
-        var datos = new FormData();
-        datos.append("encuesta", true);
-
-        $.ajax({
-            url:"./ajax/jugadores.ajax.php",
-            method: "POST",
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(ans){
-            }
-        });
-        
         Swal.fire({
             title: '¡Has ganado!',
             text: "A continuación se mostrará el top 10 de jugadores.",
@@ -134,7 +120,7 @@ export default class Alert {
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
-              //window.location.href = "top_puntajes";
+              window.location.href = "puntajes";
             }
         })
     }

@@ -49,11 +49,6 @@ if(isset($_POST["num_resp"])){
     $agregar -> ajaxAgregarSeccion();
 }
 
-if(isset($_POST["encuesta"])){
-    $_SESSION["game"] = false;
-    //$_SESSION["encuesta"] = true;
-}
-
 if(isset($_POST["idInfoJugador"])){
     $mostrar = new AjaxJugadores();
     $mostrar -> id = $_POST["idInfoJugador"];
@@ -61,6 +56,8 @@ if(isset($_POST["idInfoJugador"])){
 }
 
 if(isset($_POST["total_time"])){
+    $_SESSION["game"] = false;
+    $_SESSION["puntaje"] = true;
     $puntaje = new AjaxJugadores();
     $puntaje -> total_time = $_POST["total_time"];
     $puntaje -> total_coins = $_POST["total_coins"];

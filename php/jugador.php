@@ -44,22 +44,6 @@ class Jugador{
         }catch(Exception $e){}
     }
     
-    static public function jugadoresCompletos() {
-        try{
-            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NOT NULL AND encuesta.id_jugador IS NOT NULL;");
-            $stmt -> execute();
-            return $stmt -> fetchAll();
-        }catch(Exception $e){} 
-    }
-
-    static public function jugadoresIncompletos() {
-        try{
-            $stmt = Conexion::conectar()->prepare("SELECT DISTINCT jugador.*, seccion.id_jugador, encuesta.id_jugador FROM jugador LEFT JOIN seccion ON seccion.id_jugador = jugador.id LEFT JOIN encuesta ON encuesta.id_jugador = jugador.id WHERE seccion.id_jugador IS NULL OR encuesta.id_jugador IS NULL");
-            $stmt -> execute();
-            return $stmt -> fetchAll();
-        }catch(Exception $e){} 
-    }
-    
     static public function eliminarUsuario(){
         try{
             $stmt = Conexion::conectar()->prepare("DELETE FROM jugador WHERE id = :id");
@@ -154,35 +138,5 @@ class Jugador{
             }
         }  
     }
-        
-    static public function contarJugadores($ocupacion){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) AS cantidad FROM jugador WHERE ocupacion = :ocupacion;");
-            $stmt->bindParam(":ocupacion",$ocupacion, PDO::PARAM_STR);
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
 
-    static public function seccionesJuego($calificacion_juego, $cambiar_juego){
-        try{
-            $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) AS cantidad FROM seccion 
-            WHERE calificacion_juego = :calificacion_juego AND cambiar_juego = :cambiar_juego;");
-
-            $stmt->bindParam(":calificacion_juego",$calificacion_juego, PDO::PARAM_STR);
-            $stmt->bindParam(":cambiar_juego",$cambiar_juego, PDO::PARAM_STR);
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e) {}
-    }
-
-    static public function contarEdades($edadMin, $edadMax){
-        try {
-            $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) AS cantidad FROM jugador WHERE edad BETWEEN :edadMin AND :edadMax;");
-            $stmt->bindParam(":edadMin",$edadMin, PDO::PARAM_INT);
-            $stmt->bindParam(":edadMax",$edadMax, PDO::PARAM_INT);
-            $stmt -> execute();
-            return $stmt -> fetch(PDO::FETCH_OBJ);
-        }catch(Exception $e){}
-    }
 }

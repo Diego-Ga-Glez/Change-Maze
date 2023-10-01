@@ -1,7 +1,4 @@
-<?php
-    include 'php/jugador.php'; 
-    include 'php/usuario.php'; 
-?>
+<?php include 'php/jugador.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,37 +44,17 @@
     <!-- Sweet Alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="modulos/funciones.js"></script>
-
 </head>
 <body style="background: #f8fafc;">
     <?php
         if (isset($_GET["ruta"])){
             if ($_GET["ruta"] == 'game')
-                include 'modulos/juego/game.php';
+                include 'modulos/game.php';
 
             if ($_GET["ruta"] == 'puntajes')
-                include 'modulos/juego/puntajes.php';
-                
-            if ($_GET["ruta"] == 'login')
-                include 'modulos/gestion/login.php';
-            
-            if ($_GET["ruta"] == 'inicio')
-                include 'modulos/gestion/inicio.php';
-
-            if ($_GET["ruta"] == 'completos')
-                include 'modulos/gestion/completos.php';
-            
-            if ($_GET["ruta"] == 'incompletos')
-                include 'modulos/gestion/incompletos.php';
-            
-            if ($_GET["ruta"] == 'usuarios')
-                include 'modulos/gestion/usuarios.php';
-
-            if($_GET["ruta"] == 'salir')
-                include 'modulos/gestion/salir.php';
+                include 'modulos/puntajes.php';
         }else{
-            include 'modulos/juego/registro.php';
+            include 'modulos/registro.php';
         }
     ?>
 </body>

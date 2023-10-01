@@ -368,13 +368,13 @@ export default class DungeonScene extends Phaser.Scene {
     cam.once("camerafadeoutcomplete", () => {
       if (this.level == 10) {
         this.scene.pause();
-
         var datos = new FormData();
         datos.append("total_time", this.initialTimer);
-        datos.append("total_coins", this.coins_obtained);
+        datos.append("total_coins", this.coins);
+        datos.append("punataje",true);
 
         $.ajax({
-          url:"./ajax/jugadores.ajax.php",
+          url:"./modulos/jugadores.ajax.php",
           method: "POST",
           data: datos,
           cache: false,
@@ -409,7 +409,7 @@ export default class DungeonScene extends Phaser.Scene {
     this.coins_obtained = 0;
 
     $.ajax({
-      url:"./ajax/jugadores.ajax.php",
+      url:"./modulos/jugadores.ajax.php",
       method: "POST",
       data: datos,
       cache: false,
