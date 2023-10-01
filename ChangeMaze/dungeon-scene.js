@@ -401,7 +401,6 @@ export default class DungeonScene extends Phaser.Scene {
 
   async add_section(){
     if(this.change_yes) {return}
-    this.change_yes = true;
     
     this.scene.pause()
     const score = await this.alert.score_section();
@@ -429,6 +428,7 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.num_resp++;
     if (change == 1) {
+      this.change_yes = true;
       var level_change = Math.floor(Math.random() * 2);
       if(!level_change){
         if(this.level - 1 != 0)
