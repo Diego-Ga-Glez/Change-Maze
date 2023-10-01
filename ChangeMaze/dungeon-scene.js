@@ -13,7 +13,6 @@ export default class DungeonScene extends Phaser.Scene {
     this.num_resp = 0;
     this.initialTimer = 0;
     this.timer_change = 0;
-    this.gameplay = true;
     this.skin = Math.floor(Math.random() * 4);
     this.tilesColor = Math.floor(Math.random() * 10) // 0,1,2,3,4,5,6,7,8,9
     this.xPortal = 0;
@@ -59,12 +58,11 @@ export default class DungeonScene extends Phaser.Scene {
   create() {
     this.coins_obtained = 0;
     this.coins_level = 0;
+    this.restart_game_once = true;
+    this.change_yes = false;
 
     this.alert = new Alert();
-    if (this.gameplay){
-      this.gameplay = false;
-      this.tutorial();
-    }
+    this.tutorial_once();
 
     if(this.alert_change){
       // this.changes_in_level = [level_change,coins_change,time_change]
@@ -217,12 +215,11 @@ export default class DungeonScene extends Phaser.Scene {
       this.game_over()
     });
 
-    this.stuffLayer.setTileIndexCallback(this.portal, async () => {
+    this.stuffLayer.setTileIndexCallback(this.portal, () => {
       const playerTileX = this.groundLayer.worldToTileX(this.player.sprite.x);
       const playerTileY = this.groundLayer.worldToTileY(this.player.sprite.y);
       const playerRoom = this.dungeon.getRoomAt(playerTileX, playerTileY)
       this.stuffLayer.removeTileAt(playerRoom.centerX,playerRoom.centerY)
-
       this.add_section();
     });
 
@@ -330,6 +327,11 @@ export default class DungeonScene extends Phaser.Scene {
   //   }
   // }
 
+  tutorial_once(){
+    this.tutorial_once = function(){};
+    this.tutorial();
+  }
+  
   tutorial() {
     this.scene.pause();
     this.alert.gameplay(this.scene);
@@ -386,14 +388,21 @@ export default class DungeonScene extends Phaser.Scene {
         this.alert.you_win();
         return;
       }
-      this.player.destroy();
-      this.anims.remove("player-walk");
-      this.anims.remove("player-walk-back");
-      this.scene.restart();
+      if(this.restart_game_once){
+        this.restart_game_once = false;
+        this.player.destroy();
+        this.anims.remove("player-walk");
+        this.anims.remove("player-walk-back");
+        this.scene.restart();
+      }
+      
     });
   }
 
   async add_section(){
+    if(this.change_yes) {return}
+    this.change_yes = true;
+    
     this.scene.pause()
     const score = await this.alert.score_section();
     const change = await this.alert.change_section(this.scene);
@@ -420,7 +429,6 @@ export default class DungeonScene extends Phaser.Scene {
 
     this.num_resp++;
     if (change == 1) {
-
       var level_change = Math.floor(Math.random() * 2);
       if(!level_change){
         if(this.level - 1 != 0)
