@@ -49,7 +49,7 @@
                     $segundos = $segundos - ($horas * 3600) - ($minutos * 60);
                     $tiempo = $horas . ':' . $minutos . ":" . $segundos;
 
-                    if ($value["id_jugador"] == $_SESSION["id"])
+                    if (isset($_SESSION["id"]) && ($value["id_jugador"] == $_SESSION["id"]))
                         $tr = '<tr style="background-color: #B1FFF0;">';
                     else
                         $tr = '<tr>';
