@@ -373,7 +373,7 @@ export default class DungeonScene extends Phaser.Scene {
         var datos = new FormData();
         datos.append("total_time", this.initialTimer);
         datos.append("total_coins", this.coins);
-        datos.append("punataje",true);
+        datos.append("puntaje",true);
 
         $.ajax({
           url:"./modulos/jugadores.ajax.php",
