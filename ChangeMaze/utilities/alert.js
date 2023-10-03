@@ -14,24 +14,24 @@ export default class Alert {
                          'Cómo moverse',
                          'Niveles',
                          'Monedas',
-                         'Comprar tiempo',
-                         'Portales',
+                         'Sección de cambio pt. 1',
+                         'Sección de cambio pt. 2',
                          'Aviso importante']
 
         const videos = ["",
-                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/1moverse.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/2niveles.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/3monedas.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/4comprar.mp4' type='video/mp4'></video>",
-                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/5portales.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/1-moverse.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/2-niveles.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/3-monedas.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/4-secciones1.mp4' type='video/mp4'></video>",
+                        "<video width='320' height='240' autoplay loop><source src='./ChangeMaze/assets/video/5-secciones2.mp4' type='video/mp4'></video>",
                         ""]
         
         const descripcion = ["<p align='justify'>Hola, bienvenido/a a nuestro juego. A continuación se mostrará un pequeño tutorial que te enseñará todos los mecanismos que hay dentro del juego para que así puedas tener una mejor experiencia.</p>",
                              "<p align='justify'>Para mover a tu personaje deberás hacer uso de las teclas de dirección o del joystick en caso de estar jugando en un dispositivo móvil.</p>",
-                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El objetivo del juego es finalizar el nivel 10. Se tiene un máximo de 2 minutos para completar cada nivel, si se acaba el tiempo se te regresará al nivel anterior. </p>",
-                             "<p align='justify'>A lo largo de toda tu aventura podrás encontrar monedas en el mapa. Estas monedas te servirán para comprar tiempo.  </p>",
-                             "<p align='justify'>Para comprar tiempo podrás hacerlo presionando la tecla 'A' o el botón rojo que se encuentra debajo del temporizador. Al comprar tiempo se agregarán 30 segundos al temporizador y esto te costará solo una moneda.</p>",
-                             "<p align='justify'>En algunos niveles podrás encontrar portales, estos podrán llevarte a un nivel aleatorio. </p>",
+                             "<p align='justify'>En cada nivel tendrás que encontrar unas escaleras, las cuales te llevarán al siguiente nivel. El juego consta de 10 niveles, y en la esquina superior derecha podrás ver un cronómetro del tiempo que ha transcurrido en tu juego, uno de los objetivos del juego es terminar en el menor tiempo posible.<br>Nota: En cada nivel cambiará el color del mapa y tu personaje.</p>",
+                             "<p align='justify'>A lo largo de tu aventura podrás encontrar monedas en el mapa. El segundo objetivo del juego es terminar con la mayor cantidad posible de monedas.</p>",
+                             "<p align='justify'>También encontrarás portales, al entrar en ellos se te preguntará sobre el estado actual de tu juego, y si deseas cambiarlo. En caso de querer hacerlo, el portal te llevará a 1 nivel superior o inferior al que te encuentras, además de aumentar o disminuir tus monedas y el tiempo transcurrido de manera aleatoria. En caso contrario, podrás continuar sin cambios en tu juego.</p>",
+                             "<p align='justify'>Además de los portales, cada cierto tiempo se te harán las mismas preguntas sobre el estado de tu juego. En caso de elegir cambiarlo, tendrás el mismo efecto aleatorio que en los portales, en caso contrario podrás continuar sin cambios.</p>",
                              "<p align='justify'>Es fundamental que en el transcurso de todo el juego no recargues la página. Además, podrás volver a consultar cada que quieras este tutorial presionando la tecla 'G' o el botón azul.</p>"]
                              
         const swalQueueStep = Swal.mixin({
