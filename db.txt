@@ -1,0 +1,56 @@
+CREATE DATABASE ERC_GAME;
+USE ERC_GAME;
+
+CREATE TABLE jugador(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nombre_completo VARCHAR(50) NOT NULL,
+	correo VARCHAR(50) UNIQUE NOT NULL,
+	sexo CHAR(1) NOT NULL,
+	edad INT UNSIGNED NOT NULL,
+	ocupacion VARCHAR(15) NOT NULL,
+	escuela VARCHAR(10),
+	carrera VARCHAR(50),
+	semestre INT UNSIGNED,
+	profesion VARCHAR(50) 
+);
+
+CREATE TABLE seccion(
+	num_respuesta TINYINT UNSIGNED NOT NULL,
+	calificacion_juego TINYINT NOT NULL,
+	cambiar_juego TINYINT NOT NULL,
+	suerte TINYINT UNSIGNED NOT NULL,
+	monedas_nivel TINYINT UNSIGNED NOT NULL,
+	monedas_obtenidas TINYINT UNSIGNED NOT NULL,
+nivel_actual INT UNSIGNED NOT NULL,
+tiempo_transcurrido INT UNSIGNED NOT NULL,
+	id_jugador INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY(num_respuesta,id_jugador)
+);
+
+CREATE TABLE puntaje(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       	tiempo_total INT NOT NULL,
+       	monedas_total INT NOT NULL,
+      	id_jugador INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE avg_seccion(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    avg_calificacion_juego FLOAT,
+    avg_cambiar_juego FLOAT,
+    avg_suerte FLOAT,
+    avg_monedas_obtenidas FLOAT,
+    id_jugador INT UNSIGNED NOT NULL,
+	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE usuario(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       	correo VARCHAR(50) NOT NULL UNIQUE,
+        	usuario VARCHAR(20) NOT NULL UNIQUE,
+       	password VARCHAR(100) NOT NULL,
+       	rol VARCHAR(20) NOT NULL,
+      	ultimo_login DATETIME
+);

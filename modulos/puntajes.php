@@ -99,31 +99,59 @@
 
                         <tbody>
                             <?php
-                            $jugadores = new Jugador();
-                            $jugadores = $jugadores -> topJugadores(0);
+                                $jugadores = new Jugador();
+                                $jugadores = $jugadores -> topJugadores(0);
 
-                            foreach($jugadores as $key => $value) {
-                                if ($value["id_jugador"] == $_SESSION["id"]) {
-                                    $segundos = $value["tiempo_total"];
-                                    $horas = floor($segundos/ 3600);
-                                    $minutos = floor(($segundos - ($horas * 3600)) / 60);
-                                    $segundos = $segundos - ($horas * 3600) - ($minutos * 60);
-                                    $tiempo = $horas . ':' . $minutos . ":" . $segundos;
+                                foreach($jugadores as $key => $value) {
+                                    if ($value["id_jugador"] == $_SESSION["id"]) {
+                                        $segundos = $value["tiempo_total"];
+                                        $horas = floor($segundos/ 3600);
+                                        $minutos = floor(($segundos - ($horas * 3600)) / 60);
+                                        $segundos = $segundos - ($horas * 3600) - ($minutos * 60);
+                                        $tiempo = $horas . ':' . $minutos . ":" . $segundos;
 
-                                    echo '<tr>
-                                            <td>'.($key+1).'</td>
-                                            <td>'.$value["nombre_completo"].'</td>
-                                            <td>'.$value["monedas_total"].'</td>
-                                            <td>'.$tiempo.'</td>
-                                        </tr>';
-                                    
-                                    break;
+                                        echo '<tr>
+                                                <td>'.($key+1).'</td>
+                                                <td>'.$value["nombre_completo"].'</td>
+                                                <td>'.$value["monedas_total"].'</td>
+                                                <td>'.$tiempo.'</td>
+                                            </tr>';
+                                        
+                                        break;
+                                    }
                                 }
-                            }
                             ?>
                         </tbody>
-
                     </table>
+
+                    <!-- kmeans y PCA -->
+                    <?php
+                        $jugadores = new Jugador();
+                        $campos = array("avg_calificacion_juego", "avg_cambiar_juego", 
+                                        "avg_suerte", "avg_monedas_obtenidas");
+                        $avg_jugadores = $jugadores -> avg_jugadores($campos);
+                        
+                        $campos = array("id_jugador");
+                        $avg_id_jugadores =  $jugadores -> avg_jugadores($campos);
+                    ?>
+
+                    <script>
+                        async function WCluster(avg_jugadores) {
+                            let WCluster = window['w-cluster'];
+                            let mode = 'k-medoids';
+                            let resultado = await WCluster.cluster(avg_jugadores, { mode, kNumber: 2, nCompNIPALS: 2 })
+                            return JSON.stringify(resultado, null, 2);
+                        }
+
+                        let avg_jugadores = <?php echo json_encode($avg_jugadores); ?>;
+                        let avg_id_jugadores = <?php echo json_encode($avg_id_jugadores); ?>;
+                        console.log(avg_jugadores);
+                        WCluster(avg_jugadores).then(resultado => { 
+                            console.log(resultado);
+                        });
+                       
+                    </script>
+
                 </div>
 
             </div>

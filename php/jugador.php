@@ -5,6 +5,20 @@ require_once "conexion.php";
 require_once "alert.php";
 
 class Jugador{
+    
+    static public function avg_jugadores($campos){
+        try{
+            $sql = "SELECT ";
+            foreach ($campos as $c) { $sql .= $c.","; }
+            $sql = substr($sql, 0, -1);
+            $sql .= " FROM avg_seccion";
+            $stmt = Conexion::conectar()->prepare($sql);
+            $stmt -> execute();
+            if(count($campos) != 1) return $stmt -> fetchAll(PDO::FETCH_NUM);
+            else return $stmt -> fetchAll(PDO::FETCH_COLUMN, 0);
+
+        }catch(Exception $e){} 
+    }
 
     static public function topJugadores($limit) {
         try{
@@ -31,6 +45,28 @@ class Jugador{
             $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
 
             $stmt -> execute();
+            
+            // Agregar promedio a tabla avg_seccion
+
+            $sth = Conexion::conectar()->prepare("SELECT AVG(calificacion_juego) AS avg_calificacion_juego,
+            AVG(cambiar_juego) AS avg_cambiar_juego, AVG(suerte) AS avg_suerte, AVG(monedas_obtenidas) AS
+            avg_monedas_obtenidas FROM seccion WHERE id_jugador = :id_jugador");
+
+            $sth->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
+            $sth -> execute();
+            $resultado = $sth -> fetch(PDO::FETCH_ASSOC);
+
+            $stc = Conexion::conectar()->prepare("INSERT INTO avg_seccion (avg_calificacion_juego,
+            avg_cambiar_juego, avg_suerte, avg_monedas_obtenidas, id_jugador) VALUES (:avg_calificacion_juego,
+            :avg_cambiar_juego, :avg_suerte, :avg_monedas_obtenidas, :id_jugador)");
+
+            $stc->bindParam(":avg_calificacion_juego", $resultado["avg_calificacion_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":avg_cambiar_juego", $resultado["avg_cambiar_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":avg_suerte", $resultado["avg_suerte"], PDO::PARAM_STR);
+            $stc->bindParam(":avg_monedas_obtenidas", $resultado["avg_monedas_obtenidas"], PDO::PARAM_STR);
+            $stc->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
+            $stc -> execute();
+
         }catch(Exception $e){}
     }
 

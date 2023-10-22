@@ -32,6 +32,10 @@
     <!-- Sweet Alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- w cluster -->
+    <!-- https://www.npmjs.com/package/w-cluster -->
+    <script src="https://cdn.jsdelivr.net/npm/w-cluster@1.0.17/dist/w-cluster.umd.js"></script>
+
 </head>
 <body style="background: #f8fafc;">
     <?php
