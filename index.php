@@ -36,6 +36,9 @@
     <!-- https://www.npmjs.com/package/w-cluster -->
     <script src="https://cdn.jsdelivr.net/npm/w-cluster@1.0.17/dist/w-cluster.umd.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
 </head>
 <body style="background: #f8fafc;">
     <?php

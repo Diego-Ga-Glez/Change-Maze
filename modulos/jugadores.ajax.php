@@ -29,7 +29,8 @@ class AjaxJugadores{
     public $total_coins;
 
     public function ajaxJugadorAgregarPuntaje(){
-        Jugador::agregarPuntajeJugador($this->total_time,$this->total_coins);
+        $jugador = new Jugador();
+        $jugador -> agregarPuntajeJugador($this->total_time,$this->total_coins);
     }
 
 

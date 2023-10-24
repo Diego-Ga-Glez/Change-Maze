@@ -11,7 +11,7 @@ class Jugador{
             $sql = "SELECT ";
             foreach ($campos as $c) { $sql .= $c.","; }
             $sql = substr($sql, 0, -1);
-            $sql .= " FROM avg_seccion";
+            $sql .= " FROM resultados";
             $stmt = Conexion::conectar()->prepare($sql);
             $stmt -> execute();
             if(count($campos) != 1) return $stmt -> fetchAll(PDO::FETCH_NUM);
@@ -35,7 +35,7 @@ class Jugador{
         }catch(Exception $e){} 
     }
 
-    static public function agregarPuntajeJugador($total_time,$total_coins){
+    public function agregarPuntajeJugador($total_time,$total_coins){
         try{
             $stmt = Conexion::conectar()->prepare("INSERT INTO puntaje (tiempo_total,monedas_total,id_jugador)
             VALUES(:total_time,:total_coins,:id)");
@@ -46,24 +46,52 @@ class Jugador{
 
             $stmt -> execute();
             
-            // Agregar promedio a tabla avg_seccion
+            // Agregar promedios a tabla resultados
 
+            // Promedios para búsqueda de rutina y reacción emocional
             $sth = Conexion::conectar()->prepare("SELECT AVG(calificacion_juego) AS avg_calificacion_juego,
-            AVG(cambiar_juego) AS avg_cambiar_juego, AVG(suerte) AS avg_suerte, AVG(monedas_obtenidas) AS
-            avg_monedas_obtenidas FROM seccion WHERE id_jugador = :id_jugador");
+            AVG(cambiar_juego) AS avg_cambiar_juego, AVG(suerte) AS avg_suerte FROM seccion WHERE id_jugador = :id_jugador");
 
             $sth->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
             $sth -> execute();
             $resultado = $sth -> fetch(PDO::FETCH_ASSOC);
 
-            $stc = Conexion::conectar()->prepare("INSERT INTO avg_seccion (avg_calificacion_juego,
-            avg_cambiar_juego, avg_suerte, avg_monedas_obtenidas, id_jugador) VALUES (:avg_calificacion_juego,
-            :avg_cambiar_juego, :avg_suerte, :avg_monedas_obtenidas, :id_jugador)");
+            // Para rigidez cognitiva
+            $resultadoNo = $this -> contarCambioJuego(0); // 0 = no cambiar juego
+            $resultadoSi = $this -> contarCambioJuego(1); // 0 = sí cambiar juego
+            $totalCambios = $this -> contarCambioJuego(3); // 3 = total de cambios
 
-            $stc->bindParam(":avg_calificacion_juego", $resultado["avg_calificacion_juego"], PDO::PARAM_STR);
-            $stc->bindParam(":avg_cambiar_juego", $resultado["avg_cambiar_juego"], PDO::PARAM_STR);
-            $stc->bindParam(":avg_suerte", $resultado["avg_suerte"], PDO::PARAM_STR);
-            $stc->bindParam(":avg_monedas_obtenidas", $resultado["avg_monedas_obtenidas"], PDO::PARAM_STR);
+            $noCambiar = intval($resultadoNo -> cambio);
+            $siCambiar = intval($resultadoSi -> cambio);
+            $total = intval($totalCambios -> cambio);
+
+            $porcentajeNo = $noCambiar / $total; 
+            $porcentajeSi = $siCambiar / $total;
+
+            if ($porcentajeNo > $porcentajeSi)
+                $num = $porcentajeSi / $porcentajeNo; //dividir numero menor entre el mayor
+            else
+                $num = $porcentajeNo / $porcentajeSi;
+
+            $rigidezCognitiva = 1 - $num;
+
+            // Para enfoque a corto plazo
+            $promedio_cal_juego = floatval($resultado["avg_calificacion_juego"]);
+            $primer_porcentaje = $promedio_cal_juego / 2;
+
+            $promedio_suerte = floatval($resultado["avg_suerte"]);
+            $segundo_porcentaje = (1 - $promedio_suerte) / 2;
+            $enfoque_corto_plazo = $primer_porcentaje + $segundo_porcentaje;
+
+
+            $stc = Conexion::conectar()->prepare("INSERT INTO resultados (busqueda_rutina,
+            reaccion_emocional, enfoque_corto_plazo, rigidez_cognitiva, id_jugador) VALUES (:busqueda_rutina,
+            :reaccion_emocional, :enfoque_corto_plazo, :rigidez_cognitiva, :id_jugador)");
+
+            $stc->bindParam(":busqueda_rutina", $resultado["avg_calificacion_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":reaccion_emocional", $resultado["avg_cambiar_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":enfoque_corto_plazo", $enfoque_corto_plazo, PDO::PARAM_STR);
+            $stc->bindParam(":rigidez_cognitiva", $rigidezCognitiva, PDO::PARAM_STR);
             $stc->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
             $stc -> execute();
 
@@ -173,6 +201,22 @@ class Jugador{
                             "Por favor, intentalo de nuevo","error","OK","");
             }
         }  
+    }
+
+    static public function contarCambioJuego($cambio){
+        try {
+            if ($cambio == 3) {
+                $stmt = Conexion::conectar()->prepare("SELECT COUNT(cambiar_juego) AS cambio FROM seccion WHERE id_jugador = :id_jugador");
+            }
+            else {
+                $stmt = Conexion::conectar()->prepare("SELECT COUNT(cambiar_juego) AS cambio FROM seccion WHERE id_jugador = :id_jugador AND cambiar_juego = :cambiar_juego;");
+                $stmt->bindParam(":cambiar_juego",$cambio, PDO::PARAM_INT);
+            }
+
+            $stmt->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){}
     }
 
 }

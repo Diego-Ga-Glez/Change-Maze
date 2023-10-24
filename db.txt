@@ -21,8 +21,8 @@ CREATE TABLE seccion(
 	suerte TINYINT UNSIGNED NOT NULL,
 	monedas_nivel TINYINT UNSIGNED NOT NULL,
 	monedas_obtenidas TINYINT UNSIGNED NOT NULL,
-nivel_actual INT UNSIGNED NOT NULL,
-tiempo_transcurrido INT UNSIGNED NOT NULL,
+	nivel_actual INT UNSIGNED NOT NULL,
+	tiempo_transcurrido INT UNSIGNED NOT NULL,
 	id_jugador INT UNSIGNED NOT NULL,
 	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY(num_respuesta,id_jugador)
@@ -30,27 +30,27 @@ tiempo_transcurrido INT UNSIGNED NOT NULL,
 
 CREATE TABLE puntaje(
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       	tiempo_total INT NOT NULL,
-       	monedas_total INT NOT NULL,
-      	id_jugador INT UNSIGNED NOT NULL,
+	tiempo_total INT NOT NULL,
+	monedas_total INT NOT NULL,
+	id_jugador INT UNSIGNED NOT NULL,
 	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE avg_seccion(
+CREATE TABLE resultados(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    avg_calificacion_juego FLOAT,
-    avg_cambiar_juego FLOAT,
-    avg_suerte FLOAT,
-    avg_monedas_obtenidas FLOAT,
+    busqueda_rutina FLOAT,
+    reaccion_emocional FLOAT,
+    enfoque_corto_plazo FLOAT,
+    rigidez_cognitiva FLOAT,
     id_jugador INT UNSIGNED NOT NULL,
 	FOREIGN KEY (id_jugador) REFERENCES jugador(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE usuario(
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-       	correo VARCHAR(50) NOT NULL UNIQUE,
-        	usuario VARCHAR(20) NOT NULL UNIQUE,
-       	password VARCHAR(100) NOT NULL,
-       	rol VARCHAR(20) NOT NULL,
-      	ultimo_login DATETIME
+	correo VARCHAR(50) NOT NULL UNIQUE,
+	usuario VARCHAR(20) NOT NULL UNIQUE,
+	password VARCHAR(100) NOT NULL,
+	rol VARCHAR(20) NOT NULL,
+	ultimo_login DATETIME
 );

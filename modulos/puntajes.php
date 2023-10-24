@@ -123,36 +123,154 @@
                             ?>
                         </tbody>
                     </table>
+                </div>
 
-                    <!-- kmeans y PCA -->
-                    <?php
-                        $jugadores = new Jugador();
-                        $campos = array("avg_calificacion_juego", "avg_cambiar_juego", 
-                                        "avg_suerte", "avg_monedas_obtenidas");
-                        $avg_jugadores = $jugadores -> avg_jugadores($campos);
-                        
-                        $campos = array("id_jugador");
-                        $avg_id_jugadores =  $jugadores -> avg_jugadores($campos);
-                    ?>
+                <div class="card-body">
+                    <canvas id="chart1"></canvas>
+                </div>
 
-                    <script>
-                        async function WCluster(avg_jugadores) {
-                            let WCluster = window['w-cluster'];
-                            let mode = 'k-medoids';
-                            let resultado = await WCluster.cluster(avg_jugadores, { mode, kNumber: 2, nCompNIPALS: 2 })
-                            return JSON.stringify(resultado, null, 2);
+                <div class="card-body">
+                    <div>
+                        <h6 class="text-center">Perfil de resistencia al cambio</h6>
+                        <p>
+                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                        </p>
+                        <p>
+                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                        </p>
+                        <p>
+                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                        </p>
+                        <p>
+                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                        </p>
+                        <p>
+                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- kmeans y PCA -->
+                <?php
+                    $jugadores = new Jugador();
+                    $campos = array("busqueda_rutina", "reaccion_emocional", 
+                                    "enfoque_corto_plazo", "rigidez_cognitiva");
+                    $avg_jugadores = $jugadores -> avg_jugadores($campos);
+                    
+                    $campos = array("id_jugador");
+                    $avg_id_jugadores =  $jugadores -> avg_jugadores($campos);
+                    $id_jugador = $_SESSION["id"];
+                ?>
+
+                <script>
+                    async function WCluster(avg_jugadores) {
+                        let WCluster = window['w-cluster'];
+                        let mode = 'k-medoids';
+                        let resultado = await WCluster.cluster(avg_jugadores, { mode, kNumber: 2, nCompNIPALS: 2 })
+                        return JSON.stringify(resultado, null, 2);
+                    }
+
+                    let avg_jugadores = <?php echo json_encode($avg_jugadores); ?>;
+                    let avg_id_jugadores = <?php echo json_encode($avg_id_jugadores); ?>;
+                    let id_jugador = <?php echo $id_jugador ?>;
+                    var avg_float = [];
+                    var tmp = [];
+
+                    console.log(avg_jugadores);
+
+                    for (let i = 0; i < avg_jugadores.length; i++) {
+                        for (let j = 0; j < 4; j++)
+                            tmp.push(parseFloat(avg_jugadores[i][j]));
+
+                        avg_float.push(tmp);
+                        tmp = [];
+                    }
+
+                    WCluster(avg_float).then(resultado => { 
+                        var res = JSON.parse(resultado);
+                        console.log(res);
+                        var datasets = [[],[],[]]; //[[grupo1],[grupo2],[jugador actual]]
+                        var indice_jugador = 0;
+                        var posicion_final = [0,0]; //[grupo, posición en el grupo] del jugador actual
+
+                        // encontrar indice del jugador en la lista de ids
+                        for (let i = 0; i < avg_id_jugadores.length; i++) {
+                            if (avg_id_jugadores[i] == id_jugador) {
+                                indice_jugador = i;
+                                break;
+                            }
                         }
 
-                        let avg_jugadores = <?php echo json_encode($avg_jugadores); ?>;
-                        let avg_id_jugadores = <?php echo json_encode($avg_id_jugadores); ?>;
-                        console.log(avg_jugadores);
-                        WCluster(avg_jugadores).then(resultado => { 
-                            console.log(resultado);
-                        });
-                       
-                    </script>
+                        //encontrar posición de resultado del jugador
+                        var encontrado = false;
+                        for (let i = 0; i < res["ginds"].length; i++) {
+                            for (let j = 0; j < res["ginds"][i].length; j++) {
+                                if (res["ginds"][i][j] == indice_jugador) {
+                                    posicion_final = [i,j];
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            if (encontrado)
+                                break;
+                        }
 
-                </div>
+                        //Guardar datos de los grupos (y del jugador actual) en datasets
+                        for (let i = 0; i < res["gmat"].length; i++) {
+                            for (let j = 0; j < res["gmat"][i].length; j++) {
+                                if (posicion_final[0] == i && posicion_final[1] == j)
+                                    datasets[2].push({ x: res["gmat"][i][j][0], y: res["gmat"][i][j][1] });
+                                else 
+                                    datasets[i].push({ x: res["gmat"][i][j][0], y: res["gmat"][i][j][1] });
+                            }
+                        }
+
+                        var ctx = document.getElementById("chart1").getContext("2d");
+                        var myScatter = Chart.Scatter(ctx, {
+                        data: {
+                            datasets: [{
+                                label: "Grupo 1",
+                                borderColor: '#FF6384',
+                                backgroundColor: '#FF638480',
+                                data: datasets[0]
+                            }, {
+                                label: "Grupo 2",
+                                borderColor: '#36A2EB',
+                                backgroundColor: '#36A2EB80',
+                                data: datasets[1]
+                            }, {
+                                label: "Jugador actual",
+                                borderColor: '#36EB8B',
+                                backgroundColor: '#36EB8B80',
+                                data: datasets[2]
+                            }
+                        ]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: 'Resultado de todos los jugadores'
+                            },
+                            showLines: false,
+                            /*scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        min: 28,
+                                        max: 40,
+                                    }
+                                }],
+                            },*/
+                            elements: {
+                                point: {
+                                    radius: 5
+                                }
+                            }
+                        }
+                        });
+                        
+                    });
+                    
+                </script>
 
             </div>
         </div>     
