@@ -5,6 +5,15 @@ require_once "conexion.php";
 require_once "alert.php";
 
 class Jugador{
+
+    static public function resultados_jugador() {
+        try{
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM resultados WHERE id_jugador = :id_jugador");
+            $stmt->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);
+            $stmt -> execute();
+            return $stmt -> fetch(PDO::FETCH_OBJ);
+        }catch(Exception $e){} 
+    }
     
     static public function avg_jugadores($campos){
         try{
@@ -79,7 +88,7 @@ class Jugador{
             $promedio_cal_juego = floatval($resultado["avg_calificacion_juego"]);
             $primer_porcentaje = $promedio_cal_juego / 2;
 
-            $promedio_suerte = floatval($resultado["avg_suerte"]);
+            $promedio_suerte = floatval($resultado["avg_suerte"]); //Tal vez cambie
             $segundo_porcentaje = (1 - $promedio_suerte) / 2;
             $enfoque_corto_plazo = $primer_porcentaje + $segundo_porcentaje;
 
@@ -88,8 +97,8 @@ class Jugador{
             reaccion_emocional, enfoque_corto_plazo, rigidez_cognitiva, id_jugador) VALUES (:busqueda_rutina,
             :reaccion_emocional, :enfoque_corto_plazo, :rigidez_cognitiva, :id_jugador)");
 
-            $stc->bindParam(":busqueda_rutina", $resultado["avg_calificacion_juego"], PDO::PARAM_STR);
-            $stc->bindParam(":reaccion_emocional", $resultado["avg_cambiar_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":busqueda_rutina", $resultado["avg_cambiar_juego"], PDO::PARAM_STR);
+            $stc->bindParam(":reaccion_emocional", $resultado["avg_calificacion_juego"], PDO::PARAM_STR);
             $stc->bindParam(":enfoque_corto_plazo", $enfoque_corto_plazo, PDO::PARAM_STR);
             $stc->bindParam(":rigidez_cognitiva", $rigidezCognitiva, PDO::PARAM_STR);
             $stc->bindParam(":id_jugador", $_SESSION["id"], PDO::PARAM_INT);

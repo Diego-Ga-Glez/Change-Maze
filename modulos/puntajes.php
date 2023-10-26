@@ -50,7 +50,7 @@
                     $tiempo = $horas . ':' . $minutos . ":" . $segundos;
 
                     if (isset($_SESSION["id"]) && ($value["id_jugador"] == $_SESSION["id"]))
-                        $tr = '<tr style="background-color: #B1FFF0;">';
+                        $tr = '<tr style="background-color: #36EB8B80;">';
                     else
                         $tr = '<tr>';
 
@@ -129,24 +129,66 @@
                     <canvas id="chart1"></canvas>
                 </div>
 
+                <?php
+                    $jugadores = new Jugador();
+                    $resultados_jugador = $jugadores -> resultados_jugador();
+
+                    $busqueda_rutina = floatval($resultados_jugador -> busqueda_rutina); // mayor de 0.5 le gusta experimentar cosas nuevas
+                    $reaccion_emocional = floatval($resultados_jugador -> reaccion_emocional); //mayor de 0.5 buena reacción
+                    $enfoque_corto_plazo = floatval($resultados_jugador -> enfoque_corto_plazo); // mayor de 0.5 sí tiene enfoque a corto plazo
+                    $rigidez_cognitiva = floatval($resultados_jugador -> rigidez_cognitiva); // mayor de 0.5 tiene rigidez cognitiva (no cambia de opinión)
+
+                    $flexibilidad_cambio = ($busqueda_rutina + $reaccion_emocional + $enfoque_corto_plazo + $rigidez_cognitiva) / 4; // Quizá la rigidez cognitiva da puntaje negativo porque entre mayor es, suele cambiar menos de opinión
+                ?>
+
                 <div class="card-body">
                     <div>
                         <h6 class="text-center">Perfil de resistencia al cambio</h6>
-                        <p>
-                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
-                        </p>
-                        <p>
-                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
-                        </p>
-                        <p>
-                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
-                        </p>
-                        <p>
-                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
-                        </p>
-                        <p>
-                        Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
-                        </p>
+                        <?php if ($flexibilidad_cambio > 0.5) { ?>
+                            <p align="justify">
+                                Tu enfoque general hacia el cambio tiende a ser positivo. Por lo general, te gustan los cambios y tiendes a buscarlos. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es dinámico y relativamente impredecible.
+                            </p>
+                        <?php } else { ?>
+                            <p align="justify">
+                                Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
+                            </p>
+                        <?php } ?>
+                        <?php if ($busqueda_rutina > 0.5) { ?>
+                            <p align="justify">
+                                En cuanto a tu enfoque hacia las rutinas, te gusta experimentar cosas nuevas, generalmente disfrutas de las sorpresas y te aburres cada vez que se forma una rutina en tu vida.
+                            </p>
+                        <?php } else { ?>
+                            <p align="justify">
+                                En cuanto a tu enfoque hacia las rutinas, ganas comodidad y disfrutas haciendo las mismas cosas a la misma hora, no te gustan particularmente las sorpresas y te sientes incómodo cuando algo se interpone en tu rutina diaria.
+                            </p>
+                        <?php } ?>
+                        <?php if ($reaccion_emocional > 0.5) { ?>
+                            <p align="justify">
+                                No tiendes a tener reacciones emocionales negativas a los cambios. No te hacen sentir particularmente incómodo y cuando ocurren mantienes la compostura.
+                            </p>
+                        <?php } else { ?>
+                            <p align="justify">
+                                Tu reacción emocional a los cambios es generalmente negativa. Los cambios a menudo te hacen sentir incómodo, nervioso e incluso estresado.
+                            </p>
+                        <?php } ?>
+                        <?php if ($enfoque_corto_plazo > 0.5) { ?>
+                            <p align="justify">
+                                Tiendes a centrarte en las implicaciones del cambio a largo plazo. No te molestan demasiado los inconvenientes a corto plazo que a menudo implican los cambios y no permitirás que interfieran con tu toma de decisiones.
+                            </p>
+                        <?php } else { ?>
+                            <p align="justify">
+                                Te enfocas en los ajustes que los cambios a menudo requieren. Incluso cuando sabes que el cambio puede beneficiarte, no puedes evitar molestarte con los inconvenientes a corto plazo involucrados.
+                            </p>
+                        <?php } ?>
+                        <?php if ($rigidez_cognitiva > 0.5) { ?>
+                            <p align="justify">
+                                Pareces ser muy estable y consistente en tus opiniones. Sabes en lo que crees y no es muy probable que cambies de opinión.
+                            </p>
+                        <?php } else { ?>
+                            <p align="justify">
+                                Pareces ser bastante flexible en tu forma de pensar. Por lo general, tienes la mente abierta y estás dispuesto a reconsiderar tus puntos de vista.
+                            </p>
+                        <?php } ?>
                     </div>
                 </div>
 
