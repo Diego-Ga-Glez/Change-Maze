@@ -82,7 +82,7 @@
             <div class="card mb-4 box-shadow">
 
                 <div class="card-header">
-                    <h6 class="text-center">Tu resultado</h6>
+                    <h6 class="text-center">Tu resultado del juego</h6>
                 </div>
                 
                 <div class="card-body">
@@ -123,6 +123,17 @@
                             ?>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+    <div class="container mt-5" id="contenedorForm">
+        <div class="card-deck mb-5 mt-5">
+            <div class="card mb-4 box-shadow">
+
+                <div class="card-header">
+                    <h6 class="text-center">Resultados de resistencia al cambio</h6>
                 </div>
 
                 <div class="card-body">
@@ -250,16 +261,39 @@
                             }
                         }
 
+                        var flexibilidad_cambio = <?php echo $flexibilidad_cambio; ?>;
+                        var label1 = '';
+                        var label2 = '';
+
+                        if(posicion_final[0] == 0) { // Jugador pertenece a Grupo 1
+                            if (parseFloat(flexibilidad_cambio > 0.5)) {
+                                label1 = 'No resistentes';
+                                label2 = 'Resistentes';
+                            } else {
+                                label1 = 'Resistentes';
+                                label2 = 'No resistentes';
+                            }
+                        }
+                        else if(posicion_final[0] == 1) { // Jugador pertenece a Grupo 2
+                            if (parseFloat(flexibilidad_cambio > 0.5)) {
+                                label1 = 'Resistentes';
+                                label2 = 'No resistentes';
+                            } else {
+                                label1 = 'No resistentes';
+                                label2 = 'Resistentes';
+                            }
+                        }
+
                         var ctx = document.getElementById("chart1").getContext("2d");
                         var myScatter = Chart.Scatter(ctx, {
                         data: {
                             datasets: [{
-                                label: "Grupo 1",
+                                label: label1,
                                 borderColor: '#FF6384',
                                 backgroundColor: '#FF638480',
                                 data: datasets[0]
                             }, {
-                                label: "Grupo 2",
+                                label: label2,
                                 borderColor: '#36A2EB',
                                 backgroundColor: '#36A2EB80',
                                 data: datasets[1]
@@ -274,7 +308,7 @@
                         options: {
                             title: {
                                 display: true,
-                                text: 'Resultado de todos los jugadores'
+                                text: 'Total de muestras'
                             },
                             showLines: false,
                             /*scales: {
