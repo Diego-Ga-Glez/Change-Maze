@@ -186,24 +186,23 @@
                     </div>
                 </div>
 
-                <!-- kmeans y PCA -->
+                <!-- PCA -->
                 <?php
                     $jugadores = new Jugador();
                     $campos = array("busqueda_rutina", "reaccion_emocional", 
                                     "enfoque_corto_plazo", "rigidez_cognitiva");
-                    $avg_jugadores = $jugadores -> avg_jugadores($campos);
+                    $avg_jugadores = $jugadores -> avg_jugadores($campos); //Resultados de todos los jugadores
                     
                     $campos = array("id_jugador");
-                    $avg_id_jugadores =  $jugadores -> avg_jugadores($campos);
+                    $avg_id_jugadores =  $jugadores -> avg_jugadores($campos); //Id de todos los jugadores
                     $id_jugador = $_SESSION["id"];
                 ?>
 
                 <script>
-                    async function WCluster(avg_jugadores) {
+                    async function testPCA(avg_jugadores) {
                         let WCluster = window['w-cluster'];
-                        let mode = 'k-medoids';
-                        let resultado = await WCluster.cluster(avg_jugadores, { mode, kNumber: 2, nCompNIPALS: 2 })
-                        return JSON.stringify(resultado, null, 2);
+                        let resultado = await WCluster.PCA(avg_jugadores, { nCompNIPALS: 2 });
+                        return resultado;
                     }
 
                     let avg_jugadores = <?php echo json_encode($avg_jugadores); ?>;
@@ -212,8 +211,7 @@
                     var avg_float = [];
                     var tmp = [];
 
-                    console.log(avg_jugadores);
-
+                    // Convertir datos a flotantes
                     for (let i = 0; i < avg_jugadores.length; i++) {
                         for (let j = 0; j < 4; j++)
                             tmp.push(parseFloat(avg_jugadores[i][j]));
@@ -221,15 +219,24 @@
                         avg_float.push(tmp);
                         tmp = [];
                     }
+                    
+                    testPCA(avg_float).then(resultado => { 
+                        //console.log(avg_float);
+                        //console.log(resultado);
+                        var datasets = [[],[],[]]; // [[grupo1],[grupo2],[jugador actual]]
+                        var indice_jugador = 0; // Posición del jugador en la lista de resultados
+                        var grupo = []; // Lista de grupo de cada jugador. 1 = resistente; 0 = no resistente
 
-                    WCluster(avg_float).then(resultado => { 
-                        var res = JSON.parse(resultado);
-                        console.log(res);
-                        var datasets = [[],[],[]]; //[[grupo1],[grupo2],[jugador actual]]
-                        var indice_jugador = 0;
-                        var posicion_final = [0,0]; //[grupo, posición en el grupo] del jugador actual
+                        // Sacar promedio de c/u y meter grupo en lista
+                        for(let i = 0; i < avg_float.length; i++) {
+                            var promedio = (avg_float[i][0] + avg_float[i][1] + avg_float[i][2] + (1 - avg_float[i][3])) / 4;
+                            if (promedio > 0.5)
+                                grupo.push(0);
+                            else
+                                grupo.push(1);
+                        }
 
-                        // encontrar indice del jugador en la lista de ids
+                        // Encontrar indice del jugador en la lista de ids
                         for (let i = 0; i < avg_id_jugadores.length; i++) {
                             if (avg_id_jugadores[i] == id_jugador) {
                                 indice_jugador = i;
@@ -237,50 +244,15 @@
                             }
                         }
 
-                        //encontrar posición de resultado del jugador
-                        var encontrado = false;
-                        for (let i = 0; i < res["ginds"].length; i++) {
-                            for (let j = 0; j < res["ginds"][i].length; j++) {
-                                if (res["ginds"][i][j] == indice_jugador) {
-                                    posicion_final = [i,j];
-                                    encontrado = true;
-                                    break;
-                                }
-                            }
-                            if (encontrado)
-                                break;
-                        }
-
-                        //Guardar datos de los grupos (y del jugador actual) en datasets
-                        for (let i = 0; i < res["gmat"].length; i++) {
-                            for (let j = 0; j < res["gmat"][i].length; j++) {
-                                if (posicion_final[0] == i && posicion_final[1] == j)
-                                    datasets[2].push({ x: res["gmat"][i][j][0], y: res["gmat"][i][j][1] });
-                                else 
-                                    datasets[i].push({ x: res["gmat"][i][j][0], y: res["gmat"][i][j][1] });
-                            }
-                        }
-
-                        var flexibilidad_cambio = <?php echo $flexibilidad_cambio; ?>;
-                        var label1 = '';
-                        var label2 = '';
-
-                        if(posicion_final[0] == 0) { // Jugador pertenece a Grupo 1
-                            if (parseFloat(flexibilidad_cambio > 0.5)) {
-                                label1 = 'No resistentes';
-                                label2 = 'Resistentes';
-                            } else {
-                                label1 = 'Resistentes';
-                                label2 = 'No resistentes';
-                            }
-                        }
-                        else if(posicion_final[0] == 1) { // Jugador pertenece a Grupo 2
-                            if (parseFloat(flexibilidad_cambio > 0.5)) {
-                                label1 = 'Resistentes';
-                                label2 = 'No resistentes';
-                            } else {
-                                label1 = 'No resistentes';
-                                label2 = 'Resistentes';
+                        // Guardar datos de los grupos (y del jugador actual) en datasets
+                        for (let i = 0; i < resultado.length; i++) { 
+                            if (i == indice_jugador)
+                                datasets[2].push({ x: resultado[i][0] , y: resultado[i][1] }); // jugador actual
+                            else {
+                                if (grupo[i] == 0)
+                                    datasets[0].push({ x: resultado[i][0] , y: resultado[i][1] }); // no resistentes
+                                else
+                                    datasets[1].push({ x: resultado[i][0] , y: resultado[i][1] }); // resistentes
                             }
                         }
 
@@ -288,12 +260,12 @@
                         var myScatter = Chart.Scatter(ctx, {
                         data: {
                             datasets: [{
-                                label: label1,
+                                label: "No resistentes",
                                 borderColor: '#FF6384',
                                 backgroundColor: '#FF638480',
                                 data: datasets[0]
                             }, {
-                                label: label2,
+                                label: "Resistentes",
                                 borderColor: '#36A2EB',
                                 backgroundColor: '#36A2EB80',
                                 data: datasets[1]
@@ -311,14 +283,6 @@
                                 text: 'Total de muestras'
                             },
                             showLines: false,
-                            /*scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        min: 28,
-                                        max: 40,
-                                    }
-                                }],
-                            },*/
                             elements: {
                                 point: {
                                     radius: 5
