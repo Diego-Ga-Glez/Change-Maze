@@ -156,7 +156,7 @@
                     <div>
                         <h6 class="text-center">Perfil de resistencia al cambio</h6>
                         
-                        <p align="justify" class="mb-0">
+                        <p align="justify" class="mb-0" style="padding: 0px 10px 10px 10px;">
                             <?php if ($flexibilidad_cambio > 0.5) { ?>
                                 Tu enfoque general hacia el cambio tiende a ser positivo. Por lo general, te gustan los cambios y tiendes a buscarlos. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es dinámico y relativamente impredecible.
                             <?php } else { ?>
