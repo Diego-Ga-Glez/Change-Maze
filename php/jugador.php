@@ -106,16 +106,6 @@ class Jugador{
 
         }catch(Exception $e){}
     }
-
-    static public function jugadorSeccionesyEncuesta($id){
-        try{
-            $stmt = Conexion::conectar()->prepare("SELECT* FROM seccion,encuesta WHERE seccion.id_jugador = :id_s AND encuesta.id_jugador = :id_e;");
-            $stmt->bindParam(":id_s", $id, PDO::PARAM_INT);
-            $stmt->bindParam(":id_e", $id, PDO::PARAM_INT);
-            $stmt -> execute();
-            return $stmt -> fetchAll();
-        }catch(Exception $e){}
-    }
     
     static public function eliminarUsuario(){
         try{
@@ -159,10 +149,9 @@ class Jugador{
         }catch(Exception $e){}
     }
     
-    static public function obtenerJugador($nombre,$correo){
+    static public function obtenerJugador($correo){
         # obtener id del jugador
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM jugador WHERE nombre_completo = :nombre and correo = :correo");
-        $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM jugador WHERE correo = :correo");
         $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
         $stmt -> execute();
         return $stmt -> fetch(PDO::FETCH_OBJ);
@@ -197,14 +186,21 @@ class Jugador{
                     $stmt->bindParam(":profesion", $_POST["profesion"], PDO::PARAM_STR);  
                 }
 
-            
-                $stmt->execute();
-                $result = $this -> obtenerJugador($_POST['nombre'],$_POST['correo']);
-                $_SESSION["id"] = $result -> id;
-                $_SESSION["game"] = true;
-                
-                echo alerts("Jugador registrado con éxito",
-                            "Ahora serás redireccionado al juego","success","OK","game");
+                $result = $this -> obtenerJugador($_POST['correo']);
+
+                if ($result != NULL) {
+                    echo alerts("Ya existe un jugador registrado con ese correo.",
+                            "Intenta con otro correo electrónico.","error","OK","");
+                }
+                else {
+                    $stmt->execute();
+                    $result = $this -> obtenerJugador($_POST['correo']);
+                    $_SESSION["id"] = $result -> id;
+                    $_SESSION["game"] = true;
+                    
+                    echo alerts("Jugador registrado con éxito",
+                                "Ahora serás redireccionado al juego","success","OK","game");
+                }
             }catch(Exception $e){
                 echo alerts("Algo salió mal, jugador no registrado",
                             "Por favor, intentalo de nuevo","error","OK","");

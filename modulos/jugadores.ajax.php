@@ -18,13 +18,6 @@ class AjaxJugadores{
         Jugador::agregarSeccionJugador($this->num_res,$this->score,$this->change,$this->luck, $this->coins_level, $this->coins_obtained, $this->current_level, $this->time);    
     }
 
-    public $id;
-
-    public function ajaxJugadorSeccionesyEncuesta(){
-        $respuesta = Jugador::jugadorSeccionesyEncuesta($this->id);
-        echo json_encode($respuesta);
-    }
-
     public $total_time;
     public $total_coins;
 
@@ -32,8 +25,6 @@ class AjaxJugadores{
         $jugador = new Jugador();
         $jugador -> agregarPuntajeJugador($this->total_time,$this->total_coins);
     }
-
-
 }
 
 if(isset($_POST["num_resp"])){
@@ -48,12 +39,6 @@ if(isset($_POST["num_resp"])){
     $agregar -> time = $_POST["time"];
 
     $agregar -> ajaxAgregarSeccion();
-}
-
-if(isset($_POST["idInfoJugador"])){
-    $mostrar = new AjaxJugadores();
-    $mostrar -> id = $_POST["idInfoJugador"];
-    $mostrar -> ajaxJugadorSeccionesyEncuesta();
 }
 
 if(isset($_POST["total_time"])){

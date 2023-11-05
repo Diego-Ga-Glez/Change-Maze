@@ -12,6 +12,12 @@
             width:60%;
         }
     }
+
+    .chart-container {
+      width: 100%;
+      height: 50vh;
+      margin: auto;
+    }
 </style>
 
 <div class="container mt-5" id="contenedorForm">
@@ -137,7 +143,9 @@
                 </div>
 
                 <div class="card-body">
-                    <canvas id="chart1"></canvas>
+                    <div class="card chart-container">
+                        <canvas id="chart1"></canvas>
+                    </div>
                 </div>
 
                 <?php
@@ -261,23 +269,25 @@
                         data: {
                             datasets: [{
                                 label: "No resistentes",
-                                borderColor: '#FF6384',
-                                backgroundColor: '#FF638480',
+                                borderColor: 'rgb(255, 99, 132)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
                                 data: datasets[0]
                             }, {
                                 label: "Resistentes",
-                                borderColor: '#36A2EB',
-                                backgroundColor: '#36A2EB80',
+                                borderColor: 'rgb(54, 162, 235)',
+                                backgroundColor: 'rgba(54, 162, 235, 0.5)',
                                 data: datasets[1]
                             }, {
                                 label: "Jugador actual",
-                                borderColor: '#36EB8B',
-                                backgroundColor: '#36EB8B80',
+                                borderColor: 'rgb(54, 235, 139)',
+                                backgroundColor: 'rgba(54, 235, 139, 0.5)',
                                 data: datasets[2]
                             }
                         ]
                         },
                         options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
                             title: {
                                 display: true,
                                 text: 'Total de muestras'
