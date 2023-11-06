@@ -340,7 +340,7 @@ export default class DungeonScene extends Phaser.Scene {
   timer(){
     this.initialTimer += 1; // One second
     this.timer_change +=1;
-    console.log(this.timer_change);
+    //console.log(this.timer_change);
     if (this.timer_change ==  45){
       this.add_section();
       this.timer_change = 0;  
