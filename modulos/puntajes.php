@@ -157,7 +157,12 @@
                     $enfoque_corto_plazo = floatval($resultados_jugador -> enfoque_corto_plazo); // mayor de 0.5 sí tiene enfoque a corto plazo
                     $rigidez_cognitiva = floatval($resultados_jugador -> rigidez_cognitiva); // mayor de 0.5 tiene rigidez cognitiva (no cambia de opinión)
 
-                    $flexibilidad_cambio = ($busqueda_rutina + $reaccion_emocional + $enfoque_corto_plazo + (1 - $rigidez_cognitiva)) / 4; // Quizá la rigidez cognitiva da puntaje negativo porque entre mayor es, suele cambiar menos de opinión
+                    $valor_br = ($busqueda_rutina > 0.5) ? 1 : -1;
+                    $valor_re = ($reaccion_emocional > 0.5) ? 1 : -1;
+                    $valor_ecp = ($enfoque_corto_plazo > 0.5) ? 1 : -1;
+                    $valor_rc = ($rigidez_cognitiva > 0.5) ? -1 : 1;
+
+                    $flexibilidad_cambio = $valor_br + $valor_re + $valor_ecp + $valor_rc; // < 0 no flexible, > 0 flexible
                 ?>
 
                 <div class="card-body">
@@ -165,28 +170,42 @@
                         <h6 class="text-center">Perfil de resistencia al cambio</h6>
                         
                         <p align="justify" class="mb-0" style="padding: 0px 10px 10px 10px;">
-                            <?php if ($flexibilidad_cambio > 0.5) { ?>
+                            <?php if ($flexibilidad_cambio > 0) { ?>
                                 Tu enfoque general hacia el cambio tiende a ser positivo. Por lo general, te gustan los cambios y tiendes a buscarlos. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es dinámico y relativamente impredecible.
+                            <?php } else if ($flexibilidad_cambio == 0) { ?>
+                                Tu calificación total de resistencia al cambio es aproximadamente promedio. Ves tanto las ventajas como las desventajas en los cambios y no sueles estar inclinado a resistirlos o promoverlos.
                             <?php } else { ?>
                                 Tu inclinación general hacia el cambio es evitarlo o resistirlo. Realmente no te gustan los cambios y no te sientes cómodo en su presencia. Por lo tanto, es probable que tu rendimiento y bienestar mejoren cuando el entorno es estable y predecible.
                             <?php } ?>
-                            <?php if ($busqueda_rutina > 0.5) { ?>
+
+                            <?php if ($busqueda_rutina > 0.6) { ?>
                                 En cuanto a tu enfoque hacia las rutinas, te gusta experimentar cosas nuevas, generalmente disfrutas de las sorpresas y te aburres cada vez que se forma una rutina en tu vida.
+                            <?php } else if ($busqueda_rutina >= 0.4 && $busqueda_rutina <= 0.6) { ?>
+                                En cuanto a tu enfoque hacia las rutinas, no pareces sentirte muy fuerte acerca de ellas. Hay cosas que te gusta hacer de forma regular, pero en ocasiones te gusta romper tus rutinas y hacer algo inesperado o no planificado.
                             <?php } else { ?>
                                 En cuanto a tu enfoque hacia las rutinas, ganas comodidad y disfrutas haciendo las mismas cosas a la misma hora, no te gustan particularmente las sorpresas y te sientes incómodo cuando algo se interpone en tu rutina diaria.
                             <?php } ?>
-                            <?php if ($reaccion_emocional > 0.5) { ?>
+
+                            <?php if ($reaccion_emocional > 0.6) { ?>
                                 No tiendes a tener reacciones emocionales negativas a los cambios. No te hacen sentir particularmente incómodo y cuando ocurren mantienes la compostura.
+                            <?php } else if ($reaccion_emocional >= 0.4 && $reaccion_emocional <= 0.6) { ?>
+                                Tu reacción emocional a los cambios es leve. No te sientes demasiado estresado en su presencia, pero no eres del todo indiferente a ellos.
                             <?php } else { ?>
                                 Tu reacción emocional a los cambios es generalmente negativa. Los cambios a menudo te hacen sentir incómodo, nervioso e incluso estresado.
                             <?php } ?>
-                            <?php if ($enfoque_corto_plazo > 0.5) { ?>
+
+                            <?php if ($enfoque_corto_plazo > 0.6) { ?>
                                 Tiendes a centrarte en las implicaciones del cambio a largo plazo. No te molestan demasiado los inconvenientes a corto plazo que a menudo implican los cambios y no permitirás que interfieran con tu toma de decisiones.
+                            <?php } else if ($enfoque_corto_plazo >= 0.4 && $enfoque_corto_plazo <= 0.6) { ?>
+                                Aunque eres consciente de los inconvenientes del cambio a corto plazo, aún puedes ver los beneficios potenciales a largo plazo y, por lo tanto, puedes tenerlos en cuenta al tomar decisiones sobre el cambio.
                             <?php } else { ?>
                                 Te enfocas en los ajustes que los cambios a menudo requieren. Incluso cuando sabes que el cambio puede beneficiarte, no puedes evitar molestarte con los inconvenientes a corto plazo involucrados.
                             <?php } ?>
-                            <?php if ($rigidez_cognitiva > 0.5) { ?>
+
+                            <?php if ($rigidez_cognitiva > 0.6) { ?>
                                 Pareces ser muy estable y consistente en tus opiniones. Sabes en lo que crees y no es muy probable que cambies de opinión.
+                            <?php } else if ($rigidez_cognitiva >= 0.4 && $rigidez_cognitiva <= 0.6) { ?>
+                                A pesar de que tus creencias son relativamente consistentes a lo largo del tiempo, aún puede cambiar ocasionalmente tu forma de ver las cosas.
                             <?php } else { ?>
                                 Pareces ser bastante flexible en tu forma de pensar. Por lo general, tienes la mente abierta y estás dispuesto a reconsiderar tus puntos de vista.
                             <?php } ?>
@@ -235,10 +254,16 @@
                         var indice_jugador = 0; // Posición del jugador en la lista de resultados
                         var grupo = []; // Lista de grupo de cada jugador. 1 = resistente; 0 = no resistente
 
-                        // Sacar promedio de c/u y meter grupo en lista
+                        // Sacar resistencia de c/u y meter grupo en lista
                         for(let i = 0; i < avg_float.length; i++) {
-                            var promedio = (avg_float[i][0] + avg_float[i][1] + avg_float[i][2] + (1 - avg_float[i][3])) / 4;
-                            if (promedio > 0.5)
+                            var valor_br = (avg_float[i][0] > 0.5) ? 1 : -1;
+                            var valor_re = (avg_float[i][1] > 0.5) ? 1 : -1;
+                            var valor_ecp = (avg_float[i][2] > 0.5) ? 1 : -1;
+                            var valor_rc = (avg_float[i][3] > 0.5) ? -1 : 1;
+
+                            var flexibilidad_cambio = valor_br + valor_re + valor_ecp + valor_rc; // < 0 no flexible, > 0 flexible
+
+                            if (flexibilidad_cambio > 0)
                                 grupo.push(0);
                             else
                                 grupo.push(1);
